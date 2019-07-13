@@ -1,17 +1,37 @@
-<div class="topbar navbar">
-    <div class="navbar-dark">
-        <a class="navbar-brand" href="">Object Oriented Internet</a>
-    </div>
-    <ul class="nav flex-row">
+<div class="topbar navbar navbar-dark">
+    <button class="navbar-toggler" onclick="@ToggleNavMenu">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <ul class="nav @NavMenuDirectionClass @NavMenuCollapseClass">
         <li class="nav-item">
-            <NavLink class="nav-link" href="fetchdata">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Detailed data
+            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                <span class="oi oi-home" aria-hidden="true"></span>Home
             </NavLink>
         </li>
         <li class="nav-item">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
+            <NavLink class="nav-link" href="subscriptions">
+                <span class="oi oi-bell" aria-hidden="true"></span>Subscriptions
+            </NavLink>
+        </li>
+        <li class="nav-item">
+            <NavLink class="nav-link" href="detailed-message">
+                <span class="oi oi-list-rich" aria-hidden="true"></span>Messages
             </NavLink>
         </li>
     </ul>
+    <a class="navbar-brand float-right" href="">Object Oriented Internet</a>
 </div>
+
+@functions 
+{
+    bool isMenuCollapsed = false;
+
+    string NavMenuCollapseClass => isMenuCollapsed ? "collapse" : string.Empty;
+
+    string NavMenuDirectionClass => true ? "flex-row" : "flex-column";
+
+    private void ToggleNavMenu()
+    {
+        isMenuCollapsed = !isMenuCollapsed;
+    }
+}

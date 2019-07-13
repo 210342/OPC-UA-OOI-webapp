@@ -14,14 +14,16 @@ app {
 }
 
 .topbar {
-    background-image: linear-gradient(90deg, #3a0647 40%, rgb(5, 39, 103));
+    background-image: linear-gradient(120deg, #00e45f 40%, rgb(5, 39, 103));
     position: sticky;
     top: 0;
     width: 100vw;
 }
 
     .topbar .navbar-brand {
-        font-size: 1.6rem;
+        font-size: 1.7rem;
+        padding-bottom: 0.5rem;
+        padding-top: 0.5rem;
     }
 
     .topbar .oi {
@@ -31,23 +33,19 @@ app {
         vertical-align: middle;
     }
 
-.nav-item {
-    display: list-item;
-    font-size: 1.3rem;
-    margin-top: 0.5rem;
-    padding-bottom: 1rem;
-    padding-left: 1.2rem;
-    padding-right: 1.2rem;
-    vertical-align: bottom;
+.navbar .navbar-toggler {
+    display: inline-flex;
 }
 
-    .nav-item:first-of-type {
-        padding-left: 3rem;
-    }
-
-    .nav-item:last-of-type {
-        padding-right: 1.8rem;
-    }
+.nav-item {
+    display: list-item;
+    font-size: 1.1rem;
+    margin-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    vertical-align: bottom;
+}
 
     .nav-item a {
         display: flex;
@@ -80,4 +78,32 @@ app {
 
 .validation-message {
     color: red;
+}
+
+@media (max-width: 700px) {
+    .navbar .navbar-toggler {
+        display: inline;
+    }
+
+    .nav-item:first-of-type {
+        padding-top: 1rem;
+    }
+
+    .nav-item:last-of-type {
+        padding-bottom: 1rem;
+    }
+}
+
+@media (min-width: 700px) {
+    .navbar .navbar-toggler {
+        display: none;
+    }
+
+    .nav-item:first-of-type {
+        padding-left: 1rem;
+    }
+
+    .nav-item:last-of-type {
+        padding-right: 1rem;
+    }
 }
