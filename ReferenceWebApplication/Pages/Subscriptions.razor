@@ -1,0 +1,22 @@
+﻿@page "/subscriptions"
+
+<h1>Current subscriptions</h1>
+
+@if (subscriptions is null)
+{
+    <p>You haven't subscribed to any devices yet</p>
+}
+else
+{
+    <ul>
+        @foreach(object subscription in subscriptions)
+        {
+            <li>subscription.ToString()</li>
+        }
+    </ul>
+}
+
+@functions 
+{
+    object[] subscriptions;
+}
