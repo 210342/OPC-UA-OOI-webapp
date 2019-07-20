@@ -15,4 +15,8 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.0.0-preview6-19319-03" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\js\JsInterop.js" />
+  </ItemGroup>
+
 </Project>

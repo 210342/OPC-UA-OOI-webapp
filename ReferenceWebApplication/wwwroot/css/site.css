@@ -14,21 +14,22 @@ app {
 }
 
 .topbar {
-    background-image: linear-gradient(120deg, #00e45f 40%, rgb(5, 39, 103));
+    background-image: linear-gradient(130deg, #217544 28%, #00a87b);
     position: sticky;
     top: 0;
     width: 100vw;
+    font-size: 1.5rem;
 }
 
     .topbar .navbar-brand {
-        font-size: 1.7rem;
-        padding-bottom: 0.5rem;
-        padding-top: 0.5rem;
+        font-size: 1em;
+        padding-bottom: 0.3rem;
+        padding-top: 0.3rem;
     }
 
     .topbar .oi {
-        width: 2.5rem;
-        font-size: 1.5rem;
+        width: 1em;
+        font-size: 1em;
         top: -1px;
         vertical-align: middle;
     }
@@ -39,19 +40,23 @@ app {
 
 .nav-item {
     display: list-item;
-    font-size: 1.1rem;
-    margin-top: 0.5rem;
-    padding-bottom: 0.5rem;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
+    font-size: 0.85em;
+    margin-top: 0.25em;
+    padding-bottom: 0.25em;
+    padding-left: 0.25em;
+    padding-right: 0.25em;
     vertical-align: bottom;
 }
+
+    .nav-item .caption {
+        margin-left: 1em;
+    }
 
     .nav-item a {
         display: flex;
         align-items: center;
         color: #d7d7d7;
-        height: 2.5rem;
+        height: 2.5em;
     }
 
         .nav-item a.active {
@@ -80,30 +85,57 @@ app {
     color: red;
 }
 
-@media (max-width: 700px) {
-    .navbar .navbar-toggler {
-        display: inline;
-    }
+@media (max-width: 992px) {
 
-    .nav-item:first-of-type {
-        padding-top: 1rem;
-    }
-
-    .nav-item:last-of-type {
-        padding-bottom: 1rem;
+    .topbar {
+        font-size: 1.2rem;
     }
 }
 
-@media (min-width: 700px) {
-    .navbar .navbar-toggler {
+@media (max-width: 768px) {
+
+    .topbar {
+        font-size: 1rem;
+    }
+
+        .topbar .oi {
+            width: 1em;
+            font-size: 1em;
+            top: -1px;
+            vertical-align: middle;
+        }
+
+    .navbar-brand {
+        margin-right: 0;
+        font-size: 0.8em;
+    }
+
+    .nav-item .caption {
         display: none;
+
     }
 
     .nav-item:first-of-type {
-        padding-left: 1rem;
+        padding-left: 0;
     }
 
-    .nav-item:last-of-type {
-        padding-right: 1rem;
+        .nav-item:first-of-type .nav-link {
+            padding-left: 0;
+        }
+
+    .nav-link {
+        padding-left: 0.4em;
+        padding-right: 0.4em;
+    }
+}
+
+@media (max-width: 400px) {
+
+    .topbar {
+        font-size: 1rem;
+    }
+
+    .navbar-brand {
+        margin-right: 0.5em;
     }
 }
