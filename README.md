@@ -12,4 +12,4 @@ Application depends on open-source NuGet packages developed by [Mariusz Postół
 - Handling and displaying asynchronous data from IoT machines
 - Designing graphical interface which changes based on the type of the data received
 
-As for 17.05.2019 the project depends on ```.NET Core 3.0.0-preview5``` (https://github.com/aspnet/AspNetCore/releases/tag/v3.0.0-preview5-19227-01)
+As for 25.07.2019 the project depends on ```.NET Core 3.0.0-preview6``` (https://github.com/aspnet/AspNetCore/releases/tag/v3.0.0-preview6.19307.2)
