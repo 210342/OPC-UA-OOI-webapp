@@ -1,46 +1,54 @@
 @page "/detailed-message"
 @using ReferenceWebApplication.Data
-@inject WeatherForecastService ForecastService
+@using System.Text
 
-<h1>Weather forecast</h1>
+<h2>Status</h2>
 
-<p>This component demonstrates fetching data from a service.</p>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-9">
+            <textarea id="MessageTextArea" rows="10" style="width: 100%;">@messages.ToString()</textarea>
+        </div>
+        <div class="col-3">
+            <div class="row">
+                <div class="col-12">
+                    <label>Packages received: </label>
+                    <label>@packagesReceived</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <label>Bytes received: </label>
+                    <label>@bytesReceived</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <button class="btn btn-lg btn-danger" onclick="@ReadMessageAsync">
+                Receive message
+            </button>
+        </div>
+    </div>
+</div>
 
-@if (forecasts == null)
-{
-    <p><em>Loading...</em></p>
-}
-else
-{
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Date</th>
-                <th>Temp. (C)</th>
-                <th>Temp. (F)</th>
-                <th>Summary</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var forecast in forecasts)
-            {
-                <tr>
-                    <td>@forecast.Date.ToShortDateString()</td>
-                    <td>@forecast.TemperatureC</td>
-                    <td>@forecast.TemperatureF</td>
-                    <td>@forecast.Summary</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-}
 
-@functions 
-{
-    WeatherForecast[] forecasts;
+@inject  DummyService Service
+@functions {
+    int bytesReceived = 0;
+    int packagesReceived = 0;
 
-    protected override async Task OnInitAsync()
+    MessageQueue messages = new MessageQueue(3);
+
+    async Task ReadMessageAsync()
     {
-        forecasts = await ForecastService.GetForecastAsync(DateTime.Now);
+        string message = await Service.ReceiveMessageAsync();
+        if (message != null)
+        {
+            messages.Add(message);
+            ++packagesReceived;
+            bytesReceived += Encoding.UTF8.GetByteCount(message);
+        }
     }
 }
