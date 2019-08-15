@@ -26,7 +26,7 @@
     </div>
     <div class="row">
         <div class="col-12">
-            <button class="btn btn-lg btn-danger" onclick="@ReadMessageAsync">
+            <button class="btn btn-lg btn-danger" @onclick="ReadMessageAsync">
                 Receive message
             </button>
         </div>
@@ -35,13 +35,14 @@
 
 
 @inject  DummyService Service
-@functions {
+@code 
+{
     int bytesReceived = 0;
     int packagesReceived = 0;
 
     MessageQueue messages = new MessageQueue(3);
 
-    async Task ReadMessageAsync()
+    public async Task ReadMessageAsync()
     {
         string message = await Service.ReceiveMessageAsync();
         if (message != null)
