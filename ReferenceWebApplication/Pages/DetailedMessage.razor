@@ -13,13 +13,13 @@
             <div class="row">
                 <div class="col-12">
                     <label>Packages received: </label>
-                    <label>@packagesReceived</label>
+                    <label>@PackagesReceived</label>
                 </div>
             </div>
             <div class="row">
                 <div class="col-12">
                     <label>Bytes received: </label>
-                    <label>@bytesReceived</label>
+                    <label>@BytesReceived</label>
                 </div>
             </div>
         </div>
@@ -37,8 +37,8 @@
 @inject  DummyService Service
 @code 
 {
-    int bytesReceived = 0;
-    int packagesReceived = 0;
+    public int BytesReceived { get; private set; } = 0;
+    public int PackagesReceived { get; private set; } = 0;
 
     MessageQueue messages = new MessageQueue(3);
 
@@ -48,8 +48,8 @@
         if (message != null)
         {
             messages.Add(message);
-            ++packagesReceived;
-            bytesReceived += Encoding.UTF8.GetByteCount(message);
+            ++PackagesReceived;
+            BytesReceived += Encoding.UTF8.GetByteCount(message);
         }
     }
 }
