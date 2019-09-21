@@ -6,18 +6,26 @@ namespace M2M_Communication
 {
     public class Message : IMessage
     {
-        private readonly static Guid _id = new Guid("E6702AFB-6CA3-4540-AC5D-B2BABACA14AE");
+        public static Guid StaticTypeGuid { get => new Guid("E6702AFB-6CA3-4540-AC5D-B2BABACA14AE"); }
 
-        public Guid ID { get; } = Guid.NewGuid();
-
-        public Guid TypeGuid { get => _id; }
+        public Guid Id { get; } = Guid.NewGuid();
 
         public string TypeAsString => nameof(Message);
 
-        public string Content => ID.ToString();
+        public string Content => Id.ToString();
 
         public DateTime TimeSent { get; } = DateTime.UtcNow;
 
         public int Size { get => Content.Length; }
+
+        public override int GetHashCode()
+        {
+            return Id.GetHashCode();
+        }
+
+        public override bool Equals(object obj)
+        {
+            return base.Equals(obj) ? Id.Equals((obj as Message).Id) : false;
+        }
     }
 }

@@ -26,9 +26,9 @@ namespace M2M_Communication
                         tuple.Item1.Equals(message.TypeGuid) || 
                         tuple.Item2.IsAssignableFrom(message.GetType())
                     )
-                ) && !message.ID.Equals(_lastReceivedMessageID))
+                ) && !message.Id.Equals(_lastReceivedMessageID))
             {
-                _lastReceivedMessageID = message.ID;
+                _lastReceivedMessageID = message.Id;
                 MessageParser.Parse(message);
             }
         }

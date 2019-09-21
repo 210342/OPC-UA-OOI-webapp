@@ -45,7 +45,7 @@
     {
         Parser.ObjectUpdated += UpdateMessage;
         Receiver.Subscriptions = new List<ISubscription>();
-        Receiver.Subscriptions.Add(new Subscription(Guid.NewGuid(), typeof(Message)));
+        Receiver.Subscriptions.Add(new Subscription(M2M_Communication.Message.StaticTypeGuid, typeof(Message)));
         Receiver.MessageParser = Parser;
         Receiver.MessageBus = Bus;
     }

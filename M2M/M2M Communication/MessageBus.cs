@@ -22,7 +22,7 @@ namespace M2M_Communication
             return _messages.Where(message =>
                 subscription.Types.Any(tuple =>
                     tuple.Item1.Equals(message.TypeGuid) 
-                    || tuple.Item2.Equals(message.GetType())));
+                    || tuple.Item2.IsAssignableFrom(message.GetType())));
         }
 
         public IEnumerable<IMessage> ReadOldMessagesByType(Type type)
