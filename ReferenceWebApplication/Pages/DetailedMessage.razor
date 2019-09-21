@@ -1,13 +1,12 @@
 @page "/detailed-message"
-@using ReferenceWebApplication.Data
-@using System.Text
+@using M2M_Communication
 
 <h2>Status</h2>
 
 <div class="container-fluid">
     <div class="row">
         <div class="col-9">
-            <textarea id="MessageTextArea" rows="10" style="width: 100%;">@messages.ToString()</textarea>
+            <textarea id="MessageTextArea" rows="10" style="width: 100%;">@Message</textarea>
         </div>
         <div class="col-3">
             <div class="row">
@@ -26,30 +25,43 @@
     </div>
     <div class="row">
         <div class="col-12">
-            <button class="btn btn-lg btn-danger" @onclick="ReadMessageAsync">
-                Receive message
+            <button class="btn btn-lg btn-danger" @onclick="GenerateMessage">
+                Generate message
             </button>
         </div>
     </div>
 </div>
 
-
-@inject  DummyService Service
+@inject IMessageBus Bus
+@inject IMessageReceiver Receiver
+@inject IMessageParser Parser
 @code 
 {
     public int BytesReceived { get; private set; } = 0;
     public int PackagesReceived { get; private set; } = 0;
+    public string Message { get; private set; } = string.Empty;
 
-    MessageQueue messages = new MessageQueue(3);
-
-    public async Task ReadMessageAsync()
+    protected override void OnInitialized()
     {
-        string message = await Service.ReceiveMessageAsync();
-        if (message != null)
+        Parser.ObjectUpdated += UpdateMessage;
+        Receiver.Subscriptions = new List<ISubscription>();
+        Receiver.Subscriptions.Add(new Subscription(Guid.NewGuid(), typeof(Message)));
+        Receiver.MessageParser = Parser;
+        Receiver.MessageBus = Bus;
+    }
+
+    public void UpdateMessage(object updatedObject, IMessage message)
+    {
+        if (updatedObject is string content)
         {
-            messages.Add(message);
+            Message = content;
             ++PackagesReceived;
-            BytesReceived += Encoding.UTF8.GetByteCount(message);
+            BytesReceived += message.Size;
         }
+    }
+
+    public void GenerateMessage()
+    {
+        Bus.SendMessage(new Message());
     }
 }

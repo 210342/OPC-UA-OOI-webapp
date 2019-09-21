@@ -1,26 +1,22 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
-using System.Text;
 
 namespace M2M_Communication
 {
-    public class DummyMessageReceiver : IMessageReceiver
+    public class DummyMessageReceiver : IMessageReceiver, IDisposable
     {
         private Guid? _lastReceivedMessageID;
 
         public IMessageBus MessageBus { get; set; }
-        public ICollection<ISubscription> Subscriptions { get; set; }
+        public ICollection<ISubscription> Subscriptions { get; set; } = new List<ISubscription>();
         public IMessageParser MessageParser { get; set; }
 
-        public DummyMessageReceiver()
+        public DummyMessageReceiver(IMessageBus bus, IMessageParser parser)
         {
+            MessageParser = parser;
+            MessageBus = bus;
             MessageBus.NewMessage += NewMessage;
-        }
-
-        public DummyMessageReceiver(IEnumerable<ISubscription> subscriptions) : this()
-        {
-            Subscriptions = new HashSet<ISubscription>(subscriptions);
         }
 
         private void NewMessage(IMessage message)
@@ -34,6 +30,14 @@ namespace M2M_Communication
             {
                 _lastReceivedMessageID = message.ID;
                 MessageParser.Parse(message);
+            }
+        }
+
+        public void Dispose()
+        {
+            if (MessageBus != null)
+            {
+                MessageBus.NewMessage -= NewMessage; 
             }
         }
     }

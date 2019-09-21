@@ -6,6 +6,6 @@ namespace M2M_Communication
 {
     public interface ISubscription
     {
-        public ICollection<Tuple<Guid, Type>> Types { get; } 
+        public ICollection<(Guid, Type)> Types { get; } 
     }
 }

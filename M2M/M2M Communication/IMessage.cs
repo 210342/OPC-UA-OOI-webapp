@@ -11,5 +11,6 @@ namespace M2M_Communication
         public string TypeAsString { get; }
         public string Content { get; }
         public DateTime TimeSent { get; }
+        public int Size { get; }
     }
 }

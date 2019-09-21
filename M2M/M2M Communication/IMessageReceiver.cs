@@ -8,5 +8,6 @@ namespace M2M_Communication
     {
         public IMessageBus MessageBus { get; set; }
         public ICollection<ISubscription> Subscriptions { get; set; }
+        public IMessageParser MessageParser { get; set; }
     }
 }
