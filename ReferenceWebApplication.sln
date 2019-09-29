@@ -18,7 +18,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MessageParsing", "MessagePa
 		{7358ED00-7AF8-4C1E-A621-C67C34572BB7} = {7358ED00-7AF8-4C1E-A621-C67C34572BB7}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "M2M CommunicationUnitTest", "M2M CommunicationUnitTest\M2M CommunicationUnitTest.csproj", "{400F1367-6349-4C4E-A33B-C43F888D4B55}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "M2M CommunicationUnitTest", "M2M\M2M CommunicationUnitTest\M2M CommunicationUnitTest.csproj", "{400F1367-6349-4C4E-A33B-C43F888D4B55}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -8,7 +8,8 @@ namespace M2M_Communication
 
     public interface IMessageBus
     {
-        public event NewMessageEventHandler NewMessage;
+        public void Subscribe(Guid id, NewMessageEventHandler newMessageEventHandler);
+        public void Unsubscribe(Guid id, NewMessageEventHandler newMessageEventHandler);
         public void SendMessage(IMessage message);
         public IEnumerable<IMessage> ReadOldMessages();
         public IEnumerable<IMessage> ReadOldMessagesByType(Type type);

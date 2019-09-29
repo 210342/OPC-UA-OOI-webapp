@@ -6,6 +6,7 @@ namespace M2M_Communication
 {
     public interface ISubscription
     {
-        public ICollection<(Guid, Type)> Types { get; } 
+        public Guid TypeId { get; }
+        public NewMessageEventHandler NewMessage { get; set; }
     }
 }

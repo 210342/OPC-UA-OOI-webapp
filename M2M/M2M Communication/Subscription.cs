@@ -6,16 +6,19 @@ namespace M2M_Communication
 {
     public class Subscription : ISubscription
     {
-        public ICollection<(Guid, Type)> Types { get; } = new List<(Guid, Type)>();
+        public Guid TypeId { get; }
 
-        public Subscription(Guid typeGuid, Type type)
+        public NewMessageEventHandler NewMessage { get; set; }
+
+        public Subscription(Guid typeGuid)
         {
-            Types.Add((typeGuid, type));
+            TypeId = typeGuid;
         }
 
-        public Subscription(IEnumerable<(Guid, Type)> types)
+        public Subscription(Guid typeGuid, NewMessageEventHandler newMessage)
         {
-            Types = new List<(Guid, Type)>(types);
+            TypeId = typeGuid;
+            NewMessage = newMessage;
         }
     }
 }

@@ -7,37 +7,55 @@ namespace M2M_Communication
     public class DummyMessageReceiver : IMessageReceiver, IDisposable
     {
         private Guid? _lastReceivedMessageID;
+        private ICollection<ISubscription> _subscriptions;
 
         public IMessageBus MessageBus { get; set; }
-        public ICollection<ISubscription> Subscriptions { get; set; } = new List<ISubscription>();
         public IMessageParser MessageParser { get; set; }
+        public IReadOnlyCollection<ISubscription> Subscriptions => _subscriptions as IReadOnlyCollection<ISubscription>;
 
-        public DummyMessageReceiver(IMessageBus bus, IMessageParser parser)
+        public DummyMessageReceiver(IMessageBus bus, IMessageParser parser) 
+            : this (bus, parser, new List<ISubscription>()) { }
+
+        public DummyMessageReceiver(IMessageBus bus, IMessageParser parser, ICollection<ISubscription> subscriptions)
         {
             MessageParser = parser;
             MessageBus = bus;
-            MessageBus.NewMessage += NewMessage;
+            _subscriptions = subscriptions;
+        }
+
+        public void Subscribe(Guid id)
+        {
+            MessageBus?.Subscribe(id, NewMessage);
+        }
+
+        public void Unsubscribe(Guid id)
+        {
+            MessageBus?.Unsubscribe(id, NewMessage);
+        }
+
+        public void Dispose()
+        {
+            UnsubscribeAll();
         }
 
         private void NewMessage(IMessage message)
         {
-            if (Subscriptions.Any(subscription => 
-                    subscription.Types.Any(tuple => 
-                        tuple.Item1.Equals(message.TypeGuid) || 
-                        tuple.Item2.IsAssignableFrom(message.GetType())
-                    )
-                ) && !message.Id.Equals(_lastReceivedMessageID))
+            if (!message.Id.Equals(_lastReceivedMessageID))
             {
                 _lastReceivedMessageID = message.Id;
                 MessageParser.Parse(message);
             }
         }
 
-        public void Dispose()
+        private void UnsubscribeAll()
         {
-            if (MessageBus != null)
+            if (_subscriptions is null)
             {
-                MessageBus.NewMessage -= NewMessage; 
+                return;
+            }
+            foreach (ISubscription subscription in _subscriptions)
+            {
+                MessageBus?.Unsubscribe(subscription.TypeId, subscription.NewMessage);
             }
         }
     }

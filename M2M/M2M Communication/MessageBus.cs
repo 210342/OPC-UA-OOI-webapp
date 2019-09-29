@@ -10,7 +10,8 @@ namespace M2M_Communication
     {
         private readonly Queue<IMessage> _messages = new Queue<IMessage>();
 
-        public event NewMessageEventHandler NewMessage;
+        private readonly Dictionary<Guid, ICollection<NewMessageEventHandler>> _subscriptions
+            = new Dictionary<Guid, ICollection<NewMessageEventHandler>>();
 
         public IEnumerable<IMessage> ReadOldMessages()
         {
@@ -20,9 +21,7 @@ namespace M2M_Communication
         public IEnumerable<IMessage> ReadOldMessagesBySubscription(ISubscription subscription)
         {
             return _messages.Where(message =>
-                subscription.Types.Any(tuple =>
-                    tuple.Item1.Equals(message.TypeGuid) 
-                    || tuple.Item2.IsAssignableFrom(message.GetType())));
+                message.TypeGuid.Equals(subscription.TypeId));
         }
 
         public IEnumerable<IMessage> ReadOldMessagesByType(Type type)
@@ -35,10 +34,40 @@ namespace M2M_Communication
             return _messages.Where(message => message.TypeGuid.Equals(typeGuid));
         }
 
+        public void Subscribe(Guid id, NewMessageEventHandler newMessageEventHandler)
+        {
+            if (_subscriptions.TryGetValue(id, out ICollection<NewMessageEventHandler> events))
+            {
+                events.Add(newMessageEventHandler);
+            }
+            else
+            {
+                _subscriptions.Add(id, new List<NewMessageEventHandler>(new[] { newMessageEventHandler }));
+            }
+        }
+
+        public void Unsubscribe(Guid id, NewMessageEventHandler newMessageEventHandler)
+        {
+            if (_subscriptions.TryGetValue(id, out ICollection<NewMessageEventHandler> events))
+            {
+                events.Remove(newMessageEventHandler);
+                if (events.Count == 0)
+                {
+                    _subscriptions.Remove(id);
+                }
+            }
+        }
+
         public void SendMessage(IMessage message)
         {
             _messages.Enqueue(message);
-            NewMessage?.Invoke(message);
+            if (_subscriptions.TryGetValue(message.TypeGuid, out ICollection<NewMessageEventHandler> events))
+            {
+                foreach (var _event in events)
+                {
+                    _event.Invoke(message);
+                }
+            }
         }
     }
 }

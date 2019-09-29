@@ -35,21 +35,9 @@ namespace M2M_CommunicationUnitTest
         {
             bool invoked = false;
             IMessageBus bus = new MessageBus();
-            bus.NewMessage += message => invoked = true;
+            bus.Subscribe(Message.StaticTypeGuid, message => invoked = true);
             bus.SendMessage(new Message());
             Assert.True(invoked);
-        }
-
-        [Fact]
-        public void GetOldBySubscriptionTest()
-        {
-            ISubscription sub = new Subscription(Message.StaticTypeGuid, typeof(Message));
-            sub.Types.Add((MessageTest.TestMessageType.StaticTypeGuid, typeof(MessageTest.TestMessageType)));
-            IMessageBus bus = new MessageBus();
-            bus.SendMessage(new Message());
-            Assert.Single(bus.ReadOldMessagesBySubscription(sub));
-            bus.SendMessage(new MessageTest.TestMessageType());
-            Assert.Equal(2, bus.ReadOldMessagesBySubscription(sub).Count());
         }
     }
 }

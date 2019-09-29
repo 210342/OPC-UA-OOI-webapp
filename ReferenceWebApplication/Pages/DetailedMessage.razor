@@ -44,8 +44,7 @@
     protected override void OnInitialized()
     {
         Parser.ObjectUpdated += UpdateMessage;
-        Receiver.Subscriptions = new List<ISubscription>();
-        Receiver.Subscriptions.Add(new Subscription(M2M_Communication.Message.StaticTypeGuid, typeof(Message)));
+        Receiver.Subscribe(M2M_Communication.Message.StaticTypeGuid);
         Receiver.MessageParser = Parser;
         Receiver.MessageBus = Bus;
     }

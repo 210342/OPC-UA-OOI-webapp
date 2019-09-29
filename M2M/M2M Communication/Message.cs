@@ -9,13 +9,10 @@ namespace M2M_Communication
         public static Guid StaticTypeGuid { get => new Guid("E6702AFB-6CA3-4540-AC5D-B2BABACA14AE"); }
 
         public Guid Id { get; } = Guid.NewGuid();
-
+        public Guid TypeGuid => StaticTypeGuid;
         public string TypeAsString => nameof(Message);
-
         public string Content => Id.ToString();
-
         public DateTime TimeSent { get; } = DateTime.UtcNow;
-
         public int Size { get => Content.Length; }
 
         public override int GetHashCode()
