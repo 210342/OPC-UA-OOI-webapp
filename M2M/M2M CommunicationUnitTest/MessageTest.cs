@@ -9,17 +9,11 @@ namespace M2M_CommunicationUnitTest
         internal class TestMessageType : IMessage
         {
             public static Guid StaticTypeGuid => new Guid("052AD04E-5E3C-41A6-88B6-AFD879C31F33");
-
             public Guid Id => Guid.NewGuid();
-
             public Guid TypeGuid { get => StaticTypeGuid; }
-
             public string TypeAsString => TypeGuid.ToString();
-
             public string Content => "Test Content";
-
             public DateTime TimeSent => DateTime.UtcNow;
-
             public int Size => 256;
         }
 

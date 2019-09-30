@@ -31,13 +31,58 @@ namespace M2M_CommunicationUnitTest
         }
 
         [Fact]
+        public void SubscribeNotSubscribedType()
+        {
+            IMessageBus bus = new MessageBus();
+            Assert.Empty(
+                (bus
+                .GetType()
+                .GetField("_subscriptions", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .GetValue(bus) as Dictionary<Guid, ICollection<NewMessageEventHandler>>)
+                .Keys);
+            bus.Subscribe(new Subscription(Message.StaticTypeGuid), _ => { });
+            Assert.NotEmpty(
+                (bus
+                .GetType()
+                .GetField("_subscriptions", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .GetValue(bus) as Dictionary<Guid, ICollection<NewMessageEventHandler>>)
+                .Keys);
+            Assert.NotEmpty(
+                (bus
+                .GetType()
+                .GetField("_subscriptions", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .GetValue(bus) as Dictionary<Guid, ICollection<NewMessageEventHandler>>)
+                .Values
+                .FirstOrDefault());
+        }
+
+        [Fact]
         public void NewMessageInvocationTest()
         {
             bool invoked = false;
             IMessageBus bus = new MessageBus();
-            bus.Subscribe(Message.StaticTypeGuid, message => invoked = true);
+            bus.Subscribe(new Subscription(Message.StaticTypeGuid), message => invoked = true);
             bus.SendMessage(new Message());
             Assert.True(invoked);
+        }
+
+        [Fact]
+        public void UnsubscribeNotSubscribedType()
+        {
+            IMessageBus bus = new MessageBus();
+            Assert.Empty(
+                (bus
+                .GetType()
+                .GetField("_subscriptions", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .GetValue(bus) as Dictionary<Guid, ICollection<NewMessageEventHandler>>)
+                .Keys);
+            bus.Unsubscribe(new Subscription(Message.StaticTypeGuid), _ => { });
+            Assert.Empty(
+                (bus
+                .GetType()
+                .GetField("_subscriptions", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .GetValue(bus) as Dictionary<Guid, ICollection<NewMessageEventHandler>>)
+                .Keys);
         }
     }
 }

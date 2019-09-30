@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace M2M_Communication
 {
@@ -22,7 +20,7 @@ namespace M2M_Communication
 
         public override bool Equals(object obj)
         {
-            return base.Equals(obj) ? Id.Equals((obj as Message).Id) : false;
+            return Id.Equals((obj as Message)?.Id);
         }
     }
 }

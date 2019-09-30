@@ -1,24 +1,31 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace M2M_Communication
 {
     public class Subscription : ISubscription
     {
         public Guid TypeId { get; }
-
-        public NewMessageEventHandler NewMessage { get; set; }
+        public string TypeName { get; }
 
         public Subscription(Guid typeGuid)
         {
             TypeId = typeGuid;
         }
 
-        public Subscription(Guid typeGuid, NewMessageEventHandler newMessage)
+        public Subscription(Guid typeGuid, string typeName)
         {
             TypeId = typeGuid;
-            NewMessage = newMessage;
+            TypeName = typeName;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return TypeId.Equals((obj as Subscription)?.TypeId);
+        }
+
+        public override int GetHashCode()
+        {
+            return TypeId.GetHashCode();
         }
     }
 }
