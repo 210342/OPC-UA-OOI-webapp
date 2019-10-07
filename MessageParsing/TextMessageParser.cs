@@ -17,6 +17,10 @@ namespace MessageParsing
 
         public void Parse(IMessage message)
         {
+            if (message is null)
+            {
+                throw new ArgumentNullException(nameof(message));
+            }
             ObjectUpdated?.Invoke($"{_localizer["Sent"]}: {message.TimeSent.ToShortDateString()} {message.TimeSent.ToLongTimeString()}{Environment.NewLine}{message.Content}", message);
         }
     }

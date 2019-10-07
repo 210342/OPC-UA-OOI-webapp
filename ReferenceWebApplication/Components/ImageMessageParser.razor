@@ -1,0 +1,15 @@
+﻿@using MessageParsing
+
+<h3>ImageMessageParser</h3>
+
+<div class="image-container">
+    @foreach (PrintableProperty property in Properties.OfType<PrintableProperty>())
+    {
+        <Property @key="property" PrintableProperty="property"/>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public IEnumerable<IProperty> Properties { get; set; }
+}

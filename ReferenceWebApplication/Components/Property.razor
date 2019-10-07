@@ -1,0 +1,22 @@
+﻿@using System.Drawing
+@using System.Text
+@using MessageParsing
+
+<span class="printable-property" style="@Style">
+    @PrintableProperty.Value.ToString()
+</span>
+
+@code
+{
+    [Parameter]
+    public PrintableProperty PrintableProperty { get; set; }
+    private string Style => PrintableProperty is null 
+        ? string.Empty 
+        : new StringBuilder()
+            .Append("position: absolute;")
+            .Append("left: ").Append(Decimal.Round(PrintableProperty.XPosition.Value)).Append("px;")
+            .Append("top: ").Append(Decimal.Round(PrintableProperty.YPosition.Value)).Append("px;")
+            .Append("background-color: ").Append(ColorTranslator.ToHtml(PrintableProperty.BackgroundColor.Value)).Append(";")
+            .Append("color: ").Append(ColorTranslator.ToHtml(PrintableProperty.FontColor.Value)).Append(";")
+            .ToString();
+}

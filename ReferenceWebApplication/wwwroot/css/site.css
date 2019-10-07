@@ -85,6 +85,12 @@ app {
     color: red;
 }
 
+.image-container {
+    position: relative;
+    text-align: center;
+    color: white;
+}
+
 @media (max-width: 992px) {
 
     .topbar {
