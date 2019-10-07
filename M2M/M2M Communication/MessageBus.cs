@@ -3,7 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Text;
 
-namespace M2M_Communication
+namespace M2MCommunication
 {
 
     public class MessageBus : IMessageBus

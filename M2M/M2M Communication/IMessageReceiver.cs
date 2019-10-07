@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace M2M_Communication
+namespace M2MCommunication
 {
     public interface IMessageReceiver : IDisposable
     {
         public IMessageBus MessageBus { get; set; }
         public IReadOnlyCollection<ISubscription> Subscriptions { get; }
-        public IMessageParser MessageParser { get; set; }
 
-        public void Subscribe(ISubscription subscription);
-        public void Unsubscribe(ISubscription subscription);
+        public void Subscribe(ISubscription subscription, NewMessageEventHandler newMessageEventHandler);
+        public void Unsubscribe(ISubscription subscription, NewMessageEventHandler newMessageEventHandler);
     }
 }

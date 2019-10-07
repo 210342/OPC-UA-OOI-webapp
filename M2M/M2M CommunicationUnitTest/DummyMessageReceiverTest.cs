@@ -1,9 +1,9 @@
-﻿using M2M_Communication;
+﻿using M2MCommunication;
 using System.Collections.Generic;
 using Xunit;
-using static M2M_CommunicationUnitTest.MessageTest;
+using static M2MCommunicationUnitTest.MessageTest;
 
-namespace M2M_CommunicationUnitTest
+namespace M2MCommunicationUnitTest
 {
     public class DummyMessageReceiverTest
     {
@@ -12,7 +12,7 @@ namespace M2M_CommunicationUnitTest
         [Fact]
         public void NoSubscriptionsOnCreationTest()
         {
-            using IMessageReceiver receiver = new DummyMessageReceiver(_bus, null);
+            using IMessageReceiver receiver = new DummyMessageReceiver(_bus);
             Assert.Empty(receiver.Subscriptions);
         }
 
@@ -20,7 +20,7 @@ namespace M2M_CommunicationUnitTest
         public void SubscribeInCtorTest()
         {
             IMessageReceiver receiver = 
-                new DummyMessageReceiver(_bus, null, new List<ISubscription>(new[] { new Subscription(TestMessageType.StaticTypeGuid) }));
+                new DummyMessageReceiver(_bus, new List<ISubscription>(new[] { new Subscription(TestMessageType.StaticTypeGuid) }), (_) => { });
             Assert.NotEmpty(receiver.Subscriptions);
             receiver.Dispose();
             Assert.Empty(receiver.Subscriptions);
@@ -30,9 +30,9 @@ namespace M2M_CommunicationUnitTest
         public void SubscribeTest()
         {
             IMessageReceiver receiver =
-                new DummyMessageReceiver(_bus, null);
+                new DummyMessageReceiver(_bus);
             Assert.Empty(receiver.Subscriptions);
-            receiver.Subscribe(new Subscription(TestMessageType.StaticTypeGuid));
+            receiver.Subscribe(new Subscription(TestMessageType.StaticTypeGuid), (_) => { });
             Assert.NotEmpty(receiver.Subscriptions);
             receiver.Dispose();
             Assert.Empty(receiver.Subscriptions);
@@ -41,12 +41,12 @@ namespace M2M_CommunicationUnitTest
         [Fact]
         public void UnsubscribeTest()
         {
-            using (IMessageReceiver receiver = new DummyMessageReceiver(_bus, null))
+            using (IMessageReceiver receiver = new DummyMessageReceiver(_bus))
             {
                 Assert.Empty(receiver.Subscriptions);
-                receiver.Subscribe(new Subscription(TestMessageType.StaticTypeGuid));
+                receiver.Subscribe(new Subscription(TestMessageType.StaticTypeGuid), (_) => { });
                 Assert.NotEmpty(receiver.Subscriptions);
-                receiver.Unsubscribe(new Subscription(TestMessageType.StaticTypeGuid));
+                receiver.Unsubscribe(new Subscription(TestMessageType.StaticTypeGuid), (_) => { });
                 Assert.Empty(receiver.Subscriptions);
             }
         }

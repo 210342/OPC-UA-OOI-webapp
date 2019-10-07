@@ -11,6 +11,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ReferenceWebApplication
 {
+    #pragma warning disable CA1052
     public class Program
     {
         public static void Main(string[] args)
@@ -25,4 +26,5 @@ namespace ReferenceWebApplication
                     webBuilder.UseStartup<Startup>();
                 });
     }
+    #pragma warning restore CA1052
 }

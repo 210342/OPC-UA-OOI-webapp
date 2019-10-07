@@ -9,18 +9,15 @@ namespace MessageParsing
     {
         public string Name { get; set; }
         public object Value { get; set; }
-        public decimal? XPosition { get; set; }
-        public decimal? YPosition { get; set; }
-        public Color? BackgroundColor { get; set; }
+        public decimal? XPosition => null;
+        public decimal? YPosition => null;
+        public Color? BackgroundColor => null;
         public Color? FontColor { get; set; }
 
-        public PrintableProperty(string name, object value, decimal xPosition, decimal yPosition, Color backgroundColor, Color fontColor)
+        public PrintableProperty(string name, object value, Color fontColor)
         {
             Name = name;
             Value = value;
-            XPosition = xPosition;
-            YPosition = yPosition;
-            BackgroundColor = backgroundColor;
             FontColor = fontColor;
         }
     }

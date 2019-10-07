@@ -1,8 +1,8 @@
-﻿using M2M_Communication;
+﻿using M2MCommunication;
 using System;
 using Xunit;
 
-namespace M2M_CommunicationUnitTest
+namespace M2MCommunicationUnitTest
 {
     public class MessageTest
     {

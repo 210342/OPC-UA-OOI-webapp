@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
-    <RootNamespace>M2M_CommunicationUnitTest</RootNamespace>
+    <RootNamespace>M2MCommunicationUnitTest</RootNamespace>
 
     <IsPackable>false</IsPackable>
   </PropertyGroup>
@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\M2M Communication\M2M Communication.csproj" />
+    <ProjectReference Include="..\M2M Communication\M2MCommunication.csproj" />
   </ItemGroup>
 
 </Project>
