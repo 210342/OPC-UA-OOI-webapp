@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace M2M_Communication
+namespace M2MCommunication
 {
     public class Message : IMessage
     {

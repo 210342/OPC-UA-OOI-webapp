@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReferenceWebApplication", "
 		{E5FBEAE7-9E36-4DB7-A6D0-C0919882671B} = {E5FBEAE7-9E36-4DB7-A6D0-C0919882671B}
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "M2M Communication", "M2M\M2M Communication\M2M Communication.csproj", "{7358ED00-7AF8-4C1E-A621-C67C34572BB7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "M2M Communication", "M2M\M2M Communication\M2MCommunication.csproj", "{7358ED00-7AF8-4C1E-A621-C67C34572BB7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "M2M", "M2M", "{6BC219BE-5C42-4BBB-9788-EFBA2C5C0D63}"
 EndProject
@@ -18,7 +18,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MessageParsing", "MessagePa
 		{7358ED00-7AF8-4C1E-A621-C67C34572BB7} = {7358ED00-7AF8-4C1E-A621-C67C34572BB7}
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "M2M CommunicationUnitTest", "M2M\M2M CommunicationUnitTest\M2M CommunicationUnitTest.csproj", "{400F1367-6349-4C4E-A33B-C43F888D4B55}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "M2M CommunicationUnitTest", "M2M\M2M CommunicationUnitTest\M2MCommunicationUnitTest.csproj", "{400F1367-6349-4C4E-A33B-C43F888D4B55}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

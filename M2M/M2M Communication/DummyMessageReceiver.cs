@@ -2,36 +2,39 @@
 using System.Linq;
 using System.Collections.Generic;
 
-namespace M2M_Communication
+namespace M2MCommunication
 {
     public class DummyMessageReceiver : IMessageReceiver
     {
-        private Guid? _lastReceivedMessageID;
-        private List<ISubscription> _subscriptions = new List<ISubscription>();
+        private readonly IDictionary<ISubscription, NewMessageEventHandler> _subscriptions 
+            = new Dictionary<ISubscription, NewMessageEventHandler>();
 
         public IMessageBus MessageBus { get; set; }
-        public IMessageParser MessageParser { get; set; }
-        public IReadOnlyCollection<ISubscription> Subscriptions => _subscriptions as IReadOnlyCollection<ISubscription>;
+        public IReadOnlyCollection<ISubscription> Subscriptions => _subscriptions.Keys as IReadOnlyCollection<ISubscription>;
 
-        public DummyMessageReceiver(IMessageBus bus, IMessageParser parser) 
-            : this (bus, parser, new List<ISubscription>()) { }
-
-        public DummyMessageReceiver(IMessageBus bus, IMessageParser parser, List<ISubscription> subscriptions)
+        public DummyMessageReceiver(IMessageBus bus) 
         {
-            MessageParser = parser;
             MessageBus = bus;
-            subscriptions.ForEach(s => Subscribe(s));
         }
 
-        public void Subscribe(ISubscription subscription)
+        public DummyMessageReceiver(
+            IMessageBus bus, 
+            List<ISubscription> subscriptions, 
+            NewMessageEventHandler newMessageEventHandler)
         {
-            MessageBus?.Subscribe(subscription, NewMessage);
-            _subscriptions.Add(subscription);
+            MessageBus = bus;
+            subscriptions.ForEach(s => Subscribe(s, newMessageEventHandler));
         }
 
-        public void Unsubscribe(ISubscription subscription)
+        public void Subscribe(ISubscription subscription, NewMessageEventHandler newMessageEventHandler)
         {
-            MessageBus?.Unsubscribe(subscription, NewMessage);
+            MessageBus?.Subscribe(subscription, newMessageEventHandler);
+            _subscriptions.Add(subscription, newMessageEventHandler);
+        }
+
+        public void Unsubscribe(ISubscription subscription, NewMessageEventHandler newMessageEventHandler)
+        {
+            MessageBus?.Unsubscribe(subscription, newMessageEventHandler);
             _subscriptions.Remove(subscription);
         }
 
@@ -40,20 +43,15 @@ namespace M2M_Communication
             UnsubscribeAll();
         }
 
-        private void NewMessage(IMessage message)
-        {
-            if (!message.Id.Equals(_lastReceivedMessageID))
-            {
-                _lastReceivedMessageID = message.Id;
-                MessageParser?.Parse(message);
-            }
-        }
-
         private void UnsubscribeAll()
         {
-            if (MessageBus != null)
+            if (MessageBus != null && _subscriptions != null)
             {
-                _subscriptions?.RemoveAll(sub => MessageBus.Unsubscribe(sub, NewMessage));
+                foreach (KeyValuePair<ISubscription, NewMessageEventHandler> pair in _subscriptions)
+                {
+                    MessageBus.Unsubscribe(pair.Key, pair.Value);
+                }
+                _subscriptions.Clear();
             }
         }
     }

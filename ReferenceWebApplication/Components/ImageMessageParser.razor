@@ -3,9 +3,9 @@
 <h3>ImageMessageParser</h3>
 
 <div class="image-container">
-    @foreach (PrintableProperty property in Properties.OfType<PrintableProperty>())
+    @foreach (DrawableProperty property in Properties.OfType<DrawableProperty>())
     {
-        <Property @key="property" PrintableProperty="property"/>
+        <Property @key="property" DrawableProperty="property"/>
     }
 </div>
 

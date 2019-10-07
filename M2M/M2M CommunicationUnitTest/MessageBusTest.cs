@@ -1,11 +1,11 @@
-﻿using M2M_Communication;
+﻿using M2MCommunication;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using Xunit;
 
-namespace M2M_CommunicationUnitTest
+namespace M2MCommunicationUnitTest
 {
     public class MessageBusTest
     {

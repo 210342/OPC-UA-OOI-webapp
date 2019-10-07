@@ -3,20 +3,20 @@
 @using MessageParsing
 
 <span class="printable-property" style="@Style">
-    @PrintableProperty.Value.ToString()
+    @DrawableProperty.Value.ToString()
 </span>
 
 @code
 {
     [Parameter]
-    public PrintableProperty PrintableProperty { get; set; }
-    private string Style => PrintableProperty is null 
-        ? string.Empty 
+    public DrawableProperty DrawableProperty { get; set; }
+    private string Style => DrawableProperty is null
+        ? string.Empty
         : new StringBuilder()
             .Append("position: absolute;")
-            .Append("left: ").Append(Decimal.Round(PrintableProperty.XPosition.Value)).Append("px;")
-            .Append("top: ").Append(Decimal.Round(PrintableProperty.YPosition.Value)).Append("px;")
-            .Append("background-color: ").Append(ColorTranslator.ToHtml(PrintableProperty.BackgroundColor.Value)).Append(";")
-            .Append("color: ").Append(ColorTranslator.ToHtml(PrintableProperty.FontColor.Value)).Append(";")
+            .Append("left: ").Append(Decimal.Round(DrawableProperty.XPosition.Value)).Append("px;")
+            .Append("top: ").Append(Decimal.Round(DrawableProperty.YPosition.Value)).Append("px;")
+            .Append("background-color: ").Append(ColorTranslator.ToHtml(DrawableProperty.BackgroundColor.Value)).Append(";")
+            .Append("color: ").Append(ColorTranslator.ToHtml(DrawableProperty.FontColor.Value)).Append(";")
             .ToString();
 }
