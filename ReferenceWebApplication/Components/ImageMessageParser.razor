@@ -3,7 +3,7 @@
 <h3>ImageMessageParser</h3>
 
 <div class="image-container">
-    @foreach (DrawableProperty property in Properties.OfType<DrawableProperty>())
+    @foreach (DrawableProperty property in Parser.DrawableProperties)
     {
         <Property @key="property" DrawableProperty="property"/>
     }
@@ -11,5 +11,5 @@
 
 @code {
     [Parameter]
-    public IEnumerable<IProperty> Properties { get; set; }
+    public IMessageParser Parser { get; set; }
 }

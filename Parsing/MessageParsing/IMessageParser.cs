@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace MessageParsing
 {
@@ -13,5 +14,6 @@ namespace MessageParsing
         public IEnumerable<PrintableProperty> PrintableProperties { get; }
 
         public void Parse(IMessage message);
+        public Task ParseAsync(IMessage message);
     }
 }
