@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using ReferenceWebApplication.Services;
 
 namespace ReferenceWebApplication
 {
@@ -26,6 +27,7 @@ namespace ReferenceWebApplication
             services.AddSingleton<IMessageBus, MessageBus>();
             services.AddTransient<IMessageParser, ImageMessageParser>();
             services.AddTransient<IMessageReceiver, DummyMessageReceiver>();
+            services.AddScoped<WindowService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,10 +1,10 @@
 ﻿@using MessageParsing
 
-<div class="image-container">
-    <img class="img-fluid rounded" src="Template.jpg" alt="Message background"/>
+<div class="">
+    <img class="rounded float-left position-relative overflow-auto" src="Template.jpg" alt="Message background" />
     @foreach (DrawableProperty property in Parser.DrawableProperties)
     {
-        <Property @key="property" DrawableProperty="property"/>
+        <Property @key="property" DrawableProperty="property" />
     }
 </div>
 

@@ -9,7 +9,7 @@ namespace MessageParsing
 {
     public abstract class MessageParser : IMessageParser
     {
-        protected ICollection<IProperty> Properties { get; } = new List<IProperty>();
+        protected internal ICollection<IProperty> Properties { get; } = new List<IProperty>();
         public IEnumerable<DrawableProperty> DrawableProperties => Properties?.OfType<DrawableProperty>();
         public IEnumerable<PrintableProperty> PrintableProperties => Properties?.OfType<PrintableProperty>();
 
