@@ -1,40 +1,61 @@
 @page "/detailed-message"
 @using M2MCommunication
 @using MessageParsing
-@using System.Text
 
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-9">
-            <div class="row my-3">
-                <div class="col-12">
-                    <ReferenceWebApplication.Components.ImageMessageParser Parser="Parser" />
-                </div>
+<div class="container-fluid" >
+    @if (!IsLayoutHorizontal)
+    {
+        <div class="row my-2">
+            <div class="col-4 text-center">
+                <h3><span class="badge badge-primary">Packages received: @PackagesReceived</span></h3>
             </div>
-            <div class="row my-3">
-                <div class="col-12">
-                    <ReferenceWebApplication.Components.TextMessageParser Parser="Parser" />
-                </div>
+            <div class="col-4 text-center">
+                <h3><span class="badge @bytesReceivedStyle">Bytes received: @BytesReceived</span></h3>
+            </div>
+            <div class="col-4 text-center">
+                <button class="btn btn-lg btn-danger" @onclick="GenerateMessage">
+                    Generate message
+                </button>
             </div>
         </div>
-        <div class="col-3">
-            <div class="row my-2">
-                <div class="col-12">
-                    <h3><span class="badge badge-primary">Packages received: @PackagesReceived</span></h3>
+    }
+    <div class="row my-3">
+        <div class="@imageColumnClass">
+            <ReferenceWebApplication.Components.ImageMessageParser Parser="Parser" />
+        </div>
+        @if (IsLayoutHorizontal)
+        {
+            <div class="col-3">
+                <div class="row my-2">
+                    <div class="col-12">
+                        <div class="text-center">
+                            <h3><span class="badge badge-primary">Packages received: @PackagesReceived</span></h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="row my-2">
+                    <div class="col-12">
+                        <div class="text-center">
+                            <h3><span class="badge @bytesReceivedStyle">Bytes received: @BytesReceived</span></h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="row my-6">
+                    <div class="col-12">
+                        <div class="text-center">
+                            <button class="btn btn-lg btn-danger" @onclick="GenerateMessage">
+                                Generate message
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="row my-2">
-                <div class="col-12">
-                    <h3><span class="badge @bytesReceivedStyle">Bytes received: @BytesReceived</span></h3>
-                </div>
-            </div>
-            <div class="row my-6">
-                <div class="col-12">
-                    <button class="btn btn-lg btn-danger" @onclick="GenerateMessage">
-                        Generate message
-                    </button>
-                </div>
-            </div>
+        }
+    </div>
+    <div class="row my-3">
+        <div class="col-12">
+            <h2 class="mt-6 mb-3">Other properties</h2>
+            <ReferenceWebApplication.Components.TextMessageParser Parser="Parser" />
         </div>
     </div>
 </div>
@@ -45,32 +66,26 @@
 @code 
 {
     private string bytesReceivedStyle => BytesReceived > 2048 ? "badge-warning" : "badge-info";
+    private string imageColumnClass => IsLayoutHorizontal ? "col-9" : "col-12";
+
     public int BytesReceived { get; private set; } = 0;
     public int PackagesReceived { get; private set; } = 0;
-    public string Message { get; private set; } = string.Empty;
+    public bool IsLayoutHorizontal { get; set; } = true;
 
     protected override void OnInitialized()
     {
         Receiver.MessageBus = Bus;
         Receiver.Subscribe(
             new Subscription(M2MCommunication.Message.StaticTypeGuid),
-            message => { Parser.Parse(message); UpdateMessage(Message, message); }
+            message => { Parser.Parse(message); UpdateMessage(null, message); }
         );
+        
     }
 
     public void UpdateMessage(object updatedObject, IMessage message)
     {
-        if (updatedObject is string content)
-        {
-            StringBuilder builder = new StringBuilder(message.TimeSent.ToShortTimeString()).AppendLine();
-            foreach (PrintableProperty property in Parser.PrintableProperties)
-            {
-                builder.AppendLine($"{property.Name}: {property.Value.ToString()}");
-            }
-            Message = builder.ToString();
-            ++PackagesReceived;
-            BytesReceived += message.Size;
-        }
+        ++PackagesReceived;
+        BytesReceived += message.Size;
     }
 
     public void GenerateMessage()

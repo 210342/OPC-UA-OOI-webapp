@@ -1,5 +1,6 @@
-﻿function isMobile() {
-    return (window.innerWidth
-        || document.documentElement.clientWidth
-        || document.body.clientWidth) < 750;
-}
+﻿getDimensions = function () {
+    return {
+        Width: window.innerWidth,
+        Height: window.innerHeight
+    };
+};
