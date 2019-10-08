@@ -27,8 +27,8 @@ namespace MessageParsing
                 throw new ArgumentNullException(nameof(message));
             }
             Properties.Clear();
-            Properties.Add(new DrawableProperty("first property", "first value", 0, 0, Color.White, Color.Black));
-            Properties.Add(new PrintableProperty("printable property", "printable value", Color.Black));
+            Properties.Add(new DrawableProperty("First property", "Drawable property value", 30, 0, Color.White, Color.Black));
+            Properties.Add(new PrintableProperty(nameof(message.TimeSent), message.TimeSent, Color.Black));
         }
 
         public override async Task ParseAsync(IMessage message)
