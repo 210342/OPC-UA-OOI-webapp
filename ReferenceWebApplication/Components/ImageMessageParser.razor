@@ -1,8 +1,7 @@
 ﻿@using MessageParsing
 
-<h3>ImageMessageParser</h3>
-
 <div class="image-container">
+    <img class="img-fluid rounded" src="Template.jpg" alt="Message background"/>
     @foreach (DrawableProperty property in Parser.DrawableProperties)
     {
         <Property @key="property" DrawableProperty="property"/>

@@ -3,33 +3,38 @@
 @using MessageParsing
 @using System.Text
 
-<h2>Status</h2>
-
 <div class="container-fluid">
     <div class="row">
         <div class="col-9">
-            <textarea id="MessageTextArea" rows="10" style="width: 100%;">@Message</textarea>
+            <div class="row my-3">
+                <div class="col-12">
+                    <ReferenceWebApplication.Components.ImageMessageParser Parser="Parser" />
+                </div>
+            </div>
+            <div class="row my-3">
+                <div class="col-12">
+                    <ReferenceWebApplication.Components.TextMessageParser Parser="Parser" />
+                </div>
+            </div>
         </div>
         <div class="col-3">
-            <div class="row">
+            <div class="row my-2">
                 <div class="col-12">
-                    <label>Packages received: </label>
-                    <label>@PackagesReceived</label>
+                    <h3><span class="badge badge-primary">Packages received: @PackagesReceived</span></h3>
                 </div>
             </div>
-            <div class="row">
+            <div class="row my-2">
                 <div class="col-12">
-                    <label>Bytes received: </label>
-                    <label>@BytesReceived</label>
+                    <h3><span class="badge @bytesReceivedStyle">Bytes received: @BytesReceived</span></h3>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-12">
-            <button class="btn btn-lg btn-danger" @onclick="GenerateMessage">
-                Generate message
-            </button>
+            <div class="row my-6">
+                <div class="col-12">
+                    <button class="btn btn-lg btn-danger" @onclick="GenerateMessage">
+                        Generate message
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -39,6 +44,7 @@
 @inject IMessageParser Parser
 @code 
 {
+    private string bytesReceivedStyle => BytesReceived > 2048 ? "badge-warning" : "badge-info";
     public int BytesReceived { get; private set; } = 0;
     public int PackagesReceived { get; private set; } = 0;
     public string Message { get; private set; } = string.Empty;

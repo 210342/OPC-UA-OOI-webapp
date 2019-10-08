@@ -22,7 +22,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "M2MCommunicationUnitTest", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Parsing", "Parsing", "{D1585A27-3466-4C0B-84A5-D008CAEB13F1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessageParsingUnitTest", "Parsing\MessageParsingUnitTest\MessageParsingUnitTest.csproj", "{AB6D12D1-36D6-4EA6-86C6-1080E677E6FC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MessageParsingUnitTest", "Parsing\MessageParsingUnitTest\MessageParsingUnitTest.csproj", "{AB6D12D1-36D6-4EA6-86C6-1080E677E6FC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
