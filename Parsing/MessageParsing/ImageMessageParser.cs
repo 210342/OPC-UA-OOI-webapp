@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace MessageParsing
 {
@@ -27,6 +28,16 @@ namespace MessageParsing
             }
             Properties.Clear();
             Properties.Add(new DrawableProperty("first property", "first value", 0, 0, Color.White, Color.Black));
+            Properties.Add(new PrintableProperty("printable property", "printable value", Color.Black));
+        }
+
+        public override async Task ParseAsync(IMessage message)
+        {
+            await Task.Run(() =>
+            {
+                Parse(message);
+            })
+            .ConfigureAwait(true);
         }
     }
 }

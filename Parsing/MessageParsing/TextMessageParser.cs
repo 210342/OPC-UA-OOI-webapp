@@ -3,6 +3,7 @@ using Microsoft.Extensions.Localization;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Threading.Tasks;
 
 namespace MessageParsing
 {
@@ -23,6 +24,15 @@ namespace MessageParsing
             }
             Properties.Clear();
             Properties.Add(new PrintableProperty("first property", "first value", Color.Black));
+        }
+
+        public override async Task ParseAsync(IMessage message)
+        {
+            await Task.Run(() =>
+            {
+                Parse(message);
+            })
+            .ConfigureAwait(true);
         }
     }
 }

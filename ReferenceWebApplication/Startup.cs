@@ -24,7 +24,7 @@ namespace ReferenceWebApplication
             services.AddServerSideBlazor();
             services.AddLocalization();
             services.AddSingleton<IMessageBus, MessageBus>();
-            services.AddTransient<IMessageParser, TextMessageParser>();
+            services.AddTransient<IMessageParser, ImageMessageParser>();
             services.AddTransient<IMessageReceiver, DummyMessageReceiver>();
         }
 
