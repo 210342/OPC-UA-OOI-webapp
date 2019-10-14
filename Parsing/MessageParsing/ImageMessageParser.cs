@@ -1,4 +1,5 @@
 ﻿using M2MCommunication;
+using MessageParsing.Model;
 using Microsoft.Extensions.Localization;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,8 @@ namespace MessageParsing
     {
         private readonly IStringLocalizer<ImageMessageParser> _localizer;
 
+        public ImageTemplate ImageTemplate { get; }
+
         public ImageMessageParser(IStringLocalizer<ImageMessageParser> localizer)
         {
             _localizer = localizer;
@@ -20,15 +23,23 @@ namespace MessageParsing
 
         public override void Parse(IMessage message)
         {
-            // deserialise content or something
-            // get properties from the message
             if (message is null)
             {
                 throw new ArgumentNullException(nameof(message));
             }
+            // get image template from db, something like
+            // ImageTemplate = DbContext.ImageTemplates.Where(it => message.TypeGuid.Equals(it.MessageTypeGuid));
+            // deserialise content or something
+            // get properties from the message
             Properties.Clear();
-            Properties.Add(new DrawableProperty("First property", "Drawable property value", 30, 0, Color.White, Color.Black));
-            Properties.Add(new PrintableProperty(nameof(message.TimeSent), message.TimeSent, Color.Black));
+            Properties.Add(new DrawableProperty(
+                "drawable value",
+                new PropertyTemplate("drawable", new Point(0, 0), Color.BlueViolet, Color.White))
+            );
+            Properties.Add(new PrintableProperty(
+                "first value",
+                new PropertyTemplate("first", null, Color.Black, null))
+            );
         }
 
         public override async Task ParseAsync(IMessage message)

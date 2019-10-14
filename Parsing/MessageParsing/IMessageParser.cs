@@ -1,4 +1,5 @@
 ﻿using M2MCommunication;
+using MessageParsing.Model;
 using System;
 using System.Collections.Generic;
 using System.Text;
