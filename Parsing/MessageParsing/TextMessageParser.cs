@@ -1,4 +1,5 @@
 ﻿using M2MCommunication;
+using MessageParsing.Model;
 using Microsoft.Extensions.Localization;
 using System;
 using System.Collections.Generic;
@@ -23,7 +24,10 @@ namespace MessageParsing
                 throw new ArgumentNullException(nameof(message));
             }
             Properties.Clear();
-            Properties.Add(new PrintableProperty("first property", "first value", Color.Black));
+            Properties.Add(new PrintableProperty(
+                "first value", 
+                new PropertyTemplate("first", null, Color.Black, null))
+            );
         }
 
         public override async Task ParseAsync(IMessage message)

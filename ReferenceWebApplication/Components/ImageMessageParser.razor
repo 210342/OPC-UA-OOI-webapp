@@ -1,7 +1,8 @@
 ﻿@using MessageParsing
+@using MessageParsing.Model
 
 <div class="">
-    <img class="rounded float-left position-relative overflow-auto" src="Template.jpg" alt="Message background" />
+    <img class="rounded float-left position-absolute overflow-auto" src="Template.jpg" alt="Message background" />
     @foreach (DrawableProperty property in Parser.DrawableProperties)
     {
         <Property @key="property" DrawableProperty="property" />
@@ -9,6 +10,8 @@
 </div>
 
 @code {
+    private MessageParsing.ImageMessageParser ImageParser => Parser as MessageParsing.ImageMessageParser;
+
     [Parameter]
     public IMessageParser Parser { get; set; }
 }

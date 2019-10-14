@@ -1,4 +1,5 @@
 ﻿@using MessageParsing
+@using MessageParsing.Model
 
 <div class="table-responsive">
     <table class="table table-striped table-sm">
@@ -12,7 +13,7 @@
             @foreach (PrintableProperty property in Parser.PrintableProperties)
             {
                 <tr>
-                    <th scope="row">@property.Name</th>
+                    <th scope="row">@property.Template.Name</th>
                     <td>@property.Value.ToString()</td>
                 </tr>
             }

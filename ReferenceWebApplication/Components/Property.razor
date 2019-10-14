@@ -1,6 +1,7 @@
 ﻿@using System.Drawing
 @using System.Text
 @using MessageParsing
+@using MessageParsing.Model
 
 <span class="printable-property" style="@Style">
     @DrawableProperty.Value.ToString()
@@ -14,9 +15,9 @@
         ? string.Empty
         : new StringBuilder()
             .Append("position: absolute;")
-            .Append("left: ").Append(Decimal.Round(DrawableProperty.XPosition.Value)).Append("px;")
-            .Append("top: ").Append(Decimal.Round(DrawableProperty.YPosition.Value)).Append("px;")
-            .Append("background-color: ").Append(ColorTranslator.ToHtml(DrawableProperty.BackgroundColor.Value)).Append(";")
-            .Append("color: ").Append(ColorTranslator.ToHtml(DrawableProperty.FontColor.Value)).Append(";")
+            .Append("left: ").Append(Decimal.Round(DrawableProperty.Template.Location.Value.X)).Append("px;")
+            .Append("top: ").Append(Decimal.Round(DrawableProperty.Template.Location.Value.Y)).Append("px;")
+            .Append("background-color: ").Append(ColorTranslator.ToHtml(DrawableProperty.Template.BackgroundColor.Value)).Append(";")
+            .Append("color: ").Append(ColorTranslator.ToHtml(DrawableProperty.Template.FontColor.Value)).Append(";")
             .ToString();
 }
