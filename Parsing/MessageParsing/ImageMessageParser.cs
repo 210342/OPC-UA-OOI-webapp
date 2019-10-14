@@ -14,7 +14,7 @@ namespace MessageParsing
     {
         private readonly IStringLocalizer<ImageMessageParser> _localizer;
 
-        public ImageTemplate ImageTemplate { get; }
+        public ImageTemplate ImageTemplate { get; private set; }
 
         public ImageMessageParser(IStringLocalizer<ImageMessageParser> localizer)
         {
@@ -32,13 +32,15 @@ namespace MessageParsing
             // deserialise content or something
             // get properties from the message
             Properties.Clear();
+            ImageTemplate = new ImageTemplate(message.TypeGuid, "Template.jpg", 1300, 480);
+
             Properties.Add(new DrawableProperty(
                 "drawable value",
                 new PropertyTemplate("drawable", new Point(0, 0), Color.BlueViolet, Color.White))
             );
             Properties.Add(new PrintableProperty(
-                "first value",
-                new PropertyTemplate("first", null, Color.Black, null))
+                "printable value",
+                new PropertyTemplate("printable", null, Color.Black, null))
             );
         }
 

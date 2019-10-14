@@ -1,16 +1,26 @@
 ﻿@using MessageParsing
 @using MessageParsing.Model
 
-<div class="">
-    <img class="rounded float-left position-absolute overflow-auto" src="Template.jpg" alt="Message background" />
-    @foreach (DrawableProperty property in Parser.DrawableProperties)
-    {
-        <Property @key="property" DrawableProperty="property" />
-    }
-</div>
+@if (ImageParser.ImageTemplate != null)
+{
+    <div class="overflow-auto" style="width: 100%; height auto;">
+        <img class="rounded float-left"
+                src="@ImageParser?.ImageTemplate?.RelativePath"
+                alt="Message background"
+                style="@ImageStyle" />
+        @foreach (DrawableProperty property in Parser.DrawableProperties)
+        {
+            <Property @key="property" DrawableProperty="property" />
+        }
+    </div>
+}
 
-@code {
+@code
+{
     private MessageParsing.ImageMessageParser ImageParser => Parser as MessageParsing.ImageMessageParser;
+    private int? Width => ImageParser?.ImageTemplate?.Width;
+    private int? Height => ImageParser?.ImageTemplate?.Height;
+    private string ImageStyle => ImageParser.ImageTemplate is null ? "" : $"width: {Width}px; height: {Height}px;";
 
     [Parameter]
     public IMessageParser Parser { get; set; }
