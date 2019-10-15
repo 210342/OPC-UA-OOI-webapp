@@ -3,15 +3,17 @@
 
 @if (ImageParser.ImageTemplate != null)
 {
-    <div class="overflow-auto" style="width: 100%; height auto;">
-        <img class="rounded float-left"
-                src="@ImageParser?.ImageTemplate?.RelativePath"
-                alt="Message background"
-                style="@ImageStyle" />
-        @foreach (DrawableProperty property in Parser.DrawableProperties)
-        {
-            <Property @key="property" DrawableProperty="property" />
-        }
+    <div class="d-flex justify-content-center">
+        <div class="overflow-auto" style="position: relative;">
+            <img class="rounded float-left"
+                    src="@ImageParser?.ImageTemplate?.RelativePath"
+                    alt="Message background"
+                    style="@ImageStyle" />
+            @foreach (DrawableProperty property in Parser.DrawableProperties)
+            {
+                <Property @key="property" DrawableProperty="property" />
+            }
+        </div>
     </div>
 }
 
