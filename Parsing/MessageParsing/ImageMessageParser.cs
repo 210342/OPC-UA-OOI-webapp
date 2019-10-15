@@ -36,7 +36,7 @@ namespace MessageParsing
 
             Properties.Add(new DrawableProperty(
                 "drawable value",
-                new PropertyTemplate("drawable", new Point(0, 0), Color.BlueViolet, Color.White))
+                new PropertyTemplate("drawable", new Point(0, 0), Color.BlueViolet, Color.Transparent))
             );
             Properties.Add(new PrintableProperty(
                 "printable value",
