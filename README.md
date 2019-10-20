@@ -11,3 +11,19 @@ Application depends on open-source NuGet packages developed by [Mariusz Postół
 - Designing application architecture based on dependency injection
 - Handling and displaying asynchronous data from IoT machines
 - Designing graphical interface which changes based on the type of the data received
+
+
+### Build steps:
+
+- Download and install [ASP.Net Core 3.0.0](https://github.com/aspnet/AspNetCore/releases/tag/v3.0.0)
+- Clone or download this repository
+- Either:
+  - Use **dotnet CLI**:
+    - Navigate to `ReferenceWebApplication` project's directory (*project*, not *solution*)
+    - Open command line and run `dotnet run` 
+    - Open a browser and navigate to `https://localhost:5001` (unless this port was already taken)
+  - Use **Visual Studio 2019** (ASP.Net Core 3.0.0 won't work on earlier versions, [reference](https://github.com/dotnet/core/blob/master/release-notes/3.0/3.0.0/3.0.0.md)):
+    - Make sure you have installed necessary Visual Studio tools for developing ASP.Net Applications (You can use **Visual Studio Installer** to easily install those tools)
+    - Open the `ReferenceWebApplication` solution
+    - Choose IIS Express in the dropdown menu in the build toolbar
+    - Build and run - this should open a browser with the right URL
