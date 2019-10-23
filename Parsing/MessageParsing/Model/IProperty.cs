@@ -7,7 +7,7 @@ namespace MessageParsing.Model
 {
     public interface IProperty
     {
-        object Value { get; }
+        object Value { get; set; }
         IPropertyTemplate Template { get; }
     }
 }

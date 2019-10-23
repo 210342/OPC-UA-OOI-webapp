@@ -7,18 +7,22 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UAOOI.Configuration.Networking.Serialization;
+using UAOOI.Networking.SemanticData;
 
 namespace MessageParsing
 {
     public class ImageMessageParser : MessageParser
     {
         private readonly IStringLocalizer<ImageMessageParser> _localizer;
+        private readonly IBindingFactory _bindingFactory;
 
         public ImageTemplate ImageTemplate { get; private set; }
 
-        public ImageMessageParser(IStringLocalizer<ImageMessageParser> localizer)
+        public ImageMessageParser(IStringLocalizer<ImageMessageParser> localizer, IBindingFactory bindingFactory)
         {
             _localizer = localizer;
+            _bindingFactory = bindingFactory;
         }
 
         public override void Parse(IMessage message)
@@ -42,6 +46,11 @@ namespace MessageParsing
                 "printable value",
                 new PropertyTemplate("printable", null, Color.Black, null))
             );
+            foreach (IProperty property in Properties)
+            {
+                (_bindingFactory as ConsumerBindingFactory)?.BoundProperties.Add(property.Template.Name, property);
+                _bindingFactory.GetConsumerBinding(string.Empty, property.Template.Name, new UATypeInfo(BuiltInType.String));
+            }
         }
 
         public override async Task ParseAsync(IMessage message)

@@ -11,14 +11,14 @@ namespace MessageParsingUnitTest
         [Fact]
         public void ParseNullArgumentTest()
         {
-            IMessageParser parser = new ImageMessageParser(null);
+            IMessageParser parser = new ImageMessageParser(null, null);
             Assert.Throws<ArgumentNullException>(() => parser.Parse(null));
         }
 
         [Fact]
         public void ParseAsyncNullArgumentTest()
         {
-            IMessageParser parser = new ImageMessageParser(null);
+            IMessageParser parser = new ImageMessageParser(null, null);
             Assert.ThrowsAsync<ArgumentNullException>(async () => await parser.ParseAsync(null));
         }
     }

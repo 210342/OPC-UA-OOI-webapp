@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ReferenceWebApplication.Services;
+using UAOOI.Networking.SemanticData;
 
 namespace ReferenceWebApplication
 {
@@ -26,6 +27,7 @@ namespace ReferenceWebApplication
             services.AddLocalization();
             services.AddSingleton<IMessageBus, MessageBus>();
             services.AddTransient<IMessageParser, ImageMessageParser>();
+            services.AddTransient<IBindingFactory, ConsumerBindingFactory>();
             services.AddTransient<IMessageReceiver, DummyMessageReceiver>();
             services.AddScoped<WindowService>();
         }

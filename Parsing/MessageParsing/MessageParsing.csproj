@@ -10,6 +10,8 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Localization.Abstractions" Version="3.0.0" />
+    <PackageReference Include="UAOOI.Networking.Encoding" Version="4.0.1" />
+    <PackageReference Include="UAOOI.Networking.SemanticData" Version="4.0.1" />
   </ItemGroup>
 
   <ItemGroup>
