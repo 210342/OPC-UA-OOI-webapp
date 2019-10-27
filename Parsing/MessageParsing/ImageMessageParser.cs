@@ -39,16 +39,16 @@ namespace MessageParsing
             ImageTemplate = new ImageTemplate(message.TypeGuid, "Template.jpg", 1300, 480);
 
             Properties.Add(new DrawableProperty(
-                "drawable value",
+                message.Id.ToString(),
                 new PropertyTemplate("drawable", new Point(0, 0), Color.BlueViolet, Color.Transparent))
             );
             Properties.Add(new PrintableProperty(
-                "printable value",
+                message.TypeGuid.ToString(),
                 new PropertyTemplate("printable", null, Color.Black, null))
             );
             foreach (IProperty property in Properties)
             {
-                (_bindingFactory as ConsumerBindingFactory)?.BoundProperties.Add(property.Template.Name, property);
+                (_bindingFactory as ConsumerBindingFactory)?.BoundProperties.TryAdd(property.Template.Name, property);
                 _bindingFactory.GetConsumerBinding(string.Empty, property.Template.Name, new UATypeInfo(BuiltInType.String));
             }
         }

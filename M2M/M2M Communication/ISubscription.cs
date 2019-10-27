@@ -6,7 +6,7 @@ namespace M2MCommunication
 {
     public interface ISubscription
     {
-        public Guid TypeId { get; }
-        public string TypeName { get; }
+        Guid TypeId { get; }
+        string TypeName { get; }
     }
 }

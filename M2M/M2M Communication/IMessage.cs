@@ -6,12 +6,11 @@ namespace M2MCommunication
 {
     public interface IMessage
     {
-        public static Guid StaticTypeGuid { get; }
-        public Guid Id { get; }
-        public Guid TypeGuid { get => StaticTypeGuid; }
-        public string TypeAsString { get; }
-        public string Content { get; }
-        public DateTime TimeSent { get; }
-        public int Size { get; }
+        Guid Id { get; }
+        Guid TypeGuid { get; }
+        string TypeAsString { get; }
+        string Content { get; }
+        DateTime TimeSent { get; }
+        int Size { get; }
     }
 }

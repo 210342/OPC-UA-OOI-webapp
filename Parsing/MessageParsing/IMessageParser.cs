@@ -11,10 +11,10 @@ namespace MessageParsing
 
     public interface IMessageParser
     {
-        public IEnumerable<DrawableProperty> DrawableProperties { get; }
-        public IEnumerable<PrintableProperty> PrintableProperties { get; }
+        IEnumerable<DrawableProperty> DrawableProperties { get; }
+        IEnumerable<PrintableProperty> PrintableProperties { get; }
 
-        public void Parse(IMessage message);
-        public Task ParseAsync(IMessage message);
+        void Parse(IMessage message);
+        Task ParseAsync(IMessage message);
     }
 }

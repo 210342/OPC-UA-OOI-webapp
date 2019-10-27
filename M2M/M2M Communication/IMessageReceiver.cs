@@ -5,10 +5,10 @@ namespace M2MCommunication
 {
     public interface IMessageReceiver : IDisposable
     {
-        public IMessageBus MessageBus { get; set; }
-        public IReadOnlyCollection<ISubscription> Subscriptions { get; }
+        IMessageBus MessageBus { get; set; }
+        IReadOnlyCollection<ISubscription> Subscriptions { get; }
 
-        public void Subscribe(ISubscription subscription, NewMessageEventHandler newMessageEventHandler);
-        public void Unsubscribe(ISubscription subscription, NewMessageEventHandler newMessageEventHandler);
+        void Subscribe(ISubscription subscription, NewMessageEventHandler newMessageEventHandler);
+        void Unsubscribe(ISubscription subscription, NewMessageEventHandler newMessageEventHandler);
     }
 }

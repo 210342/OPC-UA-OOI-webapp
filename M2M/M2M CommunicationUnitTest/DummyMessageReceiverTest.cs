@@ -12,8 +12,10 @@ namespace M2MCommunicationUnitTest
         [Fact]
         public void NoSubscriptionsOnCreationTest()
         {
-            using IMessageReceiver receiver = new DummyMessageReceiver(_bus);
-            Assert.Empty(receiver.Subscriptions);
+            using (IMessageReceiver receiver = new DummyMessageReceiver(_bus))
+            {
+                Assert.Empty(receiver.Subscriptions);
+            }
         }
 
         [Fact]

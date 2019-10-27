@@ -1,8 +1,19 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
     <RootNamespace>M2MCommunication</RootNamespace>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="UAOOI.Common.Infrastructure" Version="4.0.1" />
+    <PackageReference Include="UAOOI.Configuration.Core" Version="4.0.1" />
+    <PackageReference Include="UAOOI.Configuration.DataBindings" Version="4.0.1" />
+    <PackageReference Include="UAOOI.Configuration.Networking" Version="4.0.1" />
+    <PackageReference Include="UAOOI.Networking.Core" Version="4.0.1" />
+    <PackageReference Include="UAOOI.Networking.Encoding" Version="4.0.1" />
+    <PackageReference Include="UAOOI.Networking.SemanticData" Version="4.0.1" />
+    <PackageReference Include="UAOOI.Networking.UDPMessageHandler" Version="4.0.1" />
+  </ItemGroup>
 
 </Project>
