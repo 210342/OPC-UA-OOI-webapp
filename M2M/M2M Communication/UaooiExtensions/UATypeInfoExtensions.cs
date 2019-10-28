@@ -1,7 +1,7 @@
 ﻿using System;
 using UAOOI.Configuration.Networking.Serialization;
 
-namespace MessageParsing.UaooiExtensions
+namespace M2MCommunication.UaooiExtensions
 {
     public static class UATypeInfoExtensions
     {

@@ -1,20 +1,26 @@
-﻿using MessageParsing.Model;
-using MessageParsing.UaooiExtensions;
+﻿using M2MCommunication.Core;
+using M2MCommunication.UaooiExtensions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.Composition;
 using System.Globalization;
 using System.Reflection;
-using System.Text;
 using UAOOI.Configuration.Networking.Serialization;
 using UAOOI.Networking.SemanticData;
 using UAOOI.Networking.SemanticData.DataRepository;
 
-namespace MessageParsing
+namespace M2MCommunication.UaaoiInjections
 {
-    public class ConsumerBindingFactory : IBindingFactory
+    [Export(typeof(ISubscriptionFactory))]
+    public class ConsumerBindingFactory : IBindingFactory, ISubscriptionFactory
     {
-        public IDictionary<string, IProperty> BoundProperties { get; } = new Dictionary<string, IProperty>();
+        public IDictionary<string, ISubscription> Subscriptions { get; } = new Dictionary<string, ISubscription>();
+
+        public ISubscription GetSubscription()
+        {
+            throw new NotImplementedException();
+        }
 
         public IConsumerBinding GetConsumerBinding(string repositoryGroup, string processValueName, UATypeInfo fieldTypeInfo)
         {
@@ -25,6 +31,13 @@ namespace MessageParsing
             return GetConsumerBinding(fieldTypeInfo);
         }
 
+        /// <summary>
+        /// Unsupported for consumers
+        /// </summary>
+        /// <param name="repositoryGroup"></param>
+        /// <param name="processValueName"></param>
+        /// <param name="fieldTypeInfo"></param>
+        /// <returns></returns>
         public IProducerBinding GetProducerBinding(string repositoryGroup, string processValueName, UATypeInfo fieldTypeInfo)
         {
             throw new NotSupportedException();
@@ -38,7 +51,7 @@ namespace MessageParsing
             }
             Type consumerBindingType = typeof(ConsumerBindingMonitoredValue<>).MakeGenericType(typeInfo.GetUAType());
             IConsumerBinding binding = Activator.CreateInstance(consumerBindingType, new object[] { typeInfo }) as IConsumerBinding;
-            MethodInfo handler = this.GetType().GetMethod("BoundPropertyChanged", BindingFlags.Instance | BindingFlags.NonPublic);
+            MethodInfo handler = GetType().GetMethod("BoundPropertyChanged", BindingFlags.Instance | BindingFlags.NonPublic);
             consumerBindingType
                 .GetEvent("PropertyChanged")
                 .AddEventHandler(binding, Delegate.CreateDelegate(typeof(PropertyChangedEventHandler), this, handler));
@@ -47,9 +60,9 @@ namespace MessageParsing
 
         private void BoundPropertyChanged(object sender, PropertyChangedEventArgs args)
         {
-            if (BoundProperties.TryGetValue(args.PropertyName, out IProperty boundProperty))
+            if (Subscriptions.TryGetValue(args.PropertyName, out ISubscription subscription))
             {
-                boundProperty.Value = sender;
+                subscription.Value = sender;
             }
         }
     }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using M2MCommunication.Core;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
@@ -7,12 +8,12 @@ namespace MessageParsing.Model
 {
     public abstract class BaseProperty : IProperty
     {
-        public object Value { get; set; }
+        public ISubscription Subscription { get; }
         public IPropertyTemplate Template { get; } 
 
-        internal BaseProperty(object value, IPropertyTemplate template)
+        internal BaseProperty(ISubscription subsctiption, IPropertyTemplate template)
         {
-            Value = value;
+            Subscription = subsctiption;
             Template = template;
         }
     }

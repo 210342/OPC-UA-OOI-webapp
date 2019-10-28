@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\M2M\M2M Communication\M2MCommunication.csproj" />
+    <ProjectReference Include="..\..\M2MCommunication.Core\M2MCommunication.Core.csproj" />
   </ItemGroup>
 
 </Project>

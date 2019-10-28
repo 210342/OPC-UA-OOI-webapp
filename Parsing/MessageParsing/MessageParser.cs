@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using M2MCommunication;
 using MessageParsing.Model;
+using M2MCommunication.Core;
 
 namespace MessageParsing
 {
@@ -14,7 +15,7 @@ namespace MessageParsing
         public IEnumerable<DrawableProperty> DrawableProperties => Properties?.OfType<DrawableProperty>();
         public IEnumerable<PrintableProperty> PrintableProperties => Properties?.OfType<PrintableProperty>();
 
-        public abstract void Parse(IMessage message);
-        public abstract Task ParseAsync(IMessage message);
+        public abstract void Parse();
+        public abstract Task ParseAsync();
     }
 }

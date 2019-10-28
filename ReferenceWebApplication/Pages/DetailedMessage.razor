@@ -1,21 +1,16 @@
 @page "/detailed-message"
-@using M2MCommunication
+@using M2MCommunication.Core
 @using MessageParsing
 
-<div class="container-fluid" >
+<div class="container-fluid">
     @if (!IsLayoutHorizontal)
     {
         <div class="row my-1">
-            <div class="col-4 text-center py-2">
+            <div class="col-6 text-center py-2">
                 <h3><span class="badge badge-primary">Packages received: @PackagesReceived</span></h3>
             </div>
-            <div class="col-4 text-center py-2">
+            <div class="col-6 text-center py-2">
                 <h3><span class="badge @bytesReceivedStyle">Bytes received: @BytesReceived</span></h3>
-            </div>
-            <div class="col-4 text-center py-2">
-                <button class="btn btn-danger" @onclick="GenerateMessage">
-                    Generate message
-                </button>
             </div>
         </div>
     }
@@ -40,15 +35,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="row my-6">
-                    <div class="col-12">
-                        <div class="text-center">
-                            <button class="btn btn-lg btn-danger" @onclick="GenerateMessage">
-                                Generate message
-                            </button>
-                        </div>
-                    </div>
-                </div>
             </div>
         }
     </div>
@@ -61,9 +47,8 @@
 </div>
 
 @inject IMessageBus Bus
-@inject IMessageReceiver Receiver
 @inject IMessageParser Parser
-@code 
+@code
 {
     private string bytesReceivedStyle => BytesReceived > 2048 ? "badge-warning" : "badge-info";
     private string imageColumnClass => IsLayoutHorizontal ? "col-9" : "col-12";
@@ -74,21 +59,11 @@
 
     protected override void OnInitialized()
     {
-        Receiver.MessageBus = Bus;
-        Receiver.Subscribe(
-            new Subscription(M2MCommunication.Message.StaticTypeGuid),
-            message => { Parser.Parse(message); UpdateMessage(null, message); }
-        );
+
     }
 
-    public void UpdateMessage(object updatedObject, IMessage message)
+    public void UpdateMessage(object updatedObject)
     {
         ++PackagesReceived;
-        BytesReceived += message.Size;
-    }
-
-    public void GenerateMessage()
-    {
-        Bus.SendMessage(new Message());
     }
 }

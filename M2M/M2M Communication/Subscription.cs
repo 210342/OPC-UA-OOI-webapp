@@ -1,31 +1,31 @@
 ﻿using System;
+using M2MCommunication.Core;
+using UAOOI.Configuration.Networking.Serialization;
 
 namespace M2MCommunication
 {
     public class Subscription : ISubscription
     {
-        public Guid TypeId { get; }
-        public string TypeName { get; }
+        private object _value;
 
-        public Subscription(Guid typeGuid)
-        {
-            TypeId = typeGuid;
+        public UATypeInfo TypeInfo { get; }
+        public object Value 
+        { 
+            get => _value;
+            set
+            {
+                _value = value;
+                ValueUpdated?.Invoke(this, EventArgs.Empty);
+            }
         }
 
-        public Subscription(Guid typeGuid, string typeName)
-        {
-            TypeId = typeGuid;
-            TypeName = typeName;
-        }
+        public event EventHandler ValueUpdated;
 
-        public override bool Equals(object obj)
+        public Subscription(UATypeInfo typeInfo, object value, EventHandler handler)
         {
-            return TypeId.Equals((obj as Subscription)?.TypeId);
-        }
-
-        public override int GetHashCode()
-        {
-            return TypeId.GetHashCode();
+            TypeInfo = typeInfo;
+            Value = value;
+            ValueUpdated += handler;
         }
     }
 }

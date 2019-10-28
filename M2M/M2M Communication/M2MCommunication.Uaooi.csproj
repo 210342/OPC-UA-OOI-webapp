@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
-    <RootNamespace>M2MCommunication</RootNamespace>
+    <RootNamespace>M2MCommunication.Uaooi</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,6 +14,10 @@
     <PackageReference Include="UAOOI.Networking.Encoding" Version="4.0.1" />
     <PackageReference Include="UAOOI.Networking.SemanticData" Version="4.0.1" />
     <PackageReference Include="UAOOI.Networking.UDPMessageHandler" Version="4.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\M2MCommunication.Core\M2MCommunication.Core.csproj" />
   </ItemGroup>
 
 </Project>

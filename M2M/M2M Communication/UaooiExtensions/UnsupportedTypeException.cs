@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MessageParsing.UaooiExtensions
+namespace M2MCommunication.UaooiExtensions
 {
     public class UnsupportedTypeException : Exception
     {

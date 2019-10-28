@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Threading.Tasks;
+using M2MCommunication.Core;
 
 namespace MessageParsing
 {
@@ -17,24 +18,16 @@ namespace MessageParsing
             _localizer = localizer;
         }
 
-        public override void Parse(IMessage message)
+        public override void Parse()
         {
-            if (message is null)
-            {
-                throw new ArgumentNullException(nameof(message));
-            }
             Properties.Clear();
-            Properties.Add(new PrintableProperty(
-                "first value", 
-                new PropertyTemplate("first", null, Color.Black, null))
-            );
         }
 
-        public override async Task ParseAsync(IMessage message)
+        public override async Task ParseAsync()
         {
             await Task.Run(() =>
             {
-                Parse(message);
+                Parse();
             })
             .ConfigureAwait(true);
         }

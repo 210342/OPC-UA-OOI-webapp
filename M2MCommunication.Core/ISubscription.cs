@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace M2MCommunication
+namespace M2MCommunication.Core
 {
     public interface ISubscription
     {
-        Guid TypeId { get; }
-        string TypeName { get; }
+        object Value { get; set; }
+        event EventHandler ValueUpdated;
     }
 }

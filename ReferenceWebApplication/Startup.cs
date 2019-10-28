@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using M2MCommunication;
+using M2MCommunication.Services;
 using MessageParsing;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -25,10 +26,9 @@ namespace ReferenceWebApplication
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddLocalization();
-            services.AddSingleton<IMessageBus, MessageBus>();
             services.AddTransient<IMessageParser, ImageMessageParser>();
-            services.AddTransient<IBindingFactory, ConsumerBindingFactory>();
-            services.AddTransient<IMessageReceiver, DummyMessageReceiver>();
+            services.AddTransient<SubscriptionFactoryService>();
+            services.AddSingleton<MessageBusService>();
             services.AddScoped<WindowService>();
         }
 
