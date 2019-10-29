@@ -7,20 +7,18 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using UAOOI.Configuration.Networking.Serialization;
-using UAOOI.Networking.SemanticData;
-using M2MCommunication.Core;
+using M2MCommunication.Services;
 
 namespace MessageParsing
 {
     public class ImageMessageParser : MessageParser
     {
         private readonly IStringLocalizer<ImageMessageParser> _localizer;
-        private readonly ISubscriptionFactory _bindingFactory;
+        private readonly SubscriptionFactoryService _bindingFactory;
 
         public ImageTemplate ImageTemplate { get; private set; }
 
-        public ImageMessageParser(IStringLocalizer<ImageMessageParser> localizer, ISubscriptionFactory bindingFactory)
+        public ImageMessageParser(IStringLocalizer<ImageMessageParser> localizer, SubscriptionFactoryService bindingFactory)
         {
             _localizer = localizer;
             _bindingFactory = bindingFactory;
@@ -37,7 +35,7 @@ namespace MessageParsing
 
             foreach (IProperty property in Properties)
             {
-                _bindingFactory.GetSubscription();
+                _bindingFactory.SubscriptionFactory.GetSubscription();
             }
         }
 

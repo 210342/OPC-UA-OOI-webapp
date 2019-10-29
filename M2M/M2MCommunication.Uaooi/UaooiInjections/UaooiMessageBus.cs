@@ -24,7 +24,7 @@ namespace M2MCommunication.UaaoiInjections
         /// Starts this instance - Initializes the data set infrastructure, enable all associations and starts pumping the data;
         /// </summary>
         /// <exception cref="ArgumentNullException"></exception>
-        public void Initialize()
+        public void Initialise()
         {
             Start();
         }

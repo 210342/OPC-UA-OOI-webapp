@@ -12,6 +12,7 @@
     <PackageProjectUrl>https://github.com/210342/OPC-UA-OOI-webapp</PackageProjectUrl>
     <RepositoryUrl>https://github.com/210342/OPC-UA-OOI-webapp</RepositoryUrl>
     <RepositoryType>Git</RepositoryType>
+    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -19,7 +20,18 @@
     <Optimize>true</Optimize>
     <DocumentationFile></DocumentationFile>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="M2MCommunication.Uaooi.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="M2MCommunication.Uaooi.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.6">
@@ -44,9 +56,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\M2MCommunication.Core\M2MCommunication.Core.csproj" />
-    <ProjectReference Include="..\M2MCommunication.Services\M2MCommunication.Services.csproj" />
-    <ProjectReference Include="..\Parsing\MessageParsing\MessageParsing.csproj" />
+    <ProjectReference Include="..\M2M\M2MCommunication.Core\M2MCommunication.Core.csproj" />
+    <ProjectReference Include="..\M2M\M2MCommunication.Services\M2MCommunication.Services.csproj" />
+    <ProjectReference Include="..\MessageParsing\MessageParsing\MessageParsing.csproj" />
   </ItemGroup>
 
 </Project>

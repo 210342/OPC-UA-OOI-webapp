@@ -10,12 +10,11 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Localization.Abstractions" Version="3.0.0" />
-    <PackageReference Include="UAOOI.Networking.Encoding" Version="4.0.1" />
-    <PackageReference Include="UAOOI.Networking.SemanticData" Version="4.0.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\M2MCommunication.Core\M2MCommunication.Core.csproj" />
+    <ProjectReference Include="..\..\M2M\M2MCommunication.Core\M2MCommunication.Core.csproj" />
+    <ProjectReference Include="..\..\M2M\M2MCommunication.Services\M2MCommunication.Services.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,5 +1,6 @@
 @page "/detailed-message"
 @using M2MCommunication.Core
+@using M2MCommunication.Services
 @using MessageParsing
 
 <div class="container-fluid">
@@ -46,10 +47,11 @@
     </div>
 </div>
 
-@inject IMessageBus Bus
+@inject MessageBusService BusService
 @inject IMessageParser Parser
 @code
 {
+    private IMessageBus Bus => BusService.MessageBus;
     private string bytesReceivedStyle => BytesReceived > 2048 ? "badge-warning" : "badge-info";
     private string imageColumnClass => IsLayoutHorizontal ? "col-9" : "col-12";
 

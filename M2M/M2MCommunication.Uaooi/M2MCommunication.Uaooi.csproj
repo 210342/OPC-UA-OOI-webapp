@@ -3,6 +3,16 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <RootNamespace>M2MCommunication.Uaooi</RootNamespace>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Any'">
+    <OutputPath>$(SolutionDir)\ReferenceWebApplication\bin\Release\netcoreapp3.0\</OutputPath>
+  </PropertyGroup>
+  
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Any'">
+    <OutputPath>$(SolutionDir)\ReferenceWebApplication\bin\Debug\netcoreapp3.0\</OutputPath>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,7 +27,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\M2MCommunication.Core\M2MCommunication.Core.csproj" />
+    <ProjectReference Include="..\M2MCommunication.Core\M2MCommunication.Core.csproj"  />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ModuleFiles
+      Include="$(TargetDir)*.dll"
+      Exclude="$(TargetDir)System*.dll;$(TargetDir)Microsoft*.dll"
+      DestinationPath="$(SolutionDir)\ReferenceWebApplication\bin\debug\netcoreapp3.0\%(Filename)%(Extension)">
+    </ModuleFiles>
   </ItemGroup>
 
 </Project>

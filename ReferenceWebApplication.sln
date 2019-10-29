@@ -9,24 +9,22 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReferenceWebApplication", "
 		{E5FBEAE7-9E36-4DB7-A6D0-C0919882671B} = {E5FBEAE7-9E36-4DB7-A6D0-C0919882671B}
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "M2MCommunication.Uaooi", "M2M\M2M Communication\M2MCommunication.Uaooi.csproj", "{7358ED00-7AF8-4C1E-A621-C67C34572BB7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "M2MCommunication.Uaooi", "M2M\M2MCommunication.Uaooi\M2MCommunication.Uaooi.csproj", "{7358ED00-7AF8-4C1E-A621-C67C34572BB7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "M2M", "M2M", "{6BC219BE-5C42-4BBB-9788-EFBA2C5C0D63}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MessageParsing", "Parsing\MessageParsing\MessageParsing.csproj", "{E5FBEAE7-9E36-4DB7-A6D0-C0919882671B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MessageParsing", "MessageParsing\MessageParsing\MessageParsing.csproj", "{E5FBEAE7-9E36-4DB7-A6D0-C0919882671B}"
 	ProjectSection(ProjectDependencies) = postProject
 		{7358ED00-7AF8-4C1E-A621-C67C34572BB7} = {7358ED00-7AF8-4C1E-A621-C67C34572BB7}
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "M2MCommunicationUnitTest", "M2M\M2M CommunicationUnitTest\M2MCommunicationUnitTest.csproj", "{400F1367-6349-4C4E-A33B-C43F888D4B55}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "M2MCommunication.UnitTest", "M2M\M2MCommunication.UnitTest\M2MCommunication.UnitTest.csproj", "{400F1367-6349-4C4E-A33B-C43F888D4B55}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Parsing", "Parsing", "{D1585A27-3466-4C0B-84A5-D008CAEB13F1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MessageParsingUnitTest", "MessageParsing\MessageParsingUnitTest\MessageParsingUnitTest.csproj", "{AB6D12D1-36D6-4EA6-86C6-1080E677E6FC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MessageParsingUnitTest", "Parsing\MessageParsingUnitTest\MessageParsingUnitTest.csproj", "{AB6D12D1-36D6-4EA6-86C6-1080E677E6FC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "M2MCommunication.Core", "M2M\M2MCommunication.Core\M2MCommunication.Core.csproj", "{FDC21CF4-4C4D-4664-BC54-E654A46E12B1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "M2MCommunication.Core", "M2MCommunication.Core\M2MCommunication.Core.csproj", "{FDC21CF4-4C4D-4664-BC54-E654A46E12B1}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "M2MCommunication.Services", "M2MCommunication.Services\M2MCommunication.Services.csproj", "{D246D52E-AB5A-4611-82F6-B15FA8BCF226}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "M2MCommunication.Services", "M2M\M2MCommunication.Services\M2MCommunication.Services.csproj", "{D246D52E-AB5A-4611-82F6-B15FA8BCF226}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
