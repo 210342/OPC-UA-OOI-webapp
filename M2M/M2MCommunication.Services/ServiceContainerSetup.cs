@@ -1,11 +1,9 @@
 ﻿using CommonServiceLocator;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
+using M2MCommunication.Core;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
-using System.ComponentModel.Composition.Primitives;
 using System.IO;
 using System.Reflection;
 using System.Text;
@@ -14,22 +12,22 @@ namespace M2MCommunication.Services
 {
     public class ServiceContainerSetup : IDisposable
     {
-        private readonly string _uaLibrary;
+        private readonly UaLibrarySettings _uaLibrarySettings;
         internal AggregateCatalog AggregateCatalog { get; private set; }
         internal CompositionContainer Container { get; private set; }
 
-        public ServiceContainerSetup(IConfiguration settings)
+        public ServiceContainerSetup(UaLibrarySettings settings)
         {
-            _uaLibrary = settings["UaLibrary"];
+            _uaLibrarySettings = settings;
         }
 
         public ServiceContainerSetup Initialise()
         {
-            AggregateCatalog = new AggregateCatalog(new DirectoryCatalog(Path.GetDirectoryName(Assembly.GetCallingAssembly().Location)));
-/*            {
-                //new AssemblyCatalog(Path.Combine(Path.GetDirectoryName(Assembly.GetCallingAssembly().Location), _uaLibrary)),
-                new AssemblyCatalog()
-            });*/
+            AggregateCatalog = new AggregateCatalog(
+                new DirectoryCatalog(
+                    Path.Combine(Path.GetDirectoryName(Assembly.GetCallingAssembly().Location), _uaLibrarySettings.LibraryDirectory)
+                )
+            );
             Container = new CompositionContainer(AggregateCatalog);
             Container.ComposeExportedValue(AggregateCatalog);
             ServiceLocator.SetLocatorProvider(() => new UaooiServiceLocator(Container));

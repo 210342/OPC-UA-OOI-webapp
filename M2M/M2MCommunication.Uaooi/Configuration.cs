@@ -9,14 +9,22 @@ namespace M2MCommunication
 {
     public class Configuration : ConfigurationFactoryBase<ConfigurationData>
     {
-        private readonly string _configurationFileName;
+        protected internal string _configurationFileName;
 
         public override event EventHandler<EventArgs> OnAssociationConfigurationChange;
         public override event EventHandler<EventArgs> OnMessageHandlerConfigurationChange;
 
-        public Configuration(string configurationFileName)
+        public Configuration()
         {
             Loader = LoadConfig;
+        }
+
+        /// <summary>
+        /// Initialises neccessary values not provided through dependency injection
+        /// </summary>
+        /// <param name="configurationFileName">name of the file containing the consumer's configuration</param>
+        public void Initialise(string configurationFileName)
+        {
             _configurationFileName = configurationFileName;
         }
 

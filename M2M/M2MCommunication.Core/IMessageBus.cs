@@ -6,6 +6,6 @@ namespace M2MCommunication.Core
 {
     public interface IMessageBus : IDisposable
     {
-        void Initialise();
+        void Initialise(UaLibrarySettings settings);
     }
 }

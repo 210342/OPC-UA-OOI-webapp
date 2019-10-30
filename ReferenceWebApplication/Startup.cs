@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using M2MCommunication;
+using M2MCommunication.Core;
 using M2MCommunication.Services;
 using MessageParsing;
 using Microsoft.AspNetCore.Builder;
@@ -11,28 +12,31 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using ReferenceWebApplication.Services;
 
 namespace ReferenceWebApplication
 {
     public class Startup
     {
-        public IConfiguration Configuration { get; private set; }
+        public IConfiguration Configuration { get;}
+
+        public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         #pragma warning disable CA1822
         public void ConfigureServices(IServiceCollection services)
         {
-            Configuration = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile(@"appsettings.json", optional: true)
-                .Build();
-            services.Configure<Settings>(Configuration);
-            services.AddSingleton(s => new ServiceContainerSetup(Configuration));
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddLocalization();
+            services.Configure<UaLibrarySettings>(Configuration.GetSection("UaLibrary"));
+            services.AddSingleton(s => s.GetRequiredService<IOptions<UaLibrarySettings>>().Value);
+            services.AddSingleton<ServiceContainerSetup>();
             services.AddTransient<SubscriptionFactoryService>();
             services.AddTransient<IMessageParser, ImageMessageParser>();
             services.AddSingleton<MessageBusService>();

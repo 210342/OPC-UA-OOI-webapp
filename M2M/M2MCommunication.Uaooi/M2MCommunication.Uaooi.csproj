@@ -6,19 +6,21 @@
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Any'">
-    <OutputPath>$(SolutionDir)\ReferenceWebApplication\bin\Release\netcoreapp3.0\</OutputPath>
-  </PropertyGroup>
   
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Any'">
-    <OutputPath>$(SolutionDir)\ReferenceWebApplication\bin\Debug\netcoreapp3.0\</OutputPath>
-    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
-  </PropertyGroup>
-
   <Target Name="PostBuild" BeforeTargets="PostBuildEvent">
-    <Exec Command="copy $(TargetDir)\UAOOI*.dll $(SolutionDir)\ReferenceWebApplication\bin\$(ConfigurationName)\netcoreapp3.0" />
+    <ItemGroup>
+      <UaooiLibraries Include="$(TargetDir)UAOOI*.dll" />
+      <UaooiLibraries Include="$(TargetDir)*Uaooi.dll" />
+    </ItemGroup>
+    <ItemGroup>
+      <UaooiConfiguration Include="$(ProjectDir)*Configuration*.xml" />
+    </ItemGroup>
+    <MakeDir Directories="$(SolutionDir)\ReferenceWebApplication\bin\$(ConfigurationName)\netcoreapp3.0\M2MCommunication.Uaooi" />
+    <Copy SourceFiles="@(UaooiLibraries)" DestinationFolder="$(SolutionDir)\ReferenceWebApplication\bin\$(ConfigurationName)\netcoreapp3.0\M2MCommunication.Uaooi" />
+    <MakeDir Directories="$(SolutionDir)\ReferenceWebApplication\ReferenceWebApplication\wwwroot\M2MCommunication.Uaooi" />
+    <Copy SourceFiles="@(UaooiConfiguration)" DestinationFolder="$(SolutionDir)\ReferenceWebApplication\wwwroot\M2MCommunication.Uaooi" />
   </Target>
-
+  
   <ItemGroup>
     <PackageReference Include="UAOOI.Common.Infrastructure" Version="4.0.1" />
     <PackageReference Include="UAOOI.Configuration.Core" Version="4.0.1" />
@@ -31,15 +33,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\M2MCommunication.Core\M2MCommunication.Core.csproj"  />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ModuleFiles
-      Include="$(TargetDir)*.dll"
-      Exclude="$(TargetDir)System*.dll;$(TargetDir)Microsoft*.dll"
-      DestinationPath="$(SolutionDir)\ReferenceWebApplication\bin\debug\netcoreapp3.0\%(Filename)%(Extension)">
-    </ModuleFiles>
+    <ProjectReference Include="..\M2MCommunication.Core\M2MCommunication.Core.csproj" />
   </ItemGroup>
 
 </Project>
