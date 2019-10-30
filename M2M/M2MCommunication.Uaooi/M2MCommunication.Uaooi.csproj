@@ -15,6 +15,10 @@
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
   </PropertyGroup>
 
+  <Target Name="PostBuild" BeforeTargets="PostBuildEvent">
+    <Exec Command="copy $(TargetDir)\UAOOI*.dll $(SolutionDir)\ReferenceWebApplication\bin\$(ConfigurationName)\netcoreapp3.0" />
+  </Target>
+
   <ItemGroup>
     <PackageReference Include="UAOOI.Common.Infrastructure" Version="4.0.1" />
     <PackageReference Include="UAOOI.Configuration.Core" Version="4.0.1" />
