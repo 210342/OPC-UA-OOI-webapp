@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using System.Text;
 
-namespace M2MCommunication.UaooiExtensions
+namespace M2MCommunication.Uaooi.Extensions
 {
     public class UnsupportedTypeException : Exception
     {
@@ -13,6 +14,10 @@ namespace M2MCommunication.UaooiExtensions
         }
 
         public UnsupportedTypeException(string message, Exception innerException) : base(message, innerException)
+        {
+        }
+
+        protected UnsupportedTypeException(SerializationInfo info, StreamingContext context) : base(info, context)
         {
         }
     }

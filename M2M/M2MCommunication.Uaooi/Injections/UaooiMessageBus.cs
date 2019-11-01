@@ -3,13 +3,13 @@ using M2MCommunication.Core;
 using UAOOI.Networking.SemanticData;
 using CommonServiceLocator;
 using UAOOI.Networking.Core;
-using M2MCommunication.UaooiInjections;
 using System.ComponentModel.Composition;
 using System.IO;
-using M2MCommunication.UaooiExtensions;
 using System.Threading.Tasks;
+using M2MCommunication.Uaooi;
+using M2MCommunication.Uaooi.Extensions;
 
-namespace M2MCommunication.UaaoiInjections
+namespace M2MCommunication.Uaaoi.Injections
 {
     [Export(typeof(IMessageBus))]
     public class UaooiMessageBus : DataManagementSetup, IMessageBus
@@ -38,16 +38,16 @@ namespace M2MCommunication.UaaoiInjections
         /// <param name="settings">Object containing application settings targeting Unified Architecture library</param>
         /// <param name="exceptionHandler">Action used to handle exceptions. 
         /// Handled exceptions: 
-        /// <see cref="ConfigurationFileNotFoundException"/>
-        /// <see cref="ValueRankOutOfRangeException"/>
-        /// <see cref="UnsupportedTypeException"/>
+        /// <see cref="ConfigurationFileNotFoundException"/>, 
+        /// <see cref="ValueRankOutOfRangeException"/>, 
+        /// <see cref="UnsupportedTypeException"/>.
         /// </param>
         public void Initialise(UaLibrarySettings settings, Action<Exception> exceptionHandler)
         {
             try
             {
                 (ConfigurationFactory as Configuration)
-                    ?.Initialise(Path.Combine(Directory.GetCurrentDirectory(), settings.WebRoot, settings.LibraryDirectory, settings.ConsumerConfigurationFile));
+                    ?.Initialise(Path.Combine(Directory.GetCurrentDirectory(), settings.ResourcesDirectory, settings.LibraryDirectory, settings.ConsumerConfigurationFile));
                 Start();
             }
             catch (Exception ex) when (ex is ConfigurationFileNotFoundException || ex is ValueRankOutOfRangeException || ex is UnsupportedTypeException)
@@ -71,9 +71,9 @@ namespace M2MCommunication.UaaoiInjections
         /// <param name="settings">Object containing application settings targeting Unified Architecture library</param>
         /// <param name="exceptionHandler">Action used to handle exceptions. 
         /// Handled exceptions: 
-        /// <see cref="ConfigurationFileNotFoundException"/>
-        /// <see cref="ValueRankOutOfRangeException"/>
-        /// <see cref="UnsupportedTypeException"/>
+        /// <see cref="ConfigurationFileNotFoundException"/>, 
+        /// <see cref="ValueRankOutOfRangeException"/>, 
+        /// <see cref="UnsupportedTypeException"/>.
         /// </param>
         public async Task InitialiseAsync(UaLibrarySettings settings, Action<Exception> exceptionHandler)
         {

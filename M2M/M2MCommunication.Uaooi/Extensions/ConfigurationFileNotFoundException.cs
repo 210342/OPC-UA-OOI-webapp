@@ -4,7 +4,7 @@ using System.IO;
 using System.Runtime.Serialization;
 using System.Text;
 
-namespace M2MCommunication.UaooiExtensions
+namespace M2MCommunication.Uaooi.Extensions
 {
     class ConfigurationFileNotFoundException : FileNotFoundException
     {

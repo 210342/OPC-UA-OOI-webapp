@@ -9,6 +9,6 @@ namespace M2MCommunication.Core
     {
         public string ConsumerConfigurationFile { get; set; }
         public string LibraryDirectory { get; set; }
-        public string WebRoot { get; set; }
+        public string ResourcesDirectory { get; set; }
     }
 }

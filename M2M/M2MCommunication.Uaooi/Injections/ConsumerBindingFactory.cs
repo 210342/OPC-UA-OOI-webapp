@@ -1,5 +1,5 @@
 ﻿using M2MCommunication.Core;
-using M2MCommunication.UaooiExtensions;
+using M2MCommunication.Uaooi.Extensions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,7 +10,7 @@ using UAOOI.Configuration.Networking.Serialization;
 using UAOOI.Networking.SemanticData;
 using UAOOI.Networking.SemanticData.DataRepository;
 
-namespace M2MCommunication.UaaoiInjections
+namespace M2MCommunication.Uaaoi.Injections
 {
     [Export(typeof(ISubscriptionFactory))]
     public class ConsumerBindingFactory : IBindingFactory, ISubscriptionFactory

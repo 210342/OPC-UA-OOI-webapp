@@ -2,7 +2,7 @@
 using M2MCommunication.Core;
 using UAOOI.Configuration.Networking.Serialization;
 
-namespace M2MCommunication
+namespace M2MCommunication.Uaooi
 {
     public class Subscription : ISubscription
     {

@@ -1,11 +1,11 @@
-﻿using M2MCommunication.UaooiExtensions;
+﻿using M2MCommunication.Uaooi.Extensions;
 using System;
 using System.IO;
 using UAOOI.Configuration.Networking;
 using UAOOI.Configuration.Networking.Serialization;
 using UAOOI.Configuration.Networking.Serializers;
 
-namespace M2MCommunication
+namespace M2MCommunication.Uaooi
 {
     public class Configuration : ConfigurationFactoryBase<ConfigurationData>
     {

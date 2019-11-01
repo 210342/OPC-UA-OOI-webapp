@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace M2MCommunication.UaooiExtensions
+namespace M2MCommunication.Uaooi.Extensions
 {
     public class ValueRankOutOfRangeException : ArgumentOutOfRangeException
     {
