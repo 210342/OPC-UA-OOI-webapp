@@ -1,21 +1,21 @@
 @page "/detailed-message"
-@using M2MCommunication
+@using System.IO
+@using Microsoft.Extensions.Localization
+@using Microsoft.Extensions.Logging
+@using M2MCommunication.Core
+@using M2MCommunication.Services
 @using MessageParsing
 
-<div class="container-fluid" >
+<div class="container-fluid">
+    <h1 class="text-danger">@ExceptionMessage</h1>
     @if (!IsLayoutHorizontal)
     {
         <div class="row my-1">
-            <div class="col-4 text-center py-2">
+            <div class="col-6 text-center py-2">
                 <h3><span class="badge badge-primary">Packages received: @PackagesReceived</span></h3>
             </div>
-            <div class="col-4 text-center py-2">
+            <div class="col-6 text-center py-2">
                 <h3><span class="badge @bytesReceivedStyle">Bytes received: @BytesReceived</span></h3>
-            </div>
-            <div class="col-4 text-center py-2">
-                <button class="btn btn-danger" @onclick="GenerateMessage">
-                    Generate message
-                </button>
             </div>
         </div>
     }
@@ -40,15 +40,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="row my-6">
-                    <div class="col-12">
-                        <div class="text-center">
-                            <button class="btn btn-lg btn-danger" @onclick="GenerateMessage">
-                                Generate message
-                            </button>
-                        </div>
-                    </div>
-                </div>
             </div>
         }
     </div>
@@ -60,35 +51,41 @@
     </div>
 </div>
 
-@inject IMessageBus Bus
-@inject IMessageReceiver Receiver
+@inject MessageBusService BusService
+@inject UaLibrarySettings settings
 @inject IMessageParser Parser
-@code 
+@inject ILogger<DetailedMessage> Logger
+@inject IStringLocalizer<DetailedMessage> Localizer
+@code
 {
+    private IMessageBus Bus => BusService?.MessageBus;
     private string bytesReceivedStyle => BytesReceived > 2048 ? "badge-warning" : "badge-info";
     private string imageColumnClass => IsLayoutHorizontal ? "col-9" : "col-12";
 
     public int BytesReceived { get; private set; } = 0;
     public int PackagesReceived { get; private set; } = 0;
     public bool IsLayoutHorizontal { get; set; } = false;
+    public string ExceptionMessage { get; private set; } = string.Empty;
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        Receiver.MessageBus = Bus;
-        Receiver.Subscribe(
-            new Subscription(M2MCommunication.Message.StaticTypeGuid),
-            message => { Parser.Parse(message); UpdateMessage(null, message); }
-        );
+        await Bus?.InitialiseAsync(settings, ExceptionHandler);
     }
 
-    public void UpdateMessage(object updatedObject, IMessage message)
+    protected void ExceptionHandler(Exception ex)
     {
-        ++PackagesReceived;
-        BytesReceived += message.Size;
-    }
-
-    public void GenerateMessage()
-    {
-        Bus.SendMessage(new Message());
+        Logger.LogError(ex, ex.Message);
+        if (ex is FileNotFoundException)
+        {
+            ExceptionMessage = Localizer.GetString("ConfigurationFileNotFound") ?? "Couldn't find the consumer data configuration file";
+        }
+        else if (ex is ArgumentOutOfRangeException)
+        {
+            ExceptionMessage = Localizer.GetString("UnsupportedDataType") ?? "Received data type is not supported";
+        }
+        else
+        {
+            ExceptionMessage = ex.Message;
+        }
     }
 }

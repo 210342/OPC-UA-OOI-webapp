@@ -1,0 +1,39 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <RootNamespace>M2MCommunication.Uaooi</RootNamespace>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+  </PropertyGroup>
+
+  
+  <Target Name="PostBuild" BeforeTargets="PostBuildEvent">
+    <ItemGroup>
+      <UaooiLibraries Include="$(TargetDir)UAOOI*.dll" />
+      <UaooiLibraries Include="$(TargetDir)*Uaooi.dll" />
+    </ItemGroup>
+    <ItemGroup>
+      <UaooiConfiguration Include="$(ProjectDir)*Configuration*.xml" />
+    </ItemGroup>
+    <MakeDir Directories="$(SolutionDir)\ReferenceWebApplication\bin\$(ConfigurationName)\netcoreapp3.0\M2MCommunication.Uaooi" />
+    <Copy SourceFiles="@(UaooiLibraries)" DestinationFolder="$(SolutionDir)\ReferenceWebApplication\bin\$(ConfigurationName)\netcoreapp3.0\M2MCommunication.Uaooi" />
+    <MakeDir Directories="$(SolutionDir)\ReferenceWebApplication\ReferenceWebApplication\wwwroot\M2MCommunication.Uaooi" />
+    <Copy SourceFiles="@(UaooiConfiguration)" DestinationFolder="$(SolutionDir)\ReferenceWebApplication\wwwroot\M2MCommunication.Uaooi" />
+  </Target>
+  
+  <ItemGroup>
+    <PackageReference Include="UAOOI.Common.Infrastructure" Version="4.0.1" />
+    <PackageReference Include="UAOOI.Configuration.Core" Version="4.0.1" />
+    <PackageReference Include="UAOOI.Configuration.DataBindings" Version="4.0.1" />
+    <PackageReference Include="UAOOI.Configuration.Networking" Version="4.0.1" />
+    <PackageReference Include="UAOOI.Networking.Core" Version="4.0.1" />
+    <PackageReference Include="UAOOI.Networking.Encoding" Version="4.0.1" />
+    <PackageReference Include="UAOOI.Networking.SemanticData" Version="4.0.1" />
+    <PackageReference Include="UAOOI.Networking.UDPMessageHandler" Version="4.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\M2MCommunication.Core\M2MCommunication.Core.csproj" />
+  </ItemGroup>
+
+</Project>
