@@ -1,13 +1,18 @@
-﻿using M2MCommunication.Uaooi.Extensions;
+﻿using M2MCommunication.Core;
+using M2MCommunication.Uaooi.Extensions;
 using System;
+using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using System.IO;
+using System.Linq;
 using UAOOI.Configuration.Networking;
 using UAOOI.Configuration.Networking.Serialization;
 using UAOOI.Configuration.Networking.Serializers;
 
-namespace M2MCommunication.Uaooi
+namespace M2MCommunication.Uaooi.Injections
 {
-    public class Configuration : ConfigurationFactoryBase<ConfigurationData>
+    [Export(typeof(IConfiguration))]
+    public class Configuration : ConfigurationFactoryBase<ConfigurationData>, IConfiguration
     {
         protected internal string _configurationFileName;
 
@@ -45,6 +50,15 @@ namespace M2MCommunication.Uaooi
         {
             OnAssociationConfigurationChange?.Invoke(this, EventArgs.Empty);
             OnMessageHandlerConfigurationChange?.Invoke(this, EventArgs.Empty);
+        }
+
+        public IEnumerable<string> GetDataTypeNames()
+        {
+            return Configuration
+                ?.DataSets
+                ?.SelectMany(dataset => dataset.DataSet)
+                ?.Select(fieldMetadata => fieldMetadata.ProcessValueName)
+                    ?? Enumerable.Empty<string>();
         }
     }
 }

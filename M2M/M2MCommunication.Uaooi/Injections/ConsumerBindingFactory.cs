@@ -10,16 +10,30 @@ using UAOOI.Configuration.Networking.Serialization;
 using UAOOI.Networking.SemanticData;
 using UAOOI.Networking.SemanticData.DataRepository;
 
-namespace M2MCommunication.Uaaoi.Injections
+namespace M2MCommunication.Uaooi.Injections
 {
     [Export(typeof(ISubscriptionFactory))]
     public class ConsumerBindingFactory : IBindingFactory, ISubscriptionFactory
     {
         public IDictionary<string, ISubscription> Subscriptions { get; } = new Dictionary<string, ISubscription>();
 
-        public ISubscription GetSubscription()
+        /// <summary>
+        /// Returns a subscriptions for the specified type by name
+        /// </summary>
+        /// <param name="subscriptionName">Name of the type to subscribe to</param>
+        /// <param name="handler">Callback method of the subscription</param>
+        /// <returns></returns>
+        public ISubscription GetSubscription(string subscriptionName, PropertyChangedEventHandler handler)
         {
-            throw new NotImplementedException();
+            if (Subscriptions.TryGetValue(subscriptionName, out ISubscription subscription))
+            {
+                subscription.Enable(handler);
+                return subscription;
+            }
+            else
+            {
+                throw new UnsupportedTypeException($"Type {subscriptionName} is not supported");
+            }
         }
 
         public IConsumerBinding GetConsumerBinding(string repositoryGroup, string processValueName, UATypeInfo fieldTypeInfo)
@@ -28,7 +42,7 @@ namespace M2MCommunication.Uaaoi.Injections
             {
                 throw new ArgumentNullException(nameof(fieldTypeInfo));
             }
-            return GetConsumerBinding(fieldTypeInfo);
+            return GetConsumerBinding(fieldTypeInfo, processValueName);
         }
 
         /// <summary>
@@ -43,7 +57,7 @@ namespace M2MCommunication.Uaaoi.Injections
             throw new NotSupportedException();
         }
 
-        private IConsumerBinding GetConsumerBinding(UATypeInfo typeInfo)
+        private IConsumerBinding GetConsumerBinding(UATypeInfo typeInfo, string typeName)
         {
             if (typeInfo.ContainsArray())
             {
@@ -55,6 +69,7 @@ namespace M2MCommunication.Uaaoi.Injections
             consumerBindingType
                 .GetEvent("PropertyChanged")
                 .AddEventHandler(binding, Delegate.CreateDelegate(typeof(PropertyChangedEventHandler), this, handler));
+            Subscriptions[typeName] = new Subscription(typeInfo, typeName, null);
             return binding;
         }
 

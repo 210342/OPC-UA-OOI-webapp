@@ -13,7 +13,7 @@ namespace M2MCommunication.Uaooi.Extensions
             }
             else
             {
-                return typeInfo.ValueRank >= 0;
+                return typeInfo.ValueRank == 0 || typeInfo.ValueRank > 1;
             }
         }
 

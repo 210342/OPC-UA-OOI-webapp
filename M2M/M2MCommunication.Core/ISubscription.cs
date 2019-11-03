@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.ComponentModel;
 
 namespace M2MCommunication.Core
 {
     public interface ISubscription
     {
+        string TypeName { get; }
         object Value { get; set; }
-        event EventHandler ValueUpdated;
+        void Enable(PropertyChangedEventHandler handler);
+        void Disable();
     }
 }

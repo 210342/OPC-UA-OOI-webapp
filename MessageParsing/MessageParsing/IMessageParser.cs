@@ -1,10 +1,6 @@
-﻿using M2MCommunication;
-using MessageParsing.Model;
-using System;
+﻿using MessageParsing.Model;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
-using M2MCommunication.Core;
 
 namespace MessageParsing
 {
@@ -13,7 +9,7 @@ namespace MessageParsing
         IEnumerable<DrawableProperty> DrawableProperties { get; }
         IEnumerable<PrintableProperty> PrintableProperties { get; }
 
-        void Parse();
-        Task ParseAsync();
+        void Initialise();
+        Task InitialiseAsync();
     }
 }

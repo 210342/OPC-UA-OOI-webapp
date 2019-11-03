@@ -1,27 +1,10 @@
 ﻿@page "/configuration"
-@using ReferenceWebApplication.Services
+@using M2MCommunication.Services
 <h1>Configuration</h1>
 
-<h3>Window's width: @WindowSize?.Width; Window's height: @WindowSize?.Height</h3>
+<h3 class="my-1">@ConfigurationService.Configuration.ToString()</h3>
 
-<button class="btn-primary" @onclick="Refresh">Refresh</button>
-
-@inject WindowService Window
+@inject ConfigurationService ConfigurationService
 @code 
 {
-    public Size WindowSize { get; set; }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (firstRender)
-        {
-            await Refresh();
-            StateHasChanged();
-        }
-    }
-
-    public async Task Refresh()
-    {
-        WindowSize = await Window.GetDimensions();
-    }
 }

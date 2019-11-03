@@ -69,7 +69,11 @@
 
     protected override async Task OnInitializedAsync()
     {
-        await Bus?.InitialiseAsync(settings, ExceptionHandler);
+        await Task.Run(() =>
+        {
+            Bus?.Initialise(settings, ExceptionHandler);
+            Parser?.Initialise();
+        });
     }
 
     protected void ExceptionHandler(Exception ex)

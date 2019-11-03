@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using MessageParsing.Model;
 using System.Drawing;
-using System.Text;
-using MessageParsing;
-using MessageParsing.Model;
 using Xunit;
 
 namespace MessageParsingUnitTest
@@ -14,7 +10,7 @@ namespace MessageParsingUnitTest
         public void MapPrintableToDrawableProperty()
         {
             IProperty printable = new PrintableProperty(
-                new TestSubscription() { Value = "Printable value" }, 
+                new TestSubscription() { Value = "Printable value" },
                 new PropertyTemplate("Name", null, Color.Red, null)
             );
             IProperty drawable = (printable as PrintableProperty).MapToDrawable(new Point(10, 100), Color.Brown);
