@@ -2,6 +2,7 @@
 using M2MCommunication.Services;
 using MessageParsing.Model;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -22,11 +23,20 @@ namespace MessageParsing
         }
 
 
-        public abstract void Initialise();
-        public abstract Task InitialiseAsync();
-        protected internal IEnumerable<ISubscription> GetSubscriptions()
+        public abstract void Initialise(PropertyChangedEventHandler handler);
+
+        public async Task InitialiseAsync(PropertyChangedEventHandler handler)
         {
-            return Configuration.GetDataTypeNames().Select(typeName => SubscriptionFactory.GetSubscription(typeName, (_, __) => { }));
+            await Task.Run(() =>
+            {
+                Initialise(handler);
+            })
+            .ConfigureAwait(true);
+        }
+
+        protected internal IEnumerable<ISubscription> GetSubscriptions(PropertyChangedEventHandler handler)
+        {
+            return Configuration.GetDataTypeNames().Select(typeName => SubscriptionFactory.GetSubscription(typeName, handler));
         }
     }
 }

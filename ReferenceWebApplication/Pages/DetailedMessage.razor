@@ -1,5 +1,6 @@
 @page "/detailed-message"
 @using System.IO
+@using System.ComponentModel
 @using Microsoft.Extensions.Localization
 @using Microsoft.Extensions.Logging
 @using M2MCommunication.Core
@@ -72,7 +73,7 @@
         await Task.Run(() =>
         {
             Bus?.Initialise(settings, ExceptionHandler);
-            Parser?.Initialise();
+            Parser?.Initialise(OnPropertyChanged);
         });
     }
 
@@ -91,5 +92,10 @@
         {
             ExceptionMessage = ex.Message;
         }
+    }
+
+    protected void OnPropertyChanged(object sender, PropertyChangedEventArgs args)
+    {
+        ++PackagesReceived;
     }
 }

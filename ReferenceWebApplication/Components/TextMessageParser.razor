@@ -14,7 +14,7 @@
             {
                 <tr>
                     <th scope="row">@property.Template.Name</th>
-                    <td>@property.Subscription.Value?.ToString()</td>
+                    <td>@(property.Subscription.ToString() ?? "null")</td>
                 </tr>
             }
         </tbody>

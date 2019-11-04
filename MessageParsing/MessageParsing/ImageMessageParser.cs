@@ -3,6 +3,7 @@ using M2MCommunication.Services;
 using MessageParsing.Model;
 using Microsoft.Extensions.Localization;
 using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,11 +22,11 @@ namespace MessageParsing
             _localizer = localizer;
         }
 
-        public override void Initialise()
+        public override void Initialise(PropertyChangedEventHandler handler)
         {
             ImageTemplate = new ImageTemplate(Guid.NewGuid(), @"Template.jpg", 1300, 480);
 
-            foreach (ISubscription subscription in GetSubscriptions())
+            foreach (ISubscription subscription in GetSubscriptions(handler))
             {
                 if (ImageTemplate.Properties.Where(p => p.Template.Name.Equals(subscription.TypeName)).FirstOrDefault() is IProperty property)
                 {
@@ -37,15 +38,6 @@ namespace MessageParsing
                     Properties.Add(new PrintableProperty(subscription, new PropertyTemplate(subscription.TypeName, null, Color.Black, null)));
                 }
             }
-        }
-
-        public override async Task InitialiseAsync()
-        {
-            await Task.Run(() =>
-            {
-                Initialise();
-            })
-            .ConfigureAwait(true);
         }
     }
 }

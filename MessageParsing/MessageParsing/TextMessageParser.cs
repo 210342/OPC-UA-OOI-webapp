@@ -2,6 +2,7 @@
 using M2MCommunication.Services;
 using MessageParsing.Model;
 using Microsoft.Extensions.Localization;
+using System.ComponentModel;
 using System.Drawing;
 using System.Threading.Tasks;
 
@@ -17,22 +18,13 @@ namespace MessageParsing
             _localizer = localizer;
         }
 
-        public override void Initialise()
+        public override void Initialise(PropertyChangedEventHandler handler)
         {
             Properties.Clear();
-            foreach (ISubscription subscription in GetSubscriptions())
+            foreach (ISubscription subscription in GetSubscriptions(handler))
             {
                 Properties.Add(new PrintableProperty(subscription, new PropertyTemplate(subscription.TypeName, null, Color.Black, null)));
             }
-        }
-
-        public override async Task InitialiseAsync()
-        {
-            await Task.Run(() =>
-            {
-                Initialise();
-            })
-            .ConfigureAwait(true);
         }
     }
 }

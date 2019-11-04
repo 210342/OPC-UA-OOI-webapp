@@ -1,4 +1,5 @@
 ﻿using M2MCommunication.Core;
+using System;
 using System.ComponentModel;
 using UAOOI.Configuration.Networking.Serialization;
 
@@ -38,6 +39,18 @@ namespace M2MCommunication.Uaooi
         public void Disable()
         {
             ValueUpdated = null;
+        }
+
+        public override string ToString()
+        {
+            try
+            {
+                return string.IsNullOrEmpty(Value?.ToString()) ? "null" : Value?.ToString();
+            }
+            catch (NullReferenceException)
+            {
+                return "null";
+            }
         }
     }
 }
