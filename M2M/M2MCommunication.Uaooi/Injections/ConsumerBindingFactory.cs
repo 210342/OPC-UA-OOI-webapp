@@ -24,7 +24,7 @@ namespace M2MCommunication.Uaooi.Injections
         /// <param name="subscriptionName">Name of the type to subscribe to</param>
         /// <param name="handler">Callback method of the subscription</param>
         /// <returns></returns>
-        public ISubscription GetSubscription(string subscriptionName, PropertyChangedEventHandler handler)
+        public ISubscription Subscribe(string subscriptionName, PropertyChangedEventHandler handler)
         {
             if (Subscriptions.TryGetValue(subscriptionName, out ISubscription subscription))
             {
