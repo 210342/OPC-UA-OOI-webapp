@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.ComponentModel;
 
 namespace M2MCommunication.Core
 {
     public interface ISubscriptionFactory
     {
-        ISubscription GetSubscription();
+        ISubscription Subscribe(string subscriptionName, PropertyChangedEventHandler handler);
     }
 }

@@ -17,6 +17,18 @@ namespace M2MCommunication.Uaooi.Extensions
             }
         }
 
+        public static bool ContainsMultidimensionalArray(this UATypeInfo typeInfo)
+        {
+            if (typeInfo is null)
+            {
+                return false;
+            }
+            else
+            {
+                return typeInfo.ValueRank == 0 || typeInfo.ValueRank > 1;
+            }
+        }
+
         public static Type GetUAType(this UATypeInfo typeInfo)
         {
             if (typeInfo is null)
@@ -27,35 +39,35 @@ namespace M2MCommunication.Uaooi.Extensions
             switch (typeInfo.BuiltInType)
             {
                 case BuiltInType.Boolean:
-                    return typeof(bool);
+                    return typeInfo.ValueRank == 1 ? typeof(bool[]) : typeof(bool);
                 case BuiltInType.SByte:
-                    return typeof(sbyte);
+                    return typeInfo.ValueRank == 1 ? typeof(sbyte[]) : typeof(sbyte);
                 case BuiltInType.Byte:
-                    return typeof(byte);
+                    return typeInfo.ValueRank == 1 ? typeof(byte[]) : typeof(byte);
                 case BuiltInType.Int16:
-                    return typeof(short);
+                    return typeInfo.ValueRank == 1 ? typeof(short[]) : typeof(short);
                 case BuiltInType.UInt16:
-                    return typeof(ushort);
+                    return typeInfo.ValueRank == 1 ? typeof(ushort[]) : typeof(ushort);
                 case BuiltInType.Int32:
-                    return typeof(int);
+                    return typeInfo.ValueRank == 1 ? typeof(int[]) : typeof(int);
                 case BuiltInType.UInt32:
-                    return typeof(uint);
+                    return typeInfo.ValueRank == 1 ? typeof(uint[]) : typeof(int);
                 case BuiltInType.Int64:
-                    return typeof(long);
+                    return typeInfo.ValueRank == 1 ? typeof(long[]) : typeof(long);
                 case BuiltInType.UInt64:
-                    return typeof(ulong);
+                    return typeInfo.ValueRank == 1 ? typeof(ulong[]) : typeof(ulong);
                 case BuiltInType.Float:
-                    return typeof(float);
+                    return typeInfo.ValueRank == 1 ? typeof(float[]) : typeof(float);
                 case BuiltInType.Double:
-                    return typeof(double);
+                    return typeInfo.ValueRank == 1 ? typeof(double[]) : typeof(double);
                 case BuiltInType.String:
-                    return typeof(string);
+                    return typeInfo.ValueRank == 1 ? typeof(string[]) : typeof(string);
                 case BuiltInType.DateTime:
-                    return typeof(DateTime?);
+                    return typeInfo.ValueRank == 1 ? typeof(DateTime?[]) : typeof(DateTime?);
                 case BuiltInType.Guid:
-                    return typeof(Guid?);
+                    return typeInfo.ValueRank == 1 ? typeof(Guid?[]) : typeof(Guid?);
                 case BuiltInType.ByteString:
-                    return typeof(byte[]);
+                    return typeInfo.ValueRank == 1 ? typeof(byte[][]) : typeof(byte[]);
                 case BuiltInType.Null:
                 case BuiltInType.XmlElement:
                 case BuiltInType.NodeId:

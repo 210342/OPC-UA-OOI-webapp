@@ -5,21 +5,36 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.Globalization;
+using System.Linq.Expressions;
 using System.Reflection;
 using UAOOI.Configuration.Networking.Serialization;
 using UAOOI.Networking.SemanticData;
 using UAOOI.Networking.SemanticData.DataRepository;
 
-namespace M2MCommunication.Uaaoi.Injections
+namespace M2MCommunication.Uaooi.Injections
 {
     [Export(typeof(ISubscriptionFactory))]
     public class ConsumerBindingFactory : IBindingFactory, ISubscriptionFactory
     {
         public IDictionary<string, ISubscription> Subscriptions { get; } = new Dictionary<string, ISubscription>();
 
-        public ISubscription GetSubscription()
+        /// <summary>
+        /// Returns a subscriptions for the specified type by name
+        /// </summary>
+        /// <param name="subscriptionName">Name of the type to subscribe to</param>
+        /// <param name="handler">Callback method of the subscription</param>
+        /// <returns></returns>
+        public ISubscription Subscribe(string subscriptionName, PropertyChangedEventHandler handler)
         {
-            throw new NotImplementedException();
+            if (Subscriptions.TryGetValue(subscriptionName, out ISubscription subscription))
+            {
+                subscription.Enable(handler);
+                return subscription;
+            }
+            else
+            {
+                throw new UnsupportedTypeException($"Type {subscriptionName} is not supported");
+            }
         }
 
         public IConsumerBinding GetConsumerBinding(string repositoryGroup, string processValueName, UATypeInfo fieldTypeInfo)
@@ -28,7 +43,7 @@ namespace M2MCommunication.Uaaoi.Injections
             {
                 throw new ArgumentNullException(nameof(fieldTypeInfo));
             }
-            return GetConsumerBinding(fieldTypeInfo);
+            return GetConsumerBinding(processValueName, fieldTypeInfo);
         }
 
         /// <summary>
@@ -43,27 +58,92 @@ namespace M2MCommunication.Uaaoi.Injections
             throw new NotSupportedException();
         }
 
-        private IConsumerBinding GetConsumerBinding(UATypeInfo typeInfo)
+        private IConsumerBinding GetConsumerBinding(string typeName, UATypeInfo typeInfo)
         {
-            if (typeInfo.ContainsArray())
+            if (typeInfo.ContainsMultidimensionalArray())
             {
-                throw new ValueRankOutOfRangeException(typeInfo.ValueRank.ToString(CultureInfo.InvariantCulture));
+                throw new ArgumentOutOfRangeException(nameof(typeInfo.ValueRank));
             }
-            Type consumerBindingType = typeof(ConsumerBindingMonitoredValue<>).MakeGenericType(typeInfo.GetUAType());
-            IConsumerBinding binding = Activator.CreateInstance(consumerBindingType, new object[] { typeInfo }) as IConsumerBinding;
-            MethodInfo handler = GetType().GetMethod("BoundPropertyChanged", BindingFlags.Instance | BindingFlags.NonPublic);
-            consumerBindingType
-                .GetEvent("PropertyChanged")
-                .AddEventHandler(binding, Delegate.CreateDelegate(typeof(PropertyChangedEventHandler), this, handler));
-            return binding;
+
+            switch (typeInfo.BuiltInType)
+            {
+                case BuiltInType.Boolean:
+                    return typeInfo.ContainsArray() 
+                        ? Bind<bool[]>(typeName, typeInfo) 
+                        : Bind<bool>(typeName, typeInfo);
+                case BuiltInType.SByte:
+                    return typeInfo.ContainsArray() 
+                        ? Bind<sbyte[]>(typeName, typeInfo) 
+                        : Bind<sbyte>(typeName, typeInfo);
+                case BuiltInType.Byte:
+                    return typeInfo.ContainsArray() 
+                        ? Bind<byte[]>(typeName, typeInfo) 
+                        : Bind<byte>(typeName, typeInfo);
+                case BuiltInType.Int16:
+                    return typeInfo.ContainsArray() 
+                        ? Bind<short[]>(typeName, typeInfo) 
+                        : Bind<short>(typeName, typeInfo);
+                case BuiltInType.UInt16:
+                    return typeInfo.ContainsArray() 
+                        ? Bind<ushort[]>(typeName, typeInfo) 
+                        : Bind<ushort>(typeName, typeInfo);
+                case BuiltInType.Int32:
+                    return typeInfo.ContainsArray() 
+                        ? Bind<int[]>(typeName, typeInfo) 
+                        : Bind<int>(typeName, typeInfo);
+                case BuiltInType.UInt32:
+                    return typeInfo.ContainsArray() 
+                        ? Bind<uint[]>(typeName, typeInfo) 
+                        : Bind<uint>(typeName, typeInfo);
+                case BuiltInType.Int64:
+                    return typeInfo.ContainsArray() 
+                        ? Bind<long[]>(typeName, typeInfo) 
+                        : Bind<long>(typeName, typeInfo);
+                case BuiltInType.UInt64:
+                    return typeInfo.ContainsArray() 
+                        ? Bind<ulong[]>(typeName, typeInfo) 
+                        : Bind<ulong>(typeName, typeInfo);
+                case BuiltInType.Float:
+                    return typeInfo.ContainsArray() 
+                        ? Bind<float[]>(typeName, typeInfo) 
+                        : Bind<float>(typeName, typeInfo);
+                case BuiltInType.Double:
+                    return typeInfo.ContainsArray() 
+                        ? Bind<double[]>(typeName, typeInfo) 
+                        : Bind<double>(typeName, typeInfo);
+                case BuiltInType.String:
+                    return typeInfo.ContainsArray() 
+                        ? Bind<string[]>(typeName, typeInfo) 
+                        : Bind<string>(typeName, typeInfo);
+                case BuiltInType.DateTime:
+                    return typeInfo.ContainsArray() 
+                        ? Bind<DateTime?[]>(typeName, typeInfo) 
+                        : Bind<DateTime?>(typeName, typeInfo);
+                case BuiltInType.Guid:
+                    return typeInfo.ContainsArray() 
+                        ? Bind<Guid?[]>(typeName, typeInfo) 
+                        : Bind<Guid?>(typeName, typeInfo);
+                case BuiltInType.ByteString:
+                    return typeInfo.ContainsArray() 
+                        ? Bind<byte[][]>(typeName, typeInfo) 
+                        : Bind<byte[]>(typeName, typeInfo);
+                default:
+                    throw new UnsupportedTypeException(typeInfo.BuiltInType.ToString());
+            }
         }
 
-        private void BoundPropertyChanged(object sender, PropertyChangedEventArgs args)
+        private IConsumerBinding Bind<type>(string typeName, UATypeInfo typeInfo)
         {
-            if (Subscriptions.TryGetValue(args.PropertyName, out ISubscription subscription))
+            ConsumerBindingMonitoredValue<type> binding = new ConsumerBindingMonitoredValue<type>(typeInfo);
+            binding.PropertyChanged += (sender, args) =>
             {
-                subscription.Value = sender;
-            }
+                if (Subscriptions.TryGetValue(typeName, out ISubscription subscription))
+                {
+                    subscription.Value = sender;
+                }
+            };
+            Subscriptions[typeName] = new Subscription(typeInfo, typeName, binding);
+            return binding;
         }
     }
 }

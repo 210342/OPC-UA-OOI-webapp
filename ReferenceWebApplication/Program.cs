@@ -1,17 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
 namespace ReferenceWebApplication
 {
-    #pragma warning disable CA1052
+#pragma warning disable CA1052
     public class Program
     {
         public static void Main(string[] args)
@@ -26,5 +18,5 @@ namespace ReferenceWebApplication
                     webBuilder.UseStartup<Startup>();
                 });
     }
-    #pragma warning restore CA1052
+#pragma warning restore CA1052
 }

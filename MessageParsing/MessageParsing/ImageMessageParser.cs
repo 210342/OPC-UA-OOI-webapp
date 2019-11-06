@@ -1,51 +1,36 @@
-﻿using M2MCommunication;
+﻿using M2MCommunication.Core;
+using M2MCommunication.Services;
 using MessageParsing.Model;
-using Microsoft.Extensions.Localization;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using M2MCommunication.Services;
 
 namespace MessageParsing
 {
     public class ImageMessageParser : MessageParser
     {
-        private readonly IStringLocalizer<ImageMessageParser> _localizer;
-        private readonly SubscriptionFactoryService _bindingFactory;
-
         public ImageTemplate ImageTemplate { get; private set; }
 
-        public ImageMessageParser(IStringLocalizer<ImageMessageParser> localizer, SubscriptionFactoryService bindingFactory)
-        {
-            _localizer = localizer;
-            _bindingFactory = bindingFactory;
-        }
+        public ImageMessageParser(ConfigurationService configuration, SubscriptionFactoryService subscriptionFactory)
+            : base(configuration, subscriptionFactory) { }
 
-        public override void Parse()
+        public override void Initialise(Func<Task> handler)
         {
-            // get image template from db, something like
-            // ImageTemplate = DbContext.ImageTemplates.Where(it => message.TypeGuid.Equals(it.MessageTypeGuid));
-            // deserialise content or something
-            // get properties from the message
-            Properties.Clear();
-            ImageTemplate = new ImageTemplate(Guid.NewGuid(), "Template.jpg", 1300, 480);
+            ImageTemplate = new ImageTemplate(Guid.NewGuid(), @"Template.jpg", 1300, 480);
 
-            foreach (IProperty property in Properties)
+            foreach (ISubscription subscription in Subscribe(handler))
             {
-                _bindingFactory.SubscriptionFactory.GetSubscription();
+                if (ImageTemplate.Properties.Where(p => p.Template.Name.Equals(subscription.TypeName)).FirstOrDefault() is IProperty property)
+                {
+                    property.Subscription = subscription;
+                    Properties.Add(property);
+                }
+                else
+                {
+                    Properties.Add(new PrintableProperty(subscription, new PropertyTemplate(subscription.TypeName, null, Color.Black, null)));
+                }
             }
-        }
-
-        public override async Task ParseAsync()
-        {
-            await Task.Run(() =>
-            {
-                Parse();
-            })
-            .ConfigureAwait(true);
         }
     }
 }

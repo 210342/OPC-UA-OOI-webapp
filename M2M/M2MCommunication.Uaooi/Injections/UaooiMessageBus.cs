@@ -1,26 +1,25 @@
-﻿using System;
+﻿using CommonServiceLocator;
 using M2MCommunication.Core;
-using UAOOI.Networking.SemanticData;
-using CommonServiceLocator;
-using UAOOI.Networking.Core;
+using M2MCommunication.Uaooi.Extensions;
+using System;
 using System.ComponentModel.Composition;
 using System.IO;
 using System.Threading.Tasks;
-using M2MCommunication.Uaooi;
-using M2MCommunication.Uaooi.Extensions;
+using UAOOI.Configuration.Networking;
+using UAOOI.Networking.Core;
+using UAOOI.Networking.SemanticData;
 
-namespace M2MCommunication.Uaaoi.Injections
+namespace M2MCommunication.Uaooi.Injections
 {
     [Export(typeof(IMessageBus))]
     public class UaooiMessageBus : DataManagementSetup, IMessageBus
     {
         public UaooiMessageBus()
-        {
-            IServiceLocator _serviceLocator = ServiceLocator.Current;
-            ConfigurationFactory = new Configuration();
-            EncodingFactory = _serviceLocator.GetInstance<IEncodingFactory>();
-            BindingFactory = new ConsumerBindingFactory();
-            MessageHandlerFactory = _serviceLocator.GetInstance<IMessageHandlerFactory>();
+        { 
+            ConfigurationFactory = ServiceLocator.Current.GetInstance<IConfiguration>() as IConfigurationFactory;
+            EncodingFactory = ServiceLocator.Current.GetInstance<IEncodingFactory>();
+            BindingFactory = ServiceLocator.Current.GetInstance<ISubscriptionFactory>() as IBindingFactory;
+            MessageHandlerFactory = ServiceLocator.Current.GetInstance<IMessageHandlerFactory>();
         }
 
         /// <summary>

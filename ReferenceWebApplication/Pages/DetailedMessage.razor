@@ -6,8 +6,10 @@
 @using M2MCommunication.Services
 @using MessageParsing
 
+@implements IDisposable
+
 <div class="container-fluid">
-    <h1 class="text-danger">@ExceptionMessage</h1>
+    <h1 class="text-danger text-center">@ExceptionMessage</h1>
     @if (!IsLayoutHorizontal)
     {
         <div class="row my-1">
@@ -15,12 +17,12 @@
                 <h3><span class="badge badge-primary">Packages received: @PackagesReceived</span></h3>
             </div>
             <div class="col-6 text-center py-2">
-                <h3><span class="badge @bytesReceivedStyle">Bytes received: @BytesReceived</span></h3>
+                <h3><span class="badge @BytesReceivedStyle">Bytes received: @BytesReceived</span></h3>
             </div>
         </div>
     }
     <div class="row my-3 no-gutters">
-        <div class="@imageColumnClass">
+        <div class="@ImageColumnClass">
             <ReferenceWebApplication.Components.ImageMessageParser Parser="Parser" />
         </div>
         @if (IsLayoutHorizontal)
@@ -36,7 +38,7 @@
                 <div class="row my-2">
                     <div class="col-12">
                         <div class="text-center">
-                            <h3><span class="badge @bytesReceivedStyle">Bytes received: @BytesReceived</span></h3>
+                            <h3><span class="badge @BytesReceivedStyle">Bytes received: @BytesReceived</span></h3>
                         </div>
                     </div>
                 </div>
@@ -59,8 +61,8 @@
 @code
 {
     private IMessageBus Bus => BusService?.MessageBus;
-    private string bytesReceivedStyle => BytesReceived > 2048 ? "badge-warning" : "badge-info";
-    private string imageColumnClass => IsLayoutHorizontal ? "col-9" : "col-12";
+    private string BytesReceivedStyle => BytesReceived > 2048 ? "badge-warning" : "badge-info";
+    private string ImageColumnClass => IsLayoutHorizontal ? "col-9" : "col-12";
 
     public int BytesReceived { get; private set; } = 0;
     public int PackagesReceived { get; private set; } = 0;
@@ -69,7 +71,11 @@
 
     protected override async Task OnInitializedAsync()
     {
-        await Bus?.InitialiseAsync(settings, ExceptionHandler);
+        await Task.Run(() =>
+        {
+            Bus?.Initialise(settings, ExceptionHandler);
+            Parser?.Initialise(OnPropertyChangedAsync);
+        });
     }
 
     protected void ExceptionHandler(Exception ex)
@@ -77,15 +83,30 @@
         Logger.LogError(ex, ex.Message);
         if (ex is FileNotFoundException)
         {
-            ExceptionMessage = Localizer.GetString("ConfigurationFileNotFound") ?? "Couldn't find the consumer data configuration file";
+            ExceptionMessage = Localizer.GetString("ConfigurationFileNotFound");
         }
         else if (ex is ArgumentOutOfRangeException)
         {
-            ExceptionMessage = Localizer.GetString("UnsupportedDataType") ?? "Received data type is not supported";
+            ExceptionMessage = Localizer.GetString("UnsupportedDataType");
         }
         else
         {
             ExceptionMessage = ex.Message;
         }
+    }
+
+    protected async Task OnPropertyChangedAsync()
+    {
+        await InvokeAsync(() =>
+        {
+            ++PackagesReceived;
+            StateHasChanged();
+        });
+    }
+
+    public void Dispose()
+    {
+        BusService.Dispose();
+        Parser.Dispose();
     }
 }

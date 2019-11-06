@@ -1,12 +1,10 @@
 ﻿using CommonServiceLocator;
 using M2MCommunication.Core;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.IO;
 using System.Reflection;
-using System.Text;
 
 namespace M2MCommunication.Services
 {

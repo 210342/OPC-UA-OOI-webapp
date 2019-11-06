@@ -1,35 +1,31 @@
-﻿using M2MCommunication;
+﻿using M2MCommunication.Core;
+using M2MCommunication.Services;
 using MessageParsing.Model;
 using Microsoft.Extensions.Localization;
 using System;
-using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Threading.Tasks;
-using M2MCommunication.Core;
 
 namespace MessageParsing
 {
     public class TextMessageParser : MessageParser
     {
         private readonly IStringLocalizer<TextMessageParser> _localizer;
-        
-        public TextMessageParser(IStringLocalizer<TextMessageParser> localizer)
+
+        public TextMessageParser(IStringLocalizer<TextMessageParser> localizer, ConfigurationService configuration, SubscriptionFactoryService subscriptionFactory)
+            : base(configuration, subscriptionFactory)
         {
             _localizer = localizer;
         }
 
-        public override void Parse()
+        public override void Initialise(Func<Task> handler)
         {
             Properties.Clear();
-        }
-
-        public override async Task ParseAsync()
-        {
-            await Task.Run(() =>
+            foreach (ISubscription subscription in Subscribe(handler))
             {
-                Parse();
-            })
-            .ConfigureAwait(true);
+                Properties.Add(new PrintableProperty(subscription, new PropertyTemplate(subscription.TypeName, null, Color.Black, null)));
+            }
         }
     }
 }
