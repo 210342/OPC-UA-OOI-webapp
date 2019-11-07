@@ -12,16 +12,24 @@ namespace M2MCommunication.Services
 
         public UaooiServiceLocator(CompositionContainer compositionContainer)
         {
-            _container = compositionContainer;
+            _container = compositionContainer ?? throw new ArgumentNullException(nameof(compositionContainer));
         }
 
         protected override IEnumerable<object> DoGetAllInstances(Type serviceType)
         {
+            if (serviceType is null)
+            {
+                throw new ArgumentNullException(nameof(serviceType));
+            }
             return _container?.GetExports(serviceType, null, null)?.Select(e => e.Value) ?? Enumerable.Empty<object>();
         }
 
         protected override object DoGetInstance(Type serviceType, string key)
         {
+            if (serviceType is null)
+            {
+                throw new ArgumentNullException(nameof(serviceType));
+            }
             return _container?.GetExports(serviceType, null, key)?.Select(e => e.Value)?.SingleOrDefault();
         }
     }
