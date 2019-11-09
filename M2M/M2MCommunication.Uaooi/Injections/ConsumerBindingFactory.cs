@@ -60,7 +60,7 @@ namespace M2MCommunication.Uaooi.Injections
         {
             if (typeInfo.ContainsMultidimensionalArray())
             {
-                throw new ArgumentOutOfRangeException(nameof(typeInfo.ValueRank));
+                throw new ValueRankOutOfRangeException(nameof(typeInfo.ValueRank));
             }
 
             switch (typeInfo.BuiltInType)

@@ -14,12 +14,21 @@ namespace M2MCommunication.Uaooi.Injections
     [Export(typeof(IMessageBus))]
     public class UaooiMessageBus : DataManagementSetup, IMessageBus
     {
-        public UaooiMessageBus()
+        [ImportingConstructor]
+        public UaooiMessageBus(
+            IConfiguration configuration,
+            IEncodingFactory encodingFactory, 
+            ISubscriptionFactory subscriptionFactory, 
+            IMessageHandlerFactory messageHandlerFactory)
         { 
-            ConfigurationFactory = ServiceLocator.Current.GetInstance<IConfiguration>() as IConfigurationFactory;
-            EncodingFactory = ServiceLocator.Current.GetInstance<IEncodingFactory>();
-            BindingFactory = ServiceLocator.Current.GetInstance<ISubscriptionFactory>() as IBindingFactory;
-            MessageHandlerFactory = ServiceLocator.Current.GetInstance<IMessageHandlerFactory>();
+            ConfigurationFactory = configuration as IConfigurationFactory
+                ?? throw new ComponentNotIntialisedException(nameof(configuration));
+            EncodingFactory = encodingFactory
+                ?? throw new ComponentNotIntialisedException(nameof(encodingFactory));
+            BindingFactory = subscriptionFactory as IBindingFactory
+                ?? throw new ComponentNotIntialisedException(nameof(subscriptionFactory));
+            MessageHandlerFactory = messageHandlerFactory
+                ?? throw new ComponentNotIntialisedException(nameof(messageHandlerFactory));
         }
 
         /// <summary>

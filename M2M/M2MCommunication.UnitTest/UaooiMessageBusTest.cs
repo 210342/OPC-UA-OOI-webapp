@@ -1,75 +1,80 @@
-﻿using M2MCommunication.Services;
+﻿using CommonServiceLocator;
+using M2MCommunication.Core;
+using M2MCommunication.Services;
 using M2MCommunication.Uaooi.Injections;
-using System;
-using System.Collections.Generic;
 using System.Reflection;
-using System.Text;
+using UAOOI.Networking.Core;
+using UAOOI.Networking.SemanticData;
 using Xunit;
 
 namespace M2MCommunicationUnitTest
 {
-    [Collection("DI")]
-    public class UaooiMessageBusTest : IDisposable
+    public class UaooiMessageBusTest
     {
-        private readonly ServiceContainerSetup _setup;
-
-        public UaooiMessageBusTest()
-        {
-            _setup = new ServiceContainerSetup(ServiceContainerSetupTest.Settings);
-        }
-
-        public void Dispose()
-        {
-            _setup.Dispose();
-        }
-
         [Fact]
         public void ConstructorTest()
         {
-            _setup.Initialise();
-            using (UaooiMessageBus bus = new UaooiMessageBus())
+            using (ServiceContainerSetup setup = new ServiceContainerSetup(ServiceContainerSetupTest.Settings))
             {
-                Assert.NotNull(bus.ConfigurationFactory);
-                Assert.NotNull(bus.EncodingFactory);
-                Assert.NotNull(bus.BindingFactory);
-                Assert.NotNull(bus.MessageHandlerFactory);
-                Assert.Null(bus
+                setup.Initialise();
+                IServiceLocator serviceLocator = setup
                     .GetType()
-                    .GetProperty("AssociationsCollection", BindingFlags.NonPublic | BindingFlags.Instance)
-                    .GetValue(bus));
-                Assert.Null(bus
-                    .GetType()
-                    .GetProperty("MessageHandlersCollection", BindingFlags.NonPublic | BindingFlags.Instance)
-                    .GetValue(bus));
+                    .GetProperty("DisposableServiceLocator", BindingFlags.NonPublic | BindingFlags.Instance)
+                    .GetValue(setup) as IServiceLocator;
+                using (UaooiMessageBus bus = new UaooiMessageBus(
+                    serviceLocator.GetInstance<IConfiguration>(),
+                    serviceLocator.GetInstance<IEncodingFactory>(),
+                    serviceLocator.GetInstance<ISubscriptionFactory>(),
+                    serviceLocator.GetInstance<IMessageHandlerFactory>()
+                    ))
+                {
+                    Assert.NotNull(bus.ConfigurationFactory);
+                    Assert.NotNull(bus.EncodingFactory);
+                    Assert.NotNull(bus.BindingFactory);
+                    Assert.NotNull(bus.MessageHandlerFactory);
+                    Assert.Null(bus
+                        .GetType()
+                        .GetProperty("AssociationsCollection", BindingFlags.NonPublic | BindingFlags.Instance)
+                        .GetValue(bus));
+                    Assert.Null(bus
+                        .GetType()
+                        .GetProperty("MessageHandlersCollection", BindingFlags.NonPublic | BindingFlags.Instance)
+                        .GetValue(bus));
+                }
             }
-        }
-
-        [Fact]
-        public void ConstructorWithoutServiceLocatorTest()
-        {
-            CommonServiceLocator.ServiceLocator.SetLocatorProvider(() => null);
-            Assert.Throws<InvalidOperationException>(() => new UaooiMessageBus());
         }
 
         [Fact]
         public void InitialiseTest()
         {
-            _setup.Initialise();
-            using (UaooiMessageBus bus = new UaooiMessageBus())
+            using (ServiceContainerSetup setup = new ServiceContainerSetup(ServiceContainerSetupTest.Settings))
             {
-                bus.Initialise(ServiceContainerSetupTest.Settings);
-                Assert.NotNull(bus.ConfigurationFactory);
-                Assert.NotNull(bus.EncodingFactory);
-                Assert.NotNull(bus.BindingFactory);
-                Assert.NotNull(bus.MessageHandlerFactory);
-                Assert.NotNull(bus
+                setup.Initialise();
+                IServiceLocator serviceLocator = setup
                     .GetType()
-                    .GetProperty("AssociationsCollection", BindingFlags.NonPublic | BindingFlags.Instance)
-                    .GetValue(bus));
-                Assert.NotNull(bus
-                    .GetType()
-                    .GetProperty("MessageHandlersCollection", BindingFlags.NonPublic | BindingFlags.Instance)
-                    .GetValue(bus));
+                    .GetProperty("DisposableServiceLocator", BindingFlags.NonPublic | BindingFlags.Instance)
+                    .GetValue(setup) as IServiceLocator;
+                using (UaooiMessageBus bus = new UaooiMessageBus(
+                    serviceLocator.GetInstance<IConfiguration>(),
+                    serviceLocator.GetInstance<IEncodingFactory>(),
+                    serviceLocator.GetInstance<ISubscriptionFactory>(),
+                    serviceLocator.GetInstance<IMessageHandlerFactory>()
+                ))
+                {
+                    bus.Initialise(ServiceContainerSetupTest.Settings);
+                    Assert.NotNull(bus.ConfigurationFactory);
+                    Assert.NotNull(bus.EncodingFactory);
+                    Assert.NotNull(bus.BindingFactory);
+                    Assert.NotNull(bus.MessageHandlerFactory);
+                    Assert.NotNull(bus
+                        .GetType()
+                        .GetProperty("AssociationsCollection", BindingFlags.NonPublic | BindingFlags.Instance)
+                        .GetValue(bus));
+                    Assert.NotNull(bus
+                        .GetType()
+                        .GetProperty("MessageHandlersCollection", BindingFlags.NonPublic | BindingFlags.Instance)
+                        .GetValue(bus));
+                }
             }
         }
     }
