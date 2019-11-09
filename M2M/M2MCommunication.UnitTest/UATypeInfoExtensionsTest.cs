@@ -89,7 +89,14 @@ namespace M2MCommunicationUnitTest
         [MemberData(nameof(MultidimensionalArrayTypes))]
         public void ContainsMultidimensionalArrayForMultidimensionalArrayTypesTest(UATypeInfo typeInfo)
         {
-            Assert.True(typeInfo.ContainsArray());
+            Assert.True(typeInfo.ContainsMultidimensionalArray());
+        }
+
+        [Theory]
+        [MemberData(nameof(NonMultidimensionalArrayTypes))]
+        public void ContainsMultidimensionalArrayForNonMultidimensionalArrayTypesTest(UATypeInfo typeInfo)
+        {
+            Assert.False(typeInfo.ContainsMultidimensionalArray());
         }
 
         [Theory]
