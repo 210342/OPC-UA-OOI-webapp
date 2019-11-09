@@ -1,12 +1,10 @@
 ﻿using M2MCommunication.Core;
+using M2MCommunication.Core.Exceptions;
 using M2MCommunication.Uaooi.Extensions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.Composition;
-using System.Globalization;
-using System.Linq.Expressions;
-using System.Reflection;
 using UAOOI.Configuration.Networking.Serialization;
 using UAOOI.Networking.SemanticData;
 using UAOOI.Networking.SemanticData.DataRepository;

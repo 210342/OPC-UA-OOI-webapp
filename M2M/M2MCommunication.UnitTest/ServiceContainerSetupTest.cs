@@ -13,7 +13,7 @@ namespace M2MCommunicationUnitTest
     {
         internal static UaLibrarySettings Settings => new UaLibrarySettings()
         {
-            ResourcesDirectory = @"..\..\..\..\..\..\ReferenceWebApplication\wwwroot",
+            ResourcesDirectory = @"..\..\..\..\..\ReferenceWebApplication\wwwroot",
             LibraryDirectory = "M2MCommunication.Uaooi",
             ConsumerConfigurationFile = "ConfigurationDataConsumer.xml"
         };
@@ -27,8 +27,17 @@ namespace M2MCommunicationUnitTest
                     .GetField("_uaLibrarySettings", BindingFlags.NonPublic | BindingFlags.Instance)
                     .GetValue(setup)
                 );
-                Assert.True(Directory.Exists(Path.Combine(Assembly.GetExecutingAssembly().Location, Settings.ResourcesDirectory, Settings.LibraryDirectory)));
-                Assert.True(File.Exists(Path.Combine(Assembly.GetExecutingAssembly().Location, Settings.ResourcesDirectory, Settings.LibraryDirectory, Settings.ConsumerConfigurationFile)));
+                Assert.True(Directory.Exists(Path.Combine(
+                    Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), 
+                    Settings.ResourcesDirectory, 
+                    Settings.LibraryDirectory
+                )));
+                Assert.True(File.Exists(Path.Combine(
+                    Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), 
+                    Settings.ResourcesDirectory, 
+                    Settings.LibraryDirectory, 
+                    Settings.ConsumerConfigurationFile
+                )));
             }
         }
 

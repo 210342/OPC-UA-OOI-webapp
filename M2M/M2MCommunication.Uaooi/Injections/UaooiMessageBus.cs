@@ -1,6 +1,6 @@
 ﻿using CommonServiceLocator;
 using M2MCommunication.Core;
-using M2MCommunication.Uaooi.Extensions;
+using M2MCommunication.Core.Exceptions;
 using System;
 using System.ComponentModel.Composition;
 using System.IO;
@@ -49,7 +49,9 @@ namespace M2MCommunication.Uaooi.Injections
                     ?.Initialise(Path.Combine(Directory.GetCurrentDirectory(), settings.ResourcesDirectory, settings.LibraryDirectory, settings.ConsumerConfigurationFile));
                 Start();
             }
-            catch (Exception ex) when (ex is ConfigurationFileNotFoundException || ex is ValueRankOutOfRangeException || ex is UnsupportedTypeException)
+            catch (Exception ex) when (ex is ConfigurationFileNotFoundException 
+                    || ex is ValueRankOutOfRangeException 
+                    || ex is UnsupportedTypeException)
             {
                 exceptionHandler?.Invoke(ex);
             }

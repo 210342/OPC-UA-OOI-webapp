@@ -7,32 +7,34 @@ using System.ComponentModel.Composition.Hosting;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using Xunit;
 
 namespace M2MCommunicationUnitTest
 {
+    [Collection("DI")]
     public class UaooiServiceLocatorTest
     {
         [Fact]
         public void ConstructorTest()
         {
-            AggregateCatalog catalog = new AggregateCatalog(
+            using (AggregateCatalog catalog = new AggregateCatalog(
                 new DirectoryCatalog(
                     Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), ServiceContainerSetupTest.Settings.LibraryDirectory)
                 )
-            );
-            CompositionContainer container = new CompositionContainer(catalog);
-            container.ComposeExportedValue(catalog);
-            IServiceLocator serviceLocator = Activator.CreateInstance(
-                Assembly.GetAssembly(typeof(ServiceContainerSetup))
-                    .DefinedTypes
-                    .Where(type => type.Name.Equals("UaooiServiceLocator"))
-                    .FirstOrDefault(), 
-                new[] {container}
-            ) as IServiceLocator;
-            Assert.NotNull(serviceLocator);
-            Assert.Equal(container, serviceLocator.GetType().GetField("_container", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(serviceLocator) as CompositionContainer);
+            ))
+            using (CompositionContainer container = new CompositionContainer(catalog))
+            {
+                container.ComposeExportedValue(catalog);
+                IServiceLocator serviceLocator = Activator.CreateInstance(
+                    Assembly.GetAssembly(typeof(ServiceContainerSetup))
+                        .DefinedTypes
+                        .Where(type => type.Name.Equals("UaooiServiceLocator"))
+                        .FirstOrDefault(),
+                    new[] { container }
+                ) as IServiceLocator;
+                Assert.NotNull(serviceLocator);
+                Assert.NotEqual(container, serviceLocator.GetType().GetField("_container", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(serviceLocator) as CompositionContainer);
+            }
         }
 
         [Fact]
@@ -57,65 +59,71 @@ namespace M2MCommunicationUnitTest
         [Fact]
         public void DoGetAllInstancesTest()
         {
-            AggregateCatalog catalog = new AggregateCatalog(
+            using (AggregateCatalog catalog = new AggregateCatalog(
                 new DirectoryCatalog(
                     Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), ServiceContainerSetupTest.Settings.LibraryDirectory)
                 )
-            );
-            CompositionContainer container = new CompositionContainer(catalog);
-            container.ComposeExportedValue(catalog);
-            IServiceLocator serviceLocator = Activator.CreateInstance(
-                Assembly.GetAssembly(typeof(ServiceContainerSetup))
-                    .DefinedTypes
-                    .Where(type => type.Name.Equals("UaooiServiceLocator"))
-                    .FirstOrDefault(),
-                new[] { container }
-            ) as IServiceLocator;
-            ServiceLocator.SetLocatorProvider(() => serviceLocator);
-            var tmp = container?.GetExports(typeof(IMessageBus), null, null);
-            Assert.NotEmpty(serviceLocator.GetAllInstances(typeof(IMessageBus)));
+            ))
+            using (CompositionContainer container = new CompositionContainer(catalog))
+            {
+                container.ComposeExportedValue(catalog);
+                IServiceLocator serviceLocator = Activator.CreateInstance(
+                    Assembly.GetAssembly(typeof(ServiceContainerSetup))
+                        .DefinedTypes
+                        .Where(type => type.Name.Equals("UaooiServiceLocator"))
+                        .FirstOrDefault(),
+                    new[] { container }
+                ) as IServiceLocator;
+                ServiceLocator.SetLocatorProvider(() => serviceLocator);
+                var tmp = container?.GetExports(typeof(IMessageBus), null, null);
+                Assert.NotEmpty(serviceLocator.GetAllInstances(typeof(IMessageBus)));
+            }
         }
 
         [Fact]
         public void DoGetAllInstancesNullTest()
         {
-            AggregateCatalog catalog = new AggregateCatalog(
+            using (AggregateCatalog catalog = new AggregateCatalog(
                 new DirectoryCatalog(
                     Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), ServiceContainerSetupTest.Settings.LibraryDirectory)
                 )
-            );
-            CompositionContainer container = new CompositionContainer(catalog);
-            container.ComposeExportedValue(catalog);
-            IServiceLocator serviceLocator = Activator.CreateInstance(
-                Assembly.GetAssembly(typeof(ServiceContainerSetup))
-                    .DefinedTypes
-                    .Where(type => type.Name.Equals("UaooiServiceLocator"))
-                    .FirstOrDefault(),
-                new[] { container }
-            ) as IServiceLocator;
-            ServiceLocator.SetLocatorProvider(() => serviceLocator);
-            Assert.Throws<NullReferenceException>(() => serviceLocator.GetAllInstances(null));
+            ))
+            using (CompositionContainer container = new CompositionContainer(catalog))
+            {
+                container.ComposeExportedValue(catalog);
+                IServiceLocator serviceLocator = Activator.CreateInstance(
+                    Assembly.GetAssembly(typeof(ServiceContainerSetup))
+                        .DefinedTypes
+                        .Where(type => type.Name.Equals("UaooiServiceLocator"))
+                        .FirstOrDefault(),
+                    new[] { container }
+                ) as IServiceLocator;
+                ServiceLocator.SetLocatorProvider(() => serviceLocator);
+                Assert.Throws<NullReferenceException>(() => serviceLocator.GetAllInstances(null));
+            }
         }
 
         [Fact]
         public void DoGetAllInstancesMissingTypeTest()
         {
-            AggregateCatalog catalog = new AggregateCatalog(
+            using (AggregateCatalog catalog = new AggregateCatalog(
                 new DirectoryCatalog(
                     Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), ServiceContainerSetupTest.Settings.LibraryDirectory)
                 )
-            );
-            CompositionContainer container = new CompositionContainer(catalog);
-            container.ComposeExportedValue(catalog);
-            IServiceLocator serviceLocator = Activator.CreateInstance(
-                Assembly.GetAssembly(typeof(ServiceContainerSetup))
-                    .DefinedTypes
-                    .Where(type => type.Name.Equals("UaooiServiceLocator"))
-                    .FirstOrDefault(),
-                new[] { container }
-            ) as IServiceLocator;
-            ServiceLocator.SetLocatorProvider(() => serviceLocator);
-            Assert.Empty(serviceLocator.GetAllInstances(typeof(UaooiServiceLocatorTest)));
+            ))
+            using (CompositionContainer container = new CompositionContainer(catalog))
+            {
+                container.ComposeExportedValue(catalog);
+                IServiceLocator serviceLocator = Activator.CreateInstance(
+                    Assembly.GetAssembly(typeof(ServiceContainerSetup))
+                        .DefinedTypes
+                        .Where(type => type.Name.Equals("UaooiServiceLocator"))
+                        .FirstOrDefault(),
+                    new[] { container }
+                ) as IServiceLocator;
+                ServiceLocator.SetLocatorProvider(() => serviceLocator);
+                Assert.Empty(serviceLocator.GetAllInstances(typeof(UaooiServiceLocatorTest)));
+            }
         }
     }
 }

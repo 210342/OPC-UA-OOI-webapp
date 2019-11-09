@@ -3,6 +3,7 @@
 @using Microsoft.Extensions.Localization
 @using Microsoft.Extensions.Logging
 @using M2MCommunication.Core
+@using M2MCommunication.Core.Exceptions
 @using M2MCommunication.Services
 @using MessageParsing
 
@@ -81,13 +82,17 @@
     protected void ExceptionHandler(Exception ex)
     {
         Logger.LogError(ex, ex.Message);
-        if (ex is FileNotFoundException)
+        if (ex is ConfigurationFileNotFoundException)
         {
             ExceptionMessage = Localizer.GetString("ConfigurationFileNotFound");
         }
-        else if (ex is ArgumentOutOfRangeException)
+        else if (ex is UnsupportedTypeException)
         {
             ExceptionMessage = Localizer.GetString("UnsupportedDataType");
+        }
+        else if (ex is ValueRankOutOfRangeException)
+        {
+            ExceptionMessage = Localizer.GetString("UnsupportedValueRank");
         }
         else
         {

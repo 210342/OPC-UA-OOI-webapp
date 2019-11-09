@@ -21,10 +21,14 @@ namespace M2MCommunication.Uaooi
             }
         }
 
-        public event PropertyChangedEventHandler ValueUpdated;
+        internal event PropertyChangedEventHandler ValueUpdated;
 
         public Subscription(UATypeInfo typeInfo, string typeName, object value)
         {
+            if (string.IsNullOrWhiteSpace(typeName))
+            {
+                throw new ArgumentException($"{nameof(typeName)} is null or consists only of white spaces", nameof(typeName));
+            }
             TypeInfo = typeInfo;
             TypeName = typeName;
             Value = value;
