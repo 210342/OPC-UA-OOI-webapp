@@ -5,7 +5,7 @@ namespace M2MCommunication.Services
 {
     public class SubscriptionFactoryService
     {
-        public ISubscriptionFactory SubscriptionFactory { get; }
+        public ISubscriptionFactory SubscriptionFactory { get; private set; }
 
         public SubscriptionFactoryService()
         {

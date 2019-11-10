@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\M2M\M2MCommunication.Core\M2MCommunication.Core.csproj" />
+    <ProjectReference Include="..\..\M2M\M2MCommunication.Services\M2MCommunication.Services.csproj" />
+  </ItemGroup>
+
+</Project>

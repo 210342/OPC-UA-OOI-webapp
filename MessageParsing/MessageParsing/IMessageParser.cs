@@ -1,4 +1,4 @@
-﻿using MessageParsing.Model;
+﻿using InterfaceModel.Model;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;

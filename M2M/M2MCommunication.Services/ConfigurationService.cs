@@ -5,7 +5,7 @@ namespace M2MCommunication.Services
 {
     public class ConfigurationService
     {
-        public IConfiguration Configuration { get; }
+        public IConfiguration Configuration { get; private set; }
 
         public ConfigurationService()
         {

@@ -1,5 +1,5 @@
 ﻿using M2MCommunication.Core;
-using M2MCommunication.Uaooi.Extensions;
+using M2MCommunication.Core.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
@@ -14,7 +14,7 @@ namespace M2MCommunication.Uaooi.Injections
     [Export(typeof(IConfiguration))]
     public class Configuration : ConfigurationFactoryBase<ConfigurationData>, IConfiguration
     {
-        protected internal string _configurationFileName;
+        protected internal string _configurationFileName = string.Empty;
 
         public override event EventHandler<EventArgs> OnAssociationConfigurationChange;
         public override event EventHandler<EventArgs> OnMessageHandlerConfigurationChange;
@@ -35,6 +35,11 @@ namespace M2MCommunication.Uaooi.Injections
 
         private ConfigurationData LoadConfig()
         {
+            if (string.IsNullOrWhiteSpace(_configurationFileName))
+            {
+                throw new ComponentNotIntialisedException($"{nameof(_configurationFileName)} was not initialised");
+            }
+
             FileInfo configurationFile = new FileInfo(_configurationFileName);
             if (configurationFile.Exists)
             {
@@ -54,7 +59,7 @@ namespace M2MCommunication.Uaooi.Injections
 
         public IEnumerable<string> GetDataTypeNames()
         {
-            return Configuration
+            return GetConfiguration()
                 ?.DataSets
                 ?.SelectMany(dataset => dataset.DataSet)
                 ?.Select(fieldMetadata => fieldMetadata.ProcessValueName)

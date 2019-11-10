@@ -1,6 +1,5 @@
-﻿using CommonServiceLocator;
-using M2MCommunication.Core;
-using M2MCommunication.Uaooi.Extensions;
+﻿using M2MCommunication.Core;
+using M2MCommunication.Core.Exceptions;
 using System;
 using System.ComponentModel.Composition;
 using System.IO;
@@ -14,12 +13,21 @@ namespace M2MCommunication.Uaooi.Injections
     [Export(typeof(IMessageBus))]
     public class UaooiMessageBus : DataManagementSetup, IMessageBus
     {
-        public UaooiMessageBus()
-        { 
-            ConfigurationFactory = ServiceLocator.Current.GetInstance<IConfiguration>() as IConfigurationFactory;
-            EncodingFactory = ServiceLocator.Current.GetInstance<IEncodingFactory>();
-            BindingFactory = ServiceLocator.Current.GetInstance<ISubscriptionFactory>() as IBindingFactory;
-            MessageHandlerFactory = ServiceLocator.Current.GetInstance<IMessageHandlerFactory>();
+        [ImportingConstructor]
+        public UaooiMessageBus(
+            IConfiguration configuration,
+            IEncodingFactory encodingFactory,
+            ISubscriptionFactory subscriptionFactory,
+            IMessageHandlerFactory messageHandlerFactory)
+        {
+            ConfigurationFactory = configuration as IConfigurationFactory
+                ?? throw new ComponentNotIntialisedException(nameof(configuration));
+            EncodingFactory = encodingFactory
+                ?? throw new ComponentNotIntialisedException(nameof(encodingFactory));
+            BindingFactory = subscriptionFactory as IBindingFactory
+                ?? throw new ComponentNotIntialisedException(nameof(subscriptionFactory));
+            MessageHandlerFactory = messageHandlerFactory
+                ?? throw new ComponentNotIntialisedException(nameof(messageHandlerFactory));
         }
 
         /// <summary>
@@ -49,7 +57,9 @@ namespace M2MCommunication.Uaooi.Injections
                     ?.Initialise(Path.Combine(Directory.GetCurrentDirectory(), settings.ResourcesDirectory, settings.LibraryDirectory, settings.ConsumerConfigurationFile));
                 Start();
             }
-            catch (Exception ex) when (ex is ConfigurationFileNotFoundException || ex is ValueRankOutOfRangeException || ex is UnsupportedTypeException)
+            catch (Exception ex) when (ex is ConfigurationFileNotFoundException
+                    || ex is ValueRankOutOfRangeException
+                    || ex is UnsupportedTypeException)
             {
                 exceptionHandler?.Invoke(ex);
             }

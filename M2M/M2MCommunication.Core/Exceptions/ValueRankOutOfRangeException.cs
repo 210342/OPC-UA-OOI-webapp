@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace M2MCommunication.Uaooi.Extensions
+namespace M2MCommunication.Core.Exceptions
 {
     public class ValueRankOutOfRangeException : ArgumentOutOfRangeException
     {

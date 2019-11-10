@@ -1,4 +1,5 @@
-﻿using System;
+﻿using M2MCommunication.Core.Exceptions;
+using System;
 using UAOOI.Configuration.Networking.Serialization;
 
 namespace M2MCommunication.Uaooi.Extensions
@@ -51,7 +52,7 @@ namespace M2MCommunication.Uaooi.Extensions
                 case BuiltInType.Int32:
                     return typeInfo.ValueRank == 1 ? typeof(int[]) : typeof(int);
                 case BuiltInType.UInt32:
-                    return typeInfo.ValueRank == 1 ? typeof(uint[]) : typeof(int);
+                    return typeInfo.ValueRank == 1 ? typeof(uint[]) : typeof(uint);
                 case BuiltInType.Int64:
                     return typeInfo.ValueRank == 1 ? typeof(long[]) : typeof(long);
                 case BuiltInType.UInt64:

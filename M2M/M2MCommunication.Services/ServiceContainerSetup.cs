@@ -13,6 +13,7 @@ namespace M2MCommunication.Services
         private readonly UaLibrarySettings _uaLibrarySettings;
         internal AggregateCatalog AggregateCatalog { get; private set; }
         internal CompositionContainer Container { get; private set; }
+        internal IServiceLocator DisposableServiceLocator { get; private set; }
 
         public ServiceContainerSetup(UaLibrarySettings settings)
         {
@@ -28,7 +29,8 @@ namespace M2MCommunication.Services
             );
             Container = new CompositionContainer(AggregateCatalog);
             Container.ComposeExportedValue(AggregateCatalog);
-            ServiceLocator.SetLocatorProvider(() => new UaooiServiceLocator(Container));
+            DisposableServiceLocator = new UaooiServiceLocator(Container);
+            ServiceLocator.SetLocatorProvider(() => DisposableServiceLocator);
             return this;
         }
 
@@ -43,9 +45,11 @@ namespace M2MCommunication.Services
                 {
                     Container?.Dispose();
                     AggregateCatalog?.Dispose();
+                    (DisposableServiceLocator as UaooiServiceLocator)?.Dispose();
                 }
                 Container = null;
                 AggregateCatalog = null;
+                DisposableServiceLocator = null;
 
                 disposedValue = true;
             }

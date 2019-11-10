@@ -1,3 +1,4 @@
+using InterfaceModel.Repositories;
 using M2MCommunication.Core;
 using M2MCommunication.Services;
 using MessageParsing;
@@ -33,6 +34,7 @@ namespace ReferenceWebApplication
             services.AddSingleton<MessageBusService>();
             services.AddSingleton<ConfigurationService>();
             services.AddTransient<IMessageParser, ImageMessageParser>();
+            services.AddTransient<IImageTemplateRepository, ImageTemplateRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

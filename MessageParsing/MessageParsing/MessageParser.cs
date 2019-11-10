@@ -1,9 +1,8 @@
-﻿using M2MCommunication.Core;
+﻿using InterfaceModel.Model;
+using M2MCommunication.Core;
 using M2MCommunication.Services;
-using MessageParsing.Model;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -11,11 +10,6 @@ namespace MessageParsing
 {
     public abstract class MessageParser : IMessageParser
     {
-        /// <summary>
-        /// For IDisposable implementation
-        /// </summary>
-        private IEnumerable<ISubscription> _subscriptions;
-
         protected internal IConfiguration Configuration { get; }
         protected internal ISubscriptionFactory SubscriptionFactory { get; }
         protected internal ICollection<IProperty> Properties { get; } = new List<IProperty>();
@@ -42,16 +36,40 @@ namespace MessageParsing
 
         protected internal IEnumerable<ISubscription> Subscribe(Func<Task> handler)
         {
-            PropertyChangedEventHandler propertyChangedEventHandler = (sender, args) => Task.Run(() => handler?.Invoke());
             _subscriptions = Configuration
                 .GetDataTypeNames()
-                .Select(typeName => SubscriptionFactory.Subscribe(typeName, propertyChangedEventHandler));
+                .Select(typeName => SubscriptionFactory.Subscribe(typeName, (sender, args) => Task.Run(() => handler?.Invoke())));
             return _subscriptions;
         }
 
+        #region IDisposable Support
+        /// <summary>
+        /// For IDisposable implementation
+        /// </summary>
+        private IEnumerable<ISubscription> _subscriptions = Enumerable.Empty<ISubscription>();
+        private bool disposedValue = false; // To detect redundant calls
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    _subscriptions?.ToList()?.ForEach(subscription => subscription.Disable());
+                }
+
+                _subscriptions = Enumerable.Empty<ISubscription>();
+
+                disposedValue = true;
+            }
+        }
+
+        // This code added to correctly implement the disposable pattern.
         public void Dispose()
         {
-            _subscriptions.ToList().ForEach(subscription => subscription.Disable());
+            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+            Dispose(true);
         }
+        #endregion
     }
 }

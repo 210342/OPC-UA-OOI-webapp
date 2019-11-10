@@ -6,19 +6,26 @@
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
 
+
+  <ItemGroup>
+    <UaooiLibraries Include="$(TargetDir)UAOOI*.dll" />
+    <UaooiLibraries Include="$(TargetDir)*Uaooi.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <UaooiConfiguration Include="$(ProjectDir)*Configuration*.xml" />
+  </ItemGroup>
   
   <Target Name="PostBuild" BeforeTargets="PostBuildEvent">
-    <ItemGroup>
-      <UaooiLibraries Include="$(TargetDir)UAOOI*.dll" />
-      <UaooiLibraries Include="$(TargetDir)*Uaooi.dll" />
-    </ItemGroup>
-    <ItemGroup>
-      <UaooiConfiguration Include="$(ProjectDir)*Configuration*.xml" />
-    </ItemGroup>
     <MakeDir Directories="$(SolutionDir)\ReferenceWebApplication\bin\$(ConfigurationName)\netcoreapp3.0\M2MCommunication.Uaooi" />
     <Copy SourceFiles="@(UaooiLibraries)" DestinationFolder="$(SolutionDir)\ReferenceWebApplication\bin\$(ConfigurationName)\netcoreapp3.0\M2MCommunication.Uaooi" />
     <MakeDir Directories="$(SolutionDir)\ReferenceWebApplication\ReferenceWebApplication\wwwroot\M2MCommunication.Uaooi" />
     <Copy SourceFiles="@(UaooiConfiguration)" DestinationFolder="$(SolutionDir)\ReferenceWebApplication\wwwroot\M2MCommunication.Uaooi" />
+  </Target>
+
+  <Target Name="PostBuildUnitTest" BeforeTargets="PostBuildEvent" Condition="'$(ConfigurationName)'=='Debug'">
+    <MakeDir Directories="$(ProjectDir)\..\M2MCommunication.UnitTest\bin\$(ConfigurationName)\netcoreapp2.2\M2MCommunication.Uaooi" />
+    <Copy SourceFiles="@(UaooiLibraries)" DestinationFolder="$(ProjectDir)\..\M2MCommunication.UnitTest\bin\$(ConfigurationName)\netcoreapp2.2\M2MCommunication.Uaooi" />
+    <Copy SourceFiles="@(UaooiConfiguration)" DestinationFolder="$(ProjectDir)\..\M2MCommunication.UnitTest\bin\$(ConfigurationName)\netcoreapp2.2\M2MCommunication.Uaooi" /> 
   </Target>
   
   <ItemGroup>

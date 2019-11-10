@@ -2,9 +2,9 @@
 using System.IO;
 using System.Runtime.Serialization;
 
-namespace M2MCommunication.Uaooi.Extensions
+namespace M2MCommunication.Core.Exceptions
 {
-    class ConfigurationFileNotFoundException : FileNotFoundException
+    public class ConfigurationFileNotFoundException : FileNotFoundException
     {
         public ConfigurationFileNotFoundException()
         {

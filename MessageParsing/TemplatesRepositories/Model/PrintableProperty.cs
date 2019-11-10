@@ -1,7 +1,7 @@
 ﻿using M2MCommunication.Core;
 using System.Drawing;
 
-namespace MessageParsing.Model
+namespace InterfaceModel.Model
 {
     public class PrintableProperty : BaseProperty
     {
