@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace MessageParsing.Model
+namespace InterfaceModel.Model
 {
     public interface IPropertyTemplate
     {

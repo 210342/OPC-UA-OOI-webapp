@@ -1,6 +1,6 @@
 ﻿using M2MCommunication.Core;
 
-namespace MessageParsing.Model
+namespace InterfaceModel.Model
 {
     public class DrawableProperty : BaseProperty
     {

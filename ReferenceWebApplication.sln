@@ -28,6 +28,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "M2MCommunication.Services",
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MessageParsing", "MessageParsing", "{2EA6E60B-78D7-467A-9110-C82366663634}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InterfaceModel", "MessageParsing\TemplatesRepositories\InterfaceModel.csproj", "{91C5851C-09C5-4519-AC4A-6EBA44F7D940}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -62,6 +64,10 @@ Global
 		{D246D52E-AB5A-4611-82F6-B15FA8BCF226}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D246D52E-AB5A-4611-82F6-B15FA8BCF226}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D246D52E-AB5A-4611-82F6-B15FA8BCF226}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91C5851C-09C5-4519-AC4A-6EBA44F7D940}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91C5851C-09C5-4519-AC4A-6EBA44F7D940}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91C5851C-09C5-4519-AC4A-6EBA44F7D940}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91C5851C-09C5-4519-AC4A-6EBA44F7D940}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -73,6 +79,7 @@ Global
 		{AB6D12D1-36D6-4EA6-86C6-1080E677E6FC} = {2EA6E60B-78D7-467A-9110-C82366663634}
 		{FDC21CF4-4C4D-4664-BC54-E654A46E12B1} = {6BC219BE-5C42-4BBB-9788-EFBA2C5C0D63}
 		{D246D52E-AB5A-4611-82F6-B15FA8BCF226} = {6BC219BE-5C42-4BBB-9788-EFBA2C5C0D63}
+		{91C5851C-09C5-4519-AC4A-6EBA44F7D940} = {2EA6E60B-78D7-467A-9110-C82366663634}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AAB14A48-A5B4-4969-9BF5-2754D3E105A6}

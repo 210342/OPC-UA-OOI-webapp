@@ -28,14 +28,14 @@ namespace M2MCommunicationUnitTest
                     .GetValue(setup)
                 );
                 Assert.True(Directory.Exists(Path.Combine(
-                    Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), 
-                    Settings.ResourcesDirectory, 
+                    Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
+                    Settings.ResourcesDirectory,
                     Settings.LibraryDirectory
                 )));
                 Assert.True(File.Exists(Path.Combine(
-                    Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), 
-                    Settings.ResourcesDirectory, 
-                    Settings.LibraryDirectory, 
+                    Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
+                    Settings.ResourcesDirectory,
+                    Settings.LibraryDirectory,
                     Settings.ConsumerConfigurationFile
                 )));
             }
@@ -59,7 +59,7 @@ namespace M2MCommunicationUnitTest
                         .GetAssembly(setup.GetType())
                         .DefinedTypes
                         .Where(type => type.Name.Equals("UaooiServiceLocator"))
-                        .FirstOrDefault(), 
+                        .FirstOrDefault(),
                     ServiceLocator.Current);
                 Assert.NotEmpty(catalog);
             }

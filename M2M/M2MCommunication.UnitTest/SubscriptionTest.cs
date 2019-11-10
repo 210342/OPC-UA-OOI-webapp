@@ -1,9 +1,6 @@
 ﻿using M2MCommunication.Uaooi;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Reflection;
-using System.Text;
 using UAOOI.Configuration.Networking.Serialization;
 using Xunit;
 
@@ -12,11 +9,11 @@ namespace M2MCommunicationUnitTest
     public class SubscriptionTest
     {
         private static readonly string _typeName = "the name of the type";
-        
+
         [Fact]
         public void ConstructorTest()
         {
-            var typeInfo = new UATypeInfo(BuiltInType.DateTime);
+            UATypeInfo typeInfo = new UATypeInfo(BuiltInType.DateTime);
             Subscription subscription = new Subscription(typeInfo, _typeName, DateTime.MinValue);
             Assert.NotNull(subscription.TypeInfo);
             Assert.NotNull(subscription.Value);

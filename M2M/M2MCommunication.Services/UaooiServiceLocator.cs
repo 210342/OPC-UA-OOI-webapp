@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace M2MCommunication.Services
 {
-    class UaooiServiceLocator : ServiceLocatorImplBase, IDisposable
+    internal class UaooiServiceLocator : ServiceLocatorImplBase, IDisposable
     {
         private readonly CompositionContainer _container;
 

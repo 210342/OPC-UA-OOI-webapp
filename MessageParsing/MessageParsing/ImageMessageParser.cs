@@ -1,6 +1,7 @@
-﻿using M2MCommunication.Core;
+﻿using InterfaceModel.Model;
+using InterfaceModel.Repositories;
+using M2MCommunication.Core;
 using M2MCommunication.Services;
-using MessageParsing.Model;
 using System;
 using System.Drawing;
 using System.Linq;
@@ -10,21 +11,27 @@ namespace MessageParsing
 {
     public class ImageMessageParser : MessageParser
     {
+        protected internal IImageTemplateRepository ImageTemplateRepository { get; }
         public ImageTemplate ImageTemplate { get; private set; }
 
-        public ImageMessageParser(ConfigurationService configuration, SubscriptionFactoryService subscriptionFactory)
-            : base(configuration, subscriptionFactory) { }
+        public ImageMessageParser(ConfigurationService configuration, SubscriptionFactoryService subscriptionFactory, IImageTemplateRepository imageTemplateRepository)
+            : base(configuration, subscriptionFactory)
+        {
+            ImageTemplateRepository = imageTemplateRepository;
+        }
 
         public override void Initialise(Func<Task> handler)
         {
-            ImageTemplate = new ImageTemplate(Guid.NewGuid(), @"Template.jpg", 1300, 480);
+            ImageTemplate = ImageTemplateRepository.GetImageTemplateById(Guid.NewGuid());
 
             foreach (ISubscription subscription in Subscribe(handler))
             {
-                if (ImageTemplate.Properties.Where(p => p.Template.Name.Equals(subscription.TypeName)).FirstOrDefault() is IProperty property)
+                if (ImageTemplate
+                    .PropertyTemplates
+                    .Where(p => p.Name.Equals(subscription.TypeName))
+                    .FirstOrDefault() is IPropertyTemplate propertyTemplate)
                 {
-                    property.Subscription = subscription;
-                    Properties.Add(property);
+                    Properties.Add(new DrawableProperty(subscription, propertyTemplate));
                 }
                 else
                 {

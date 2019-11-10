@@ -1,4 +1,5 @@
-﻿using MessageParsing.Model;
+﻿using InterfaceModel.Model;
+using MessageParsingUnitTest.Mocks;
 using System.Drawing;
 using Xunit;
 

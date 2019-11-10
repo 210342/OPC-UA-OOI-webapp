@@ -2,7 +2,6 @@
 using M2MCommunication.Uaooi.Extensions;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using UAOOI.Configuration.Networking.Serialization;
 using Xunit;
 
@@ -68,7 +67,7 @@ namespace M2MCommunicationUnitTest
                 new object[] { BuiltInType.DataValue },
                 new object[] { BuiltInType.Variant },
                 new object[] { BuiltInType.DiagnosticInfo },
-                new object[] { BuiltInType.Enumeration } 
+                new object[] { BuiltInType.Enumeration }
             };
 
         [Theory]

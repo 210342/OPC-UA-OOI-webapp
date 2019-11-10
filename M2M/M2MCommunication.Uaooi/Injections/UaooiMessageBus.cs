@@ -1,5 +1,4 @@
-﻿using CommonServiceLocator;
-using M2MCommunication.Core;
+﻿using M2MCommunication.Core;
 using M2MCommunication.Core.Exceptions;
 using System;
 using System.ComponentModel.Composition;
@@ -17,10 +16,10 @@ namespace M2MCommunication.Uaooi.Injections
         [ImportingConstructor]
         public UaooiMessageBus(
             IConfiguration configuration,
-            IEncodingFactory encodingFactory, 
-            ISubscriptionFactory subscriptionFactory, 
+            IEncodingFactory encodingFactory,
+            ISubscriptionFactory subscriptionFactory,
             IMessageHandlerFactory messageHandlerFactory)
-        { 
+        {
             ConfigurationFactory = configuration as IConfigurationFactory
                 ?? throw new ComponentNotIntialisedException(nameof(configuration));
             EncodingFactory = encodingFactory
@@ -58,8 +57,8 @@ namespace M2MCommunication.Uaooi.Injections
                     ?.Initialise(Path.Combine(Directory.GetCurrentDirectory(), settings.ResourcesDirectory, settings.LibraryDirectory, settings.ConsumerConfigurationFile));
                 Start();
             }
-            catch (Exception ex) when (ex is ConfigurationFileNotFoundException 
-                    || ex is ValueRankOutOfRangeException 
+            catch (Exception ex) when (ex is ConfigurationFileNotFoundException
+                    || ex is ValueRankOutOfRangeException
                     || ex is UnsupportedTypeException)
             {
                 exceptionHandler?.Invoke(ex);

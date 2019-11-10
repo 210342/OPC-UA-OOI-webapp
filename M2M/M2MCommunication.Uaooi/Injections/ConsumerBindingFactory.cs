@@ -66,64 +66,64 @@ namespace M2MCommunication.Uaooi.Injections
             switch (typeInfo.BuiltInType)
             {
                 case BuiltInType.Boolean:
-                    return typeInfo.ContainsArray() 
-                        ? Bind<bool[]>(typeName, typeInfo) 
+                    return typeInfo.ContainsArray()
+                        ? Bind<bool[]>(typeName, typeInfo)
                         : Bind<bool>(typeName, typeInfo);
                 case BuiltInType.SByte:
-                    return typeInfo.ContainsArray() 
-                        ? Bind<sbyte[]>(typeName, typeInfo) 
+                    return typeInfo.ContainsArray()
+                        ? Bind<sbyte[]>(typeName, typeInfo)
                         : Bind<sbyte>(typeName, typeInfo);
                 case BuiltInType.Byte:
-                    return typeInfo.ContainsArray() 
-                        ? Bind<byte[]>(typeName, typeInfo) 
+                    return typeInfo.ContainsArray()
+                        ? Bind<byte[]>(typeName, typeInfo)
                         : Bind<byte>(typeName, typeInfo);
                 case BuiltInType.Int16:
-                    return typeInfo.ContainsArray() 
-                        ? Bind<short[]>(typeName, typeInfo) 
+                    return typeInfo.ContainsArray()
+                        ? Bind<short[]>(typeName, typeInfo)
                         : Bind<short>(typeName, typeInfo);
                 case BuiltInType.UInt16:
-                    return typeInfo.ContainsArray() 
-                        ? Bind<ushort[]>(typeName, typeInfo) 
+                    return typeInfo.ContainsArray()
+                        ? Bind<ushort[]>(typeName, typeInfo)
                         : Bind<ushort>(typeName, typeInfo);
                 case BuiltInType.Int32:
-                    return typeInfo.ContainsArray() 
-                        ? Bind<int[]>(typeName, typeInfo) 
+                    return typeInfo.ContainsArray()
+                        ? Bind<int[]>(typeName, typeInfo)
                         : Bind<int>(typeName, typeInfo);
                 case BuiltInType.UInt32:
-                    return typeInfo.ContainsArray() 
-                        ? Bind<uint[]>(typeName, typeInfo) 
+                    return typeInfo.ContainsArray()
+                        ? Bind<uint[]>(typeName, typeInfo)
                         : Bind<uint>(typeName, typeInfo);
                 case BuiltInType.Int64:
-                    return typeInfo.ContainsArray() 
-                        ? Bind<long[]>(typeName, typeInfo) 
+                    return typeInfo.ContainsArray()
+                        ? Bind<long[]>(typeName, typeInfo)
                         : Bind<long>(typeName, typeInfo);
                 case BuiltInType.UInt64:
-                    return typeInfo.ContainsArray() 
-                        ? Bind<ulong[]>(typeName, typeInfo) 
+                    return typeInfo.ContainsArray()
+                        ? Bind<ulong[]>(typeName, typeInfo)
                         : Bind<ulong>(typeName, typeInfo);
                 case BuiltInType.Float:
-                    return typeInfo.ContainsArray() 
-                        ? Bind<float[]>(typeName, typeInfo) 
+                    return typeInfo.ContainsArray()
+                        ? Bind<float[]>(typeName, typeInfo)
                         : Bind<float>(typeName, typeInfo);
                 case BuiltInType.Double:
-                    return typeInfo.ContainsArray() 
-                        ? Bind<double[]>(typeName, typeInfo) 
+                    return typeInfo.ContainsArray()
+                        ? Bind<double[]>(typeName, typeInfo)
                         : Bind<double>(typeName, typeInfo);
                 case BuiltInType.String:
-                    return typeInfo.ContainsArray() 
-                        ? Bind<string[]>(typeName, typeInfo) 
+                    return typeInfo.ContainsArray()
+                        ? Bind<string[]>(typeName, typeInfo)
                         : Bind<string>(typeName, typeInfo);
                 case BuiltInType.DateTime:
-                    return typeInfo.ContainsArray() 
-                        ? Bind<DateTime?[]>(typeName, typeInfo) 
+                    return typeInfo.ContainsArray()
+                        ? Bind<DateTime?[]>(typeName, typeInfo)
                         : Bind<DateTime?>(typeName, typeInfo);
                 case BuiltInType.Guid:
-                    return typeInfo.ContainsArray() 
-                        ? Bind<Guid?[]>(typeName, typeInfo) 
+                    return typeInfo.ContainsArray()
+                        ? Bind<Guid?[]>(typeName, typeInfo)
                         : Bind<Guid?>(typeName, typeInfo);
                 case BuiltInType.ByteString:
-                    return typeInfo.ContainsArray() 
-                        ? Bind<byte[][]>(typeName, typeInfo) 
+                    return typeInfo.ContainsArray()
+                        ? Bind<byte[][]>(typeName, typeInfo)
                         : Bind<byte[]>(typeName, typeInfo);
                 default:
                     throw new UnsupportedTypeException(typeInfo.BuiltInType.ToString());

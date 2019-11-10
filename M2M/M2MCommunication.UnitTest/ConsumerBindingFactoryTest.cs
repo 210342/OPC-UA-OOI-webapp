@@ -2,9 +2,6 @@
 using M2MCommunication.Core.Exceptions;
 using M2MCommunication.Uaooi.Injections;
 using System;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Text;
 using UAOOI.Configuration.Networking.Serialization;
 using UAOOI.Networking.SemanticData.DataRepository;
 using Xunit;
@@ -19,7 +16,7 @@ namespace M2MCommunicationUnitTest
         [Fact]
         public void GetProducerBindingTest()
         {
-            Assert.Throws<NotSupportedException>(() => 
+            Assert.Throws<NotSupportedException>(() =>
                 new ConsumerBindingFactory().GetProducerBinding(string.Empty, string.Empty, null));
         }
 
@@ -61,7 +58,7 @@ namespace M2MCommunicationUnitTest
         public void SubscribeNotBoundTypeTest()
         {
             ConsumerBindingFactory factory = new ConsumerBindingFactory();
-            Assert.Throws<UnsupportedTypeException>(() =>factory.Subscribe(typeName, (sender, args) => { }));
+            Assert.Throws<UnsupportedTypeException>(() => factory.Subscribe(typeName, (sender, args) => { }));
         }
 
         [Fact]

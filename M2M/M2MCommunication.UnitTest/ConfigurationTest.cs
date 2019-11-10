@@ -1,12 +1,8 @@
-﻿using M2MCommunication.Uaooi.Injections;
-using M2MCommunication.Uaooi.Extensions;
-using System;
-using System.Collections.Generic;
+﻿using M2MCommunication.Core.Exceptions;
+using M2MCommunication.Uaooi.Injections;
 using System.Reflection;
-using System.Text;
-using Xunit;
-using M2MCommunication.Core.Exceptions;
 using UAOOI.Configuration.Networking.Serialization;
+using Xunit;
 
 namespace M2MCommunicationUnitTest
 {

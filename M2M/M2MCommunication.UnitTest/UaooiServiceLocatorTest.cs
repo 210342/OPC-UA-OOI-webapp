@@ -75,7 +75,7 @@ namespace M2MCommunicationUnitTest
                     new[] { container }
                 ) as IServiceLocator;
                 ServiceLocator.SetLocatorProvider(() => serviceLocator);
-                var tmp = container?.GetExports(typeof(IMessageBus), null, null);
+                System.Collections.Generic.IEnumerable<Lazy<object, object>> tmp = container?.GetExports(typeof(IMessageBus), null, null);
                 Assert.NotEmpty(serviceLocator.GetAllInstances(typeof(IMessageBus)));
             }
         }
