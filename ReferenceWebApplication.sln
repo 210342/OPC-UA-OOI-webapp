@@ -28,7 +28,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "M2MCommunication.Services",
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MessageParsing", "MessageParsing", "{2EA6E60B-78D7-467A-9110-C82366663634}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InterfaceModel", "MessageParsing\TemplatesRepositories\InterfaceModel.csproj", "{91C5851C-09C5-4519-AC4A-6EBA44F7D940}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InterfaceModel", "MessageParsing\InterfaceModel\InterfaceModel.csproj", "{91C5851C-09C5-4519-AC4A-6EBA44F7D940}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
