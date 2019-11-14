@@ -4,11 +4,11 @@ Following set of modules targets the functionality of communication between IoT 
 
 ## Projects
 
-- [M2MCommunication.Core](M2MCommunication.Core/README.md)
+- [M2MCommunication.Core](M2MCommunication.Core)
   - Contains core interfaces and common types referenced within the whole application
-- [M2MCommunication.Services](M2MCommunication.Services/README.md)
+- [M2MCommunication.Services](M2MCommunication.Services)
   - Provides an extra layer of abstraction through adapters allowing native **ASP**.**NET** DI container to register and inject necessary OPC-UA services without any hard dependencies
-- [M2MCommunication.Uaooi](M2MCommunication.Uaooi/README.md)
+- [M2MCommunication.Uaooi](M2MCommunication.Uaooi)
   - Contains extensions of the [UAOOI](https://github.com/mpostol/OPC-UA-OOI) package with adapters used for dependency injection
 - M2MCommunication.UnitTest
   - Contains unit tests for every project in this module

@@ -4,10 +4,10 @@ Module that targets parsing of the receiving data and preparing it for display. 
 
 ## Projects
 
-- [MessageParsing](MessageParsing/README.md)
+- [MessageParsing](MessageParsing)
   - Contains core functionality of the parsing mechanism
-- [InterfaceModel](InterfaceModel/README.md)
+- [InterfaceModel](InterfaceModel)
   - Contains the model used in the MessageParsing project and provides means to persist it
 - MessageParsingUnitTest
-  - Contains unit tests for every project in this directory
+  - Contains unit tests for every project in this module
   - Implemented using [xUnit](https://xunit.net) framework
