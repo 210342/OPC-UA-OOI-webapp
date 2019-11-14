@@ -15,7 +15,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\M2M\M2MCommunication.Core\M2MCommunication.Core.csproj" />
     <ProjectReference Include="..\..\M2M\M2MCommunication.Services\M2MCommunication.Services.csproj" />
-    <ProjectReference Include="..\TemplatesRepositories\InterfaceModel.csproj" />
+    <ProjectReference Include="..\InterfaceModel\InterfaceModel.csproj" />
   </ItemGroup>
 
 </Project>
