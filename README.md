@@ -30,6 +30,8 @@ Application depends on open-source NuGet packages developed by [Mariusz Postół
 
 The application is split into the following modules:
 
-- [M2M Communication](M2M/README.md)
-- [Message parsing](MessageParsing/README.md)
-- [Server configuration and interface](ReferenceWebApplication/README.md)
+| Module | Description |
+|:------:|:------------|
+| [M2M Communication](M2M/README.md) | Module focused on communicating between IoT machines using OPC-UA standard |
+| [Message parsing](MessageParsing/README.md) | Module focused on parsing the received data and preparing it to be displayed |
+| [Reference Web Application](ReferenceWebApplication/README.md) | Module focused on configuration of the application and its graphical interface |

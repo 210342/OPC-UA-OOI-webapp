@@ -62,7 +62,7 @@ An interface for an object representing a bus that will notify subscribers about
 
 ## Common types
 
-| Name | Goal |
+| Name | Description |
 |:----:|:-----|
 | `UaLibrarySettings` | Interface for a subscription to implement. Contains neccessary properties and methods |
 
@@ -77,3 +77,14 @@ A POCO object representing the configuration of the adapted OPC-UA library
 |`string`|ConsumerConfigurationFile| get; set; | Name of the file containing a configuration of the consumer |
 |`string`|ResourcesDirectory| get; set; | Path to the direcotry of the application's resources |
 |`string`|LibraryDirectory| get; set; | Path to the direcotry of the OPC-UA library relative to the resources directory |
+
+## Exceptions
+
+This project also provides definitions of application-scoped exceptions.
+
+| Name | Base type | Possible cause |
+|:----:|:---------:|:---------------|
+| `ComponentNotIntialisedException` | `Exception` | Thrown when something tries to call an uninitialised object or an object on which DI failed to inject a property |
+| `ConfigurationFileNotFoundException` | `FileNotFoundException` | Thrown when the application couldn't find the configuration file (Either be it a OPC-UA consumer configuration or any other) |
+| `UnsupportedTypeException` | `Exception` | Thrown when the configuration implies a subscription to a type which isn't supported by the library or when trying to subscribe to a type that is not contained within the configuration |
+| `ValueRankOutOfRangeException` | `ArgumentOutOfRangeException` | Thrown when the configuration implies a subscription to a type with an unsupported value of the `ValueRank` property (for example multidimensional arrays - values >= 2) |
