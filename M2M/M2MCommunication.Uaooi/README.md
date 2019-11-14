@@ -125,4 +125,4 @@ A set of extension methods for the `UATypeInfo` type
 | Return type | Name | Description |
 |:-----------:|:----:|:------------|
 | `bool` | ContainsArray(`this UATypeInfo` typeInfo) | Checks whether the specified `typeInfo` definitely describes an array |
-| `bool` | ContainsMultidimensionalArray(`this UATypeInfo` typeInfo) | Checks whether the specified `typeInfo` definitely contains an array of multiple dimensions |
+| `bool` | ContainsMultidimensionalArray(`this UATypeInfo` typeInfo) | Checks whether the specified `typeInfo` definitely describes an array of multiple dimensions |

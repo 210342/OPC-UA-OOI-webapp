@@ -4,7 +4,7 @@ The goal of this project is to provide an additional layer of abstraction, so th
 
 ## Services
 
-| Name | Goal |
+| Name | Description |
 |:----:|:-----|
 | `ConfigurationService` | A wrapper for an injected `IConfiguration` implementation |
 | `MessageBusService` | A wrapper for an injected `IMessageBus` implementation |
@@ -68,15 +68,16 @@ A wrapper for an injected `IConfiguration` implementation
 
 ## Helper classes
 
-| Name | Goal |
+| Name | Description |
 |:----:|:-----|
 | `UaooiServiceLocator` | An implementation of `IServiceLocator` which extends `CommonServiceLocator.ServiceLocatorImplBase`. Also implements `IDisposable` |
 | `ServiceContainerSetup` | A class which should be used to initialise a DI container of the `ServiceLocator` |
 
 ### *UaooiServiceLocator*
 
-> Implements `IDisposable`
 > Extends `ServiceLocatorImplBase`
+
+> Implements `IDisposable`
 
 An implementation of a service locator design pattern.
 
