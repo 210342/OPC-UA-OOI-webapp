@@ -12,8 +12,7 @@ namespace MessageParsing
     {
         protected internal IConfiguration Configuration { get; }
         protected internal ISubscriptionFactory SubscriptionFactory { get; }
-        protected internal ICollection<PrintableProperty> Properties { get; } = new List<PrintableProperty>();
-        public virtual IEnumerable<PrintableProperty> PrintableProperties => Properties;
+        public virtual IEnumerable<PrintableProperty> PrintableProperties { get; } = new List<PrintableProperty>();
 
         public MessageParser(ConfigurationService configuration, SubscriptionFactoryService subscriptionFactory)
         {
