@@ -1,5 +1,6 @@
 ﻿using InterfaceModel.Model;
 using System;
+using System.Drawing;
 
 namespace InterfaceModel.Repositories
 {
@@ -15,7 +16,9 @@ namespace InterfaceModel.Repositories
 
         public ImageTemplate GetImageTemplateByName(string name)
         {
-            return new ImageTemplate(Guid.NewGuid(), @"Template.jpg", 1300, 480);
+            ImageTemplate template = new ImageTemplate(Guid.NewGuid(), @"Template.jpg", 1300, 480);
+            template.PropertyTemplates.Add(new PropertyTemplate("BoolToggle", new Point(700, 200), Color.Black, Color.Transparent));
+            return template;
         }
     }
 }

@@ -20,8 +20,7 @@ namespace M2MCommunication.Uaooi.Injections
             ISubscriptionFactory subscriptionFactory,
             IMessageHandlerFactory messageHandlerFactory)
         {
-            ConfigurationFactory = configuration as IConfigurationFactory
-                ?? throw new ComponentNotIntialisedException(nameof(configuration));
+            ConfigurationFactory = configuration as IConfigurationFactory;
             EncodingFactory = encodingFactory
                 ?? throw new ComponentNotIntialisedException(nameof(encodingFactory));
             BindingFactory = subscriptionFactory as IBindingFactory
@@ -34,59 +33,49 @@ namespace M2MCommunication.Uaooi.Injections
         /// Starts this instance - Initializes the data set infrastructure, enables all associations and starts pumping the data;
         /// </summary>
         /// <param name="settings">Object containing application settings targeting Unified Architecture library</param>
+        /// <exception cref="ComponentNotIntialisedException"></exception>
+        /// <exception cref="ConfigurationFileNotFoundException"></exception>
+        /// <exception cref="UnsupportedTypeException"></exception>
+        /// <exception cref="ValueRankOutOfRangeException"></exception>
         public void Initialise(UaLibrarySettings settings)
         {
-            Initialise(settings, ex => throw ex);
+            AssertComponentsAreNotNull();
+            (ConfigurationFactory as Configuration)
+                ?.Initialise(Path.Combine(Directory.GetCurrentDirectory(), settings.ResourcesDirectory, settings.LibraryDirectory, settings.ConsumerConfigurationFile));
+            Start();
         }
 
         /// <summary>
         /// Starts this instance - Initializes the data set infrastructure, enables all associations and starts pumping the data;
         /// </summary>
         /// <param name="settings">Object containing application settings targeting Unified Architecture library</param>
-        /// <param name="exceptionHandler">Action used to handle exceptions. 
-        /// Handled exceptions: 
-        /// <see cref="ConfigurationFileNotFoundException"/>, 
-        /// <see cref="ValueRankOutOfRangeException"/>, 
-        /// <see cref="UnsupportedTypeException"/>.
-        /// </param>
-        public void Initialise(UaLibrarySettings settings, Action<Exception> exceptionHandler)
-        {
-            try
-            {
-                (ConfigurationFactory as Configuration)
-                    ?.Initialise(Path.Combine(Directory.GetCurrentDirectory(), settings.ResourcesDirectory, settings.LibraryDirectory, settings.ConsumerConfigurationFile));
-                Start();
-            }
-            catch (Exception ex) when (ex is ConfigurationFileNotFoundException
-                    || ex is ValueRankOutOfRangeException
-                    || ex is UnsupportedTypeException)
-            {
-                exceptionHandler?.Invoke(ex);
-            }
-        }
-
-        /// <summary>
-        /// Starts this instance - Initializes the data set infrastructure, enables all associations and starts pumping the data;
-        /// </summary>
-        /// <param name="settings">Object containing application settings targeting Unified Architecture library</param>
+        /// <exception cref="ComponentNotIntialisedException"></exception>
+        /// <exception cref="ConfigurationFileNotFoundException"></exception>
+        /// <exception cref="UnsupportedTypeException"></exception>
+        /// <exception cref="ValueRankOutOfRangeException"></exception>
         public async Task InitialiseAsync(UaLibrarySettings settings)
         {
             await Task.Run(() => Initialise(settings));
         }
 
-        /// <summary>
-        /// Starts this instance - Initializes the data set infrastructure, enables all associations and starts pumping the data;
-        /// </summary>
-        /// <param name="settings">Object containing application settings targeting Unified Architecture library</param>
-        /// <param name="exceptionHandler">Action used to handle exceptions. 
-        /// Handled exceptions: 
-        /// <see cref="ConfigurationFileNotFoundException"/>, 
-        /// <see cref="ValueRankOutOfRangeException"/>, 
-        /// <see cref="UnsupportedTypeException"/>.
-        /// </param>
-        public async Task InitialiseAsync(UaLibrarySettings settings, Action<Exception> exceptionHandler)
+        private void AssertComponentsAreNotNull()
         {
-            await Task.Run(() => Initialise(settings, exceptionHandler));
+            if (ConfigurationFactory is null)
+            {
+                throw new ComponentNotIntialisedException(nameof(ConfigurationFactory));
+            }
+            if (EncodingFactory is null)
+            {
+                throw new ComponentNotIntialisedException(nameof(EncodingFactory));
+            }
+            if (BindingFactory is null)
+            {
+                throw new ComponentNotIntialisedException(nameof(BindingFactory));
+            }
+            if (MessageHandlerFactory is null)
+            {
+                throw new ComponentNotIntialisedException(nameof(MessageHandlerFactory));
+            }
         }
     }
 }

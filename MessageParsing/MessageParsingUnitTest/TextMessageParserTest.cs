@@ -16,8 +16,8 @@ namespace MessageParsingUnitTest
             {
                 Assert.NotNull(sut.GetType().GetProperty("Configuration", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(sut));
                 Assert.NotNull(sut.GetType().GetProperty("SubscriptionFactory", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(sut));
-                Assert.NotNull(sut.GetType().GetProperty("Properties", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(sut));
-                Assert.Empty(sut.GetType().GetProperty("Properties", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(sut) as IEnumerable<IProperty>);
+                Assert.NotNull(sut.PrintableProperties);
+                Assert.Empty(sut.PrintableProperties);
             }
         }
 
@@ -27,8 +27,6 @@ namespace MessageParsingUnitTest
             using (TextMessageParser sut = new TextMessageParser(GetTestConfigurationService(), GetTestSubscriptionService()))
             {
                 sut.Initialise(async () => await Task.Run(() => { }));
-                Assert.NotNull(sut.GetType().GetProperty("Properties", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(sut));
-                Assert.NotEmpty(sut.GetType().GetProperty("Properties", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(sut) as IEnumerable<IProperty>);
                 Assert.NotEmpty(sut.PrintableProperties);
             }
         }
@@ -39,8 +37,6 @@ namespace MessageParsingUnitTest
             using (TextMessageParser sut = new TextMessageParser(GetTestConfigurationService(), GetTestSubscriptionService()))
             {
                 await sut.InitialiseAsync(async () => await Task.Run(() => { }));
-                Assert.NotNull(sut.GetType().GetProperty("Properties", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(sut));
-                Assert.NotEmpty(sut.GetType().GetProperty("Properties", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(sut) as IEnumerable<IProperty>);
                 Assert.NotEmpty(sut.PrintableProperties);
             }
         }
