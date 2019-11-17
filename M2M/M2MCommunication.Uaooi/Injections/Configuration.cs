@@ -57,13 +57,13 @@ namespace M2MCommunication.Uaooi.Injections
             OnMessageHandlerConfigurationChange?.Invoke(this, EventArgs.Empty);
         }
 
-        public IEnumerable<string> GetDataTypeNames()
+        public IEnumerable<UaTypeMetadata> GetTypeMetadata()
         {
             return GetConfiguration()
                 ?.DataSets
-                ?.SelectMany(dataset => dataset.DataSet)
-                ?.Select(fieldMetadata => fieldMetadata.ProcessValueName)
-                    ?? Enumerable.Empty<string>();
+                ?.GroupBy(dataset => dataset.RepositoryGroup, (key, group) => (key, group.SelectMany(g => g.DataSet.Select(ds => ds.ProcessValueName))))
+                ?.SelectMany(pair => pair.Item2.Select(typeName => new UaTypeMetadata(pair.key, typeName)))
+                    ?? Enumerable.Empty<UaTypeMetadata>();
         }
     }
 }

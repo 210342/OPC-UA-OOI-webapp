@@ -12,9 +12,7 @@ namespace MessageParsing
     {
         protected internal IConfiguration Configuration { get; }
         protected internal ISubscriptionFactory SubscriptionFactory { get; }
-        protected internal ICollection<IProperty> Properties { get; } = new List<IProperty>();
-        public IEnumerable<DrawableProperty> DrawableProperties => Properties?.OfType<DrawableProperty>();
-        public IEnumerable<PrintableProperty> PrintableProperties => Properties?.OfType<PrintableProperty>();
+        public virtual IEnumerable<PrintableProperty> PrintableProperties { get; } = new List<PrintableProperty>();
 
         public MessageParser(ConfigurationService configuration, SubscriptionFactoryService subscriptionFactory)
         {
@@ -37,8 +35,8 @@ namespace MessageParsing
         protected internal IEnumerable<ISubscription> Subscribe(Func<Task> handler)
         {
             _subscriptions = Configuration
-                .GetDataTypeNames()
-                .Select(typeName => SubscriptionFactory.Subscribe(typeName, (sender, args) => Task.Run(() => handler?.Invoke())));
+                .GetTypeMetadata()
+                .Select(uaTypeMetadata => SubscriptionFactory.Subscribe(uaTypeMetadata, (sender, args) => Task.Run(() => handler?.Invoke())));
             return _subscriptions;
         }
 

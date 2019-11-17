@@ -5,11 +5,11 @@ namespace MessageParsingUnitTest.Mocks
 {
     internal class TestSubscriptionService : ISubscriptionFactory
     {
-        public ISubscription Subscribe(string subscriptionName, PropertyChangedEventHandler handler)
+        public ISubscription Subscribe(UaTypeMetadata uaTypeMetadata, PropertyChangedEventHandler handler)
         {
             TestSubscription subscription = new TestSubscription
             {
-                TypeName = subscriptionName
+                UaTypeMetadata = uaTypeMetadata
             };
             subscription.Enable(handler);
             return subscription;

@@ -19,8 +19,8 @@ namespace MessageParsingUnitTest
                 Assert.NotNull(sut.GetType().GetProperty("Configuration", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(sut));
                 Assert.NotNull(sut.GetType().GetProperty("SubscriptionFactory", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(sut));
                 Assert.NotNull(sut.GetType().GetProperty("ImageTemplateRepository", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(sut));
-                Assert.NotNull(sut.GetType().GetProperty("Properties", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(sut));
-                Assert.Empty(sut.GetType().GetProperty("Properties", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(sut) as IEnumerable<IProperty>);
+                Assert.NotNull(sut.ImageTemplates);
+                Assert.Empty(sut.ImageTemplates);
             }
         }
 
@@ -30,10 +30,15 @@ namespace MessageParsingUnitTest
             using (ImageMessageParser sut = new ImageMessageParser(GetTestConfigurationService(), GetTestSubscriptionService(), new TestImageTemplateRepository()))
             {
                 sut.Initialise(async () => await Task.Run(() => { }));
-                Assert.NotNull(sut.ImageTemplate);
-                Assert.NotNull(sut.GetType().GetProperty("Properties", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(sut));
-                Assert.NotEmpty(sut.GetType().GetProperty("Properties", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(sut) as IEnumerable<IProperty>);
-                Assert.NotEmpty(sut.DrawableProperties);
+                Assert.NotNull(sut.ImageTemplates);
+                Assert.NotEmpty(sut.ImageTemplates);
+                foreach (var template in sut.ImageTemplates)
+                {
+                    Assert.NotNull(template.Properties);
+                    Assert.NotEmpty(template.Properties);
+                    Assert.NotEmpty(template.DrawableProperties);
+                    Assert.NotEmpty(template.PrintableProperties);
+                }
                 Assert.NotEmpty(sut.PrintableProperties);
             }
         }
@@ -44,10 +49,15 @@ namespace MessageParsingUnitTest
             using (ImageMessageParser sut = new ImageMessageParser(GetTestConfigurationService(), GetTestSubscriptionService(), new TestImageTemplateRepository()))
             {
                 await sut.InitialiseAsync(async () => await Task.Run(() => { }));
-                Assert.NotNull(sut.ImageTemplate);
-                Assert.NotNull(sut.GetType().GetProperty("Properties", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(sut));
-                Assert.NotEmpty(sut.GetType().GetProperty("Properties", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(sut) as IEnumerable<IProperty>);
-                Assert.NotEmpty(sut.DrawableProperties);
+                Assert.NotNull(sut.ImageTemplates);
+                Assert.NotEmpty(sut.ImageTemplates);
+                foreach (var template in sut.ImageTemplates)
+                {
+                    Assert.NotNull(template.Properties);
+                    Assert.NotEmpty(template.Properties);
+                    Assert.NotEmpty(template.DrawableProperties);
+                    Assert.NotEmpty(template.PrintableProperties);
+                }
                 Assert.NotEmpty(sut.PrintableProperties);
             }
         }

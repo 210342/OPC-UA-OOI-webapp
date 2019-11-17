@@ -14,7 +14,7 @@ namespace M2MCommunication.Uaooi.Injections
     [Export(typeof(ISubscriptionFactory))]
     public class ConsumerBindingFactory : IBindingFactory, ISubscriptionFactory
     {
-        public IDictionary<string, ISubscription> Subscriptions { get; } = new Dictionary<string, ISubscription>();
+        public IDictionary<UaTypeMetadata, ISubscription> Subscriptions { get; } = new Dictionary<UaTypeMetadata, ISubscription>();
 
         /// <summary>
         /// Returns a subscriptions for the specified type by name
@@ -22,16 +22,16 @@ namespace M2MCommunication.Uaooi.Injections
         /// <param name="subscriptionName">Name of the type to subscribe to</param>
         /// <param name="handler">Callback method of the subscription</param>
         /// <returns></returns>
-        public ISubscription Subscribe(string subscriptionName, PropertyChangedEventHandler handler)
+        public ISubscription Subscribe(UaTypeMetadata uaTypeMetadata, PropertyChangedEventHandler handler)
         {
-            if (Subscriptions.TryGetValue(subscriptionName, out ISubscription subscription))
+            if (Subscriptions.TryGetValue(uaTypeMetadata, out ISubscription subscription))
             {
                 subscription.Enable(handler);
                 return subscription;
             }
             else
             {
-                throw new UnsupportedTypeException($"Type {subscriptionName} is not supported");
+                throw new UnsupportedTypeException($"Type {uaTypeMetadata.ToString()} is not supported");
             }
         }
 
@@ -41,7 +41,76 @@ namespace M2MCommunication.Uaooi.Injections
             {
                 throw new ArgumentNullException(nameof(fieldTypeInfo));
             }
-            return GetConsumerBinding(processValueName, fieldTypeInfo);
+            if (fieldTypeInfo.ContainsMultidimensionalArray())
+            {
+                throw new ValueRankOutOfRangeException(nameof(fieldTypeInfo.ValueRank));
+            }
+            UaTypeMetadata typeMetadata = new UaTypeMetadata(repositoryGroup, processValueName);
+            switch (fieldTypeInfo.BuiltInType)
+            {
+                case BuiltInType.Boolean:
+                    return fieldTypeInfo.ContainsArray()
+                        ? Bind<bool[]>(typeMetadata, fieldTypeInfo)
+                        : Bind<bool>(typeMetadata, fieldTypeInfo);
+                case BuiltInType.SByte:
+                    return fieldTypeInfo.ContainsArray()
+                        ? Bind<sbyte[]>(typeMetadata, fieldTypeInfo)
+                        : Bind<sbyte>(typeMetadata, fieldTypeInfo);
+                case BuiltInType.Byte:
+                    return fieldTypeInfo.ContainsArray()
+                        ? Bind<byte[]>(typeMetadata, fieldTypeInfo)
+                        : Bind<byte>(typeMetadata, fieldTypeInfo);
+                case BuiltInType.Int16:
+                    return fieldTypeInfo.ContainsArray()
+                        ? Bind<short[]>(typeMetadata, fieldTypeInfo)
+                        : Bind<short>(typeMetadata, fieldTypeInfo);
+                case BuiltInType.UInt16:
+                    return fieldTypeInfo.ContainsArray()
+                        ? Bind<ushort[]>(typeMetadata, fieldTypeInfo)
+                        : Bind<ushort>(typeMetadata, fieldTypeInfo);
+                case BuiltInType.Int32:
+                    return fieldTypeInfo.ContainsArray()
+                        ? Bind<int[]>(typeMetadata, fieldTypeInfo)
+                        : Bind<int>(typeMetadata, fieldTypeInfo);
+                case BuiltInType.UInt32:
+                    return fieldTypeInfo.ContainsArray()
+                        ? Bind<uint[]>(typeMetadata, fieldTypeInfo)
+                        : Bind<uint>(typeMetadata, fieldTypeInfo);
+                case BuiltInType.Int64:
+                    return fieldTypeInfo.ContainsArray()
+                        ? Bind<long[]>(typeMetadata, fieldTypeInfo)
+                        : Bind<long>(typeMetadata, fieldTypeInfo);
+                case BuiltInType.UInt64:
+                    return fieldTypeInfo.ContainsArray()
+                        ? Bind<ulong[]>(typeMetadata, fieldTypeInfo)
+                        : Bind<ulong>(typeMetadata, fieldTypeInfo);
+                case BuiltInType.Float:
+                    return fieldTypeInfo.ContainsArray()
+                        ? Bind<float[]>(typeMetadata, fieldTypeInfo)
+                        : Bind<float>(typeMetadata, fieldTypeInfo);
+                case BuiltInType.Double:
+                    return fieldTypeInfo.ContainsArray()
+                        ? Bind<double[]>(typeMetadata, fieldTypeInfo)
+                        : Bind<double>(typeMetadata, fieldTypeInfo);
+                case BuiltInType.String:
+                    return fieldTypeInfo.ContainsArray()
+                        ? Bind<string[]>(typeMetadata, fieldTypeInfo)
+                        : Bind<string>(typeMetadata, fieldTypeInfo);
+                case BuiltInType.DateTime:
+                    return fieldTypeInfo.ContainsArray()
+                        ? Bind<DateTime?[]>(typeMetadata, fieldTypeInfo)
+                        : Bind<DateTime?>(typeMetadata, fieldTypeInfo);
+                case BuiltInType.Guid:
+                    return fieldTypeInfo.ContainsArray()
+                        ? Bind<Guid?[]>(typeMetadata, fieldTypeInfo)
+                        : Bind<Guid?>(typeMetadata, fieldTypeInfo);
+                case BuiltInType.ByteString:
+                    return fieldTypeInfo.ContainsArray()
+                        ? Bind<byte[][]>(typeMetadata, fieldTypeInfo)
+                        : Bind<byte[]>(typeMetadata, fieldTypeInfo);
+                default:
+                    throw new UnsupportedTypeException(fieldTypeInfo.BuiltInType.ToString());
+            }
         }
 
         /// <summary>
@@ -56,91 +125,17 @@ namespace M2MCommunication.Uaooi.Injections
             throw new NotSupportedException();
         }
 
-        private IConsumerBinding GetConsumerBinding(string typeName, UATypeInfo typeInfo)
-        {
-            if (typeInfo.ContainsMultidimensionalArray())
-            {
-                throw new ValueRankOutOfRangeException(nameof(typeInfo.ValueRank));
-            }
-
-            switch (typeInfo.BuiltInType)
-            {
-                case BuiltInType.Boolean:
-                    return typeInfo.ContainsArray()
-                        ? Bind<bool[]>(typeName, typeInfo)
-                        : Bind<bool>(typeName, typeInfo);
-                case BuiltInType.SByte:
-                    return typeInfo.ContainsArray()
-                        ? Bind<sbyte[]>(typeName, typeInfo)
-                        : Bind<sbyte>(typeName, typeInfo);
-                case BuiltInType.Byte:
-                    return typeInfo.ContainsArray()
-                        ? Bind<byte[]>(typeName, typeInfo)
-                        : Bind<byte>(typeName, typeInfo);
-                case BuiltInType.Int16:
-                    return typeInfo.ContainsArray()
-                        ? Bind<short[]>(typeName, typeInfo)
-                        : Bind<short>(typeName, typeInfo);
-                case BuiltInType.UInt16:
-                    return typeInfo.ContainsArray()
-                        ? Bind<ushort[]>(typeName, typeInfo)
-                        : Bind<ushort>(typeName, typeInfo);
-                case BuiltInType.Int32:
-                    return typeInfo.ContainsArray()
-                        ? Bind<int[]>(typeName, typeInfo)
-                        : Bind<int>(typeName, typeInfo);
-                case BuiltInType.UInt32:
-                    return typeInfo.ContainsArray()
-                        ? Bind<uint[]>(typeName, typeInfo)
-                        : Bind<uint>(typeName, typeInfo);
-                case BuiltInType.Int64:
-                    return typeInfo.ContainsArray()
-                        ? Bind<long[]>(typeName, typeInfo)
-                        : Bind<long>(typeName, typeInfo);
-                case BuiltInType.UInt64:
-                    return typeInfo.ContainsArray()
-                        ? Bind<ulong[]>(typeName, typeInfo)
-                        : Bind<ulong>(typeName, typeInfo);
-                case BuiltInType.Float:
-                    return typeInfo.ContainsArray()
-                        ? Bind<float[]>(typeName, typeInfo)
-                        : Bind<float>(typeName, typeInfo);
-                case BuiltInType.Double:
-                    return typeInfo.ContainsArray()
-                        ? Bind<double[]>(typeName, typeInfo)
-                        : Bind<double>(typeName, typeInfo);
-                case BuiltInType.String:
-                    return typeInfo.ContainsArray()
-                        ? Bind<string[]>(typeName, typeInfo)
-                        : Bind<string>(typeName, typeInfo);
-                case BuiltInType.DateTime:
-                    return typeInfo.ContainsArray()
-                        ? Bind<DateTime?[]>(typeName, typeInfo)
-                        : Bind<DateTime?>(typeName, typeInfo);
-                case BuiltInType.Guid:
-                    return typeInfo.ContainsArray()
-                        ? Bind<Guid?[]>(typeName, typeInfo)
-                        : Bind<Guid?>(typeName, typeInfo);
-                case BuiltInType.ByteString:
-                    return typeInfo.ContainsArray()
-                        ? Bind<byte[][]>(typeName, typeInfo)
-                        : Bind<byte[]>(typeName, typeInfo);
-                default:
-                    throw new UnsupportedTypeException(typeInfo.BuiltInType.ToString());
-            }
-        }
-
-        private IConsumerBinding Bind<type>(string typeName, UATypeInfo typeInfo)
+        private IConsumerBinding Bind<type>(UaTypeMetadata typeMetadata, UATypeInfo typeInfo)
         {
             ConsumerBindingMonitoredValue<type> binding = new ConsumerBindingMonitoredValue<type>(typeInfo);
             binding.PropertyChanged += (sender, args) =>
             {
-                if (Subscriptions.TryGetValue(typeName, out ISubscription subscription))
+                if (Subscriptions.TryGetValue(typeMetadata, out ISubscription subscription))
                 {
                     subscription.Value = sender;
                 }
             };
-            Subscriptions[typeName] = new Subscription(typeInfo, typeName, binding);
+            Subscriptions[typeMetadata] = new Subscription(typeInfo, typeMetadata, binding);
             return binding;
         }
     }

@@ -3,7 +3,7 @@
     <DataSetConfiguration>
       <AssociationRole>Consumer</AssociationRole>
       <AssociationName>Simple</AssociationName>
-      <RepositoryGroup>repositoryGroup</RepositoryGroup>
+      <RepositoryGroup>Repository 1</RepositoryGroup>
       <InformationModelURI>https://github.com/mpostol/OPC-UA-OOI</InformationModelURI>
       <DataSymbolicName>DataSymbolicName</DataSymbolicName>
       <DataSet>

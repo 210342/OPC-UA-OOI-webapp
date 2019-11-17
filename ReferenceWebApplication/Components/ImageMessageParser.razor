@@ -1,28 +1,29 @@
 ﻿@using MessageParsing
 @using InterfaceModel.Model
 
-@if (ImageParser.ImageTemplate != null)
+@if (ImageParser.ImageTemplates != null)
 {
-    <div class="d-flex justify-content-center">
-        <div class="overflow-auto" style="position: relative;">
-            <img class="rounded float-left"
-                    src="@ImageParser?.ImageTemplate?.RelativePath"
-                    alt="Message background"
-                    style="@ImageStyle" />
-            @foreach (DrawableProperty property in Parser.DrawableProperties)
-            {
-                <Property @key="property" DrawableProperty="property" />
-            }
+    @foreach (ImageTemplate image in ImageParser.ImageTemplates)
+    {
+        <h3>@image.Properties.FirstOrDefault()?.Subscription?.UaTypeMetadata?.RepositoryGroupName</h3>
+        <div class="d-flex justify-content-center">
+            <div class="overflow-auto" style="position: relative;">
+                <img class="rounded float-left"
+                     src="@image?.RelativePath"
+                     alt="Message background"
+                     style=@($"width: {image.Width}px; height: {image.Height}px;") />
+                @foreach (DrawableProperty property in image.DrawableProperties)
+                {
+                    <Property @key="property" DrawableProperty="property" />
+                }
+            </div>
         </div>
-    </div>
+    }
 }
 
 @code
 {
     private MessageParsing.ImageMessageParser ImageParser => Parser as MessageParsing.ImageMessageParser;
-    private int? Width => ImageParser?.ImageTemplate?.Width;
-    private int? Height => ImageParser?.ImageTemplate?.Height;
-    private string ImageStyle => ImageParser.ImageTemplate is null ? "" : $"width: {Width}px; height: {Height}px;";
 
     [Parameter]
     public IMessageParser Parser { get; set; }

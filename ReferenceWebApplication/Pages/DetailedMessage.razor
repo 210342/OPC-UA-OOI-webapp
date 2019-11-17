@@ -74,30 +74,42 @@
     {
         await Task.Run(() =>
         {
-            Bus?.Initialise(settings, ExceptionHandler);
-            Parser?.Initialise(OnPropertyChangedAsync);
+            try
+            {
+                Bus?.Initialise(settings);
+                Parser?.Initialise(OnPropertyChangedAsync);
+            }
+            catch (ConfigurationFileNotFoundException ex)
+            {
+                Logger.LogError(ex, ex.Message);
+                ExceptionMessage = Localizer.GetString("ConfigurationFileNotFound");
+            }
+            catch (UnsupportedTypeException ex)
+            {
+                Logger.LogError(ex, ex.Message);
+                ExceptionMessage = Localizer.GetString("UnsupportedDataType");
+            }
+            catch (ValueRankOutOfRangeException ex)
+            {
+                Logger.LogError(ex, ex.Message);
+                ExceptionMessage = Localizer.GetString("UnsupportedValueRank");
+            }
+            catch (ComponentNotIntialisedException ex)
+            {
+                Logger.LogError(ex, ex.Message);
+                ExceptionMessage = $"{Localizer.GetString("ComponentNotInitialisedException")} {ex.Message}";
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError(ex, ex.Message);
+                ExceptionMessage = ex.Message;
+            }
         });
     }
 
     protected void ExceptionHandler(Exception ex)
     {
-        Logger.LogError(ex, ex.Message);
-        if (ex is ConfigurationFileNotFoundException)
-        {
-            ExceptionMessage = Localizer.GetString("ConfigurationFileNotFound");
-        }
-        else if (ex is UnsupportedTypeException)
-        {
-            ExceptionMessage = Localizer.GetString("UnsupportedDataType");
-        }
-        else if (ex is ValueRankOutOfRangeException)
-        {
-            ExceptionMessage = Localizer.GetString("UnsupportedValueRank");
-        }
-        else
-        {
-            ExceptionMessage = ex.Message;
-        }
+
     }
 
     protected async Task OnPropertyChangedAsync()

@@ -5,9 +5,13 @@ namespace MessageParsingUnitTest.Mocks
 {
     internal class TestConfigurationService : IConfiguration
     {
-        public IEnumerable<string> GetDataTypeNames()
+        public IEnumerable<UaTypeMetadata> GetTypeMetadata()
         {
-            return new[] { "First type name", "Second type name" };
+            return new[]
+            {
+                new UaTypeMetadata("repo", "First type name"),
+                new UaTypeMetadata("repo", "Second type name")
+            };
         }
     }
 }

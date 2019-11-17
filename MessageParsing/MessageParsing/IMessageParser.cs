@@ -7,7 +7,6 @@ namespace MessageParsing
 {
     public interface IMessageParser : IDisposable
     {
-        IEnumerable<DrawableProperty> DrawableProperties { get; }
         IEnumerable<PrintableProperty> PrintableProperties { get; }
 
         void Initialise(Func<Task> handler);

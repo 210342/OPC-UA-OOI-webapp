@@ -3,6 +3,7 @@ using InterfaceModel.Repositories;
 using M2MCommunication.Core;
 using M2MCommunication.Services;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,7 +13,8 @@ namespace MessageParsing
     public class ImageMessageParser : MessageParser
     {
         protected internal IImageTemplateRepository ImageTemplateRepository { get; }
-        public ImageTemplate ImageTemplate { get; private set; }
+        public override IEnumerable<PrintableProperty> PrintableProperties => ImageTemplates.SelectMany(template => template.PrintableProperties);
+        public ICollection<ImageTemplate> ImageTemplates { get; } = new List<ImageTemplate>();
 
         public ImageMessageParser(ConfigurationService configuration, SubscriptionFactoryService subscriptionFactory, IImageTemplateRepository imageTemplateRepository)
             : base(configuration, subscriptionFactory)
@@ -22,21 +24,15 @@ namespace MessageParsing
 
         public override void Initialise(Func<Task> handler)
         {
-            ImageTemplate = ImageTemplateRepository.GetImageTemplateById(Guid.NewGuid());
+            ImageTemplates.Clear();
 
-            foreach (ISubscription subscription in Subscribe(handler))
+            foreach (dynamic repository in Subscribe(handler).GroupBy(sub => sub.UaTypeMetadata.RepositoryGroupName, 
+                (key, group) => new { RepositoryGroupName = key, Subscriptions = group }))
             {
-                if (ImageTemplate
-                    .PropertyTemplates
-                    .Where(p => p.Name.Equals(subscription.TypeName))
-                    .FirstOrDefault() is IPropertyTemplate propertyTemplate)
-                {
-                    Properties.Add(new DrawableProperty(subscription, propertyTemplate));
-                }
-                else
-                {
-                    Properties.Add(new PrintableProperty(subscription, new PropertyTemplate(subscription.TypeName, null, Color.Black, null)));
-                }
+                ImageTemplates.Add(
+                    ImageTemplateRepository
+                        .GetImageTemplateByName(repository.RepositoryGroupName)
+                        .Initialise(repository.Subscriptions));
             }
         }
     }

@@ -4,6 +4,6 @@ namespace M2MCommunication.Core
 {
     public interface ISubscriptionFactory
     {
-        ISubscription Subscribe(string subscriptionName, PropertyChangedEventHandler handler);
+        ISubscription Subscribe(UaTypeMetadata uaTypeMetadata, PropertyChangedEventHandler handler);
     }
 }
