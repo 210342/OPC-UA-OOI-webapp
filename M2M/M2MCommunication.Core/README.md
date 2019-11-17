@@ -19,7 +19,7 @@ An interface for a subscription to implement.
 
 | Type | Name | Accessors | Description |
 |:----:|:----:|:---------:|:------------|
-|`string`|**TypeName**| get; | Full name of the subscribed type |
+|`UaTypeMetadata`|**UaTypeMetadata**| get; | Metadata of the type subscribed |
 |`object`|**Value**| get; set; | Current value of this subscription |
 
 #### Methods
@@ -37,7 +37,7 @@ An interface for an implementation of configuration for either a consumer or pro
 
 | Return type | Name |  Description |
 |:-----------:|:----:|:-------------|
-| `ISubscription` | Subscribe(`string` subscriptionName, `PropertyChangedEventHandler` handler) | Used to create and return a subscription for the specified type and with the specified event handler |
+| `ISubscription` | Subscribe(`UaTypeMetadata` uaTypeMetadata, `PropertyChangedEventHandler` handler) | Used to return a subscription for the specified type and with the specified event handler |
 
 ### *IConfiguration*
 
@@ -47,7 +47,7 @@ An interface for an implementation of configuration for either a consumer or pro
 
 | Return type | Name |  Description |
 |:-----------:|:----:|:-------------|
-| `IEnumerable<string>` | GetDataTypeNames() | Used to retrieve names of all of the configured data types |
+| `IEnumerable<UaTypeMetadata>` | GetTypeMetadata() | Used to retrieve metadata of all of the configured data types |
 
 ### *IMessageBus*
 
@@ -64,7 +64,8 @@ An interface for an object representing a bus that will notify subscribers about
 
 | Name | Description |
 |:----:|:-----|
-| `UaLibrarySettings` | Interface for a subscription to implement. Contains neccessary properties and methods |
+| `UaLibrarySettings` | A POCO object representing the configuration of the adapted OPC-UA library |
+| `UaTypeMetadata` | A POCO object representing the type of a UA object |
 
 ### *UaLibrarySettings*
 
@@ -77,6 +78,23 @@ A POCO object representing the configuration of the adapted OPC-UA library
 |`string`|ConsumerConfigurationFile| get; set; | Name of the file containing a configuration of the consumer |
 |`string`|ResourcesDirectory| get; set; | Path to the direcotry of the application's resources |
 |`string`|LibraryDirectory| get; set; | Path to the direcotry of the OPC-UA library relative to the resources directory |
+
+### *UaTypeMetadata*
+
+A POCO object representing the type of a UA object
+
+#### Constructors
+
+| Name | Description |
+|:----:|:------------|
+|UaTypeMetadata(`string` repositoryGroupName, `string` typeName)| Sets corresponding properties; throws `ArgumentNullException` when the `typeName` is either null, empty or contains only whitespace |
+
+#### Properties
+
+| Type | Name | Accessors | Description |
+|:----:|:----:|:---------:|:------------|
+|`string`|TypeName| get; | Name of the type; required |
+|`string`|RepositoryGroupName| get; | Name of the repository the type belongs to |
 
 ## Exceptions
 

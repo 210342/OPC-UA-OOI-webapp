@@ -22,13 +22,13 @@ An implementation of the `ISubscription` interface used in `ISubscriptionFactory
 
 | Name | Description |
 |:----:|:------------|
-| Subscription(`UATypeInfo` typeInfo, `string` typeName, `object` value) | Constructs the object and initialises it with provided values |
+| Subscription(`UATypeInfo` typeInfo, `UaTypeMetadata` uaTypeMetadata, `object` value) | Constructs the object and initialises it with provided values |
 
 #### Properties
 
 | Type | Name | Accessors | Description |
 |:----:|:----:|:---------:|:------------|
-| `string` | TypeName | get; | Name of the subscribed type |
+|`UaTypeMetadata`|**UaTypeMetadata**| get; | Metadata of the type subscribed |
 | `UATypeInfo` | TypeInfo | get; | Description of the type provided from UAOOI library |
 | `object` | Value | get; set; | The subscribed object |
 
@@ -65,7 +65,7 @@ A representation of the consumer's configuration.
 | Return type | Name | Description |
 |:-----------:|:----:|:------------|
 | `void` | Initialise(`string` configurationFileName) | Initialises neccessary values that are not provided through dependency injection |
-| `IEnumerable<string>` | GetDataTypeNames() | Returns all data names specified in the configuration |
+| `IEnumerable<UaTypeMetadata>` | GetTypeMetadata() | Used to retrieve metadata of all of the types specified in the configuration |
 
 ### *ConsumerBindingFactory*
 
@@ -85,7 +85,7 @@ An implementation of `IBindingFactory` and `ISubscriptionFactory` which provides
 |:-----------:|:----:|:------------|
 | `IConsumerBinding` | GetConsumerBinding(`string` repositoryGroup, `string` processValueName, `UATypeInfo` fieldTypeInfo) | Gets a consumer binding for a type specified by the parameters |
 | `IProducerBinding` | GetProducerBinding(`string` repositoryGroup, `string` processValueName, `UATypeInfo` fieldTypeInfo) | Throws `NotSupportedException` since the application works only in the consumer mode |
-| `ISubscription` | Subscribe(`string` subscriptionName, `PropertyChangedEventHandler` handler) | Gets a subscription for a type specified by the `subscriptionName`. Can throw an `UnsupportedTypeException` |
+| `ISubscription` | Subscribe(`UaTypeMetadata` uaTypeMetadata, `PropertyChangedEventHandler` handler) | Gets a subscription for a type specified by the `uaTypeMetadata`. Can throw an `UnsupportedTypeException` when the specified type was not bound |
 
 ### *UaooiMessageBus*
 

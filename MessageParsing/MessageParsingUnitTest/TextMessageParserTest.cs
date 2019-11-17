@@ -29,7 +29,6 @@ namespace MessageParsingUnitTest
                 sut.Initialise(async () => await Task.Run(() => { }));
                 Assert.NotNull(sut.GetType().GetProperty("Properties", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(sut));
                 Assert.NotEmpty(sut.GetType().GetProperty("Properties", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(sut) as IEnumerable<IProperty>);
-                Assert.Empty(sut.DrawableProperties);
                 Assert.NotEmpty(sut.PrintableProperties);
             }
         }
@@ -42,7 +41,6 @@ namespace MessageParsingUnitTest
                 await sut.InitialiseAsync(async () => await Task.Run(() => { }));
                 Assert.NotNull(sut.GetType().GetProperty("Properties", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(sut));
                 Assert.NotEmpty(sut.GetType().GetProperty("Properties", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(sut) as IEnumerable<IProperty>);
-                Assert.Empty(sut.DrawableProperties);
                 Assert.NotEmpty(sut.PrintableProperties);
             }
         }

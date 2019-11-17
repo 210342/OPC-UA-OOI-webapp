@@ -9,14 +9,16 @@ namespace MessageParsingUnitTest.Mocks
     {
         public ImageTemplate GetImageTemplateById(Guid id)
         {
-            ImageTemplate imageTemplate = new ImageTemplate(Guid.NewGuid(), @"", 1920, 1080);
+            ImageTemplate imageTemplate = new ImageTemplate(id, @"", 1920, 1080);
             imageTemplate.PropertyTemplates.Add(new PropertyTemplate("Second type name", new Point(0, 0), Color.White, Color.Black));
             return imageTemplate;
         }
 
         public ImageTemplate GetImageTemplateByName(string name)
         {
-            throw new NotImplementedException();
+            ImageTemplate imageTemplate = new ImageTemplate(Guid.NewGuid(), @"", 1920, 1080);
+            imageTemplate.PropertyTemplates.Add(new PropertyTemplate("Second type name", new Point(0, 0), Color.White, Color.Black));
+            return imageTemplate;
         }
     }
 }

@@ -9,7 +9,7 @@ namespace MessageParsingUnitTest.Mocks
 
         public object Value { get => _value; set { _value = value as string; ValueUpdated?.Invoke(this, null); } }
 
-        public string TypeName { get; set; }
+        public UaTypeMetadata UaTypeMetadata { get; set; }
 
         public event PropertyChangedEventHandler ValueUpdated;
 

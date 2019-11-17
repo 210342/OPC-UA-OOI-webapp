@@ -10,8 +10,7 @@ namespace M2MCommunicationUnitTest
 {
     public class ConsumerBindingFactoryTest
     {
-        private static readonly string repositoryGroup = "repository group";
-        private static readonly string typeName = "type name";
+        private static readonly UaTypeMetadata _typeMetadata = new UaTypeMetadata("repository group", "type name");
 
         [Fact]
         public void GetProducerBindingTest()
@@ -25,17 +24,17 @@ namespace M2MCommunicationUnitTest
         {
             ConsumerBindingFactory factory = new ConsumerBindingFactory();
             UATypeInfo typeInfo = new UATypeInfo(BuiltInType.Byte, -1, new int[] { });
-            IConsumerBinding binding = factory.GetConsumerBinding(repositoryGroup, typeName, typeInfo);
+            IConsumerBinding binding = factory.GetConsumerBinding(_typeMetadata.RepositoryGroupName, _typeMetadata.TypeName, typeInfo);
             Assert.NotNull(binding);
-            Assert.True(factory.Subscriptions.ContainsKey(typeName));
-            Assert.NotNull(factory.Subscriptions[typeName]);
+            Assert.True(factory.Subscriptions.ContainsKey(_typeMetadata));
+            Assert.NotNull(factory.Subscriptions[_typeMetadata]);
         }
 
         [Fact]
         public void GetConsumerBindingForNullTypeTest()
         {
             ConsumerBindingFactory factory = new ConsumerBindingFactory();
-            Assert.Throws<ArgumentNullException>(() => factory.GetConsumerBinding(repositoryGroup, typeName, null));
+            Assert.Throws<ArgumentNullException>(() => factory.GetConsumerBinding(_typeMetadata.RepositoryGroupName, _typeMetadata.TypeName, null));
         }
 
         [Fact]
@@ -43,7 +42,7 @@ namespace M2MCommunicationUnitTest
         {
             ConsumerBindingFactory factory = new ConsumerBindingFactory();
             UATypeInfo typeInfo = new UATypeInfo(BuiltInType.Byte, 2, new int[] { 21, 37 });
-            Assert.Throws<ValueRankOutOfRangeException>(() => factory.GetConsumerBinding(repositoryGroup, typeName, typeInfo));
+            Assert.Throws<ValueRankOutOfRangeException>(() => factory.GetConsumerBinding(_typeMetadata.RepositoryGroupName, _typeMetadata.TypeName, typeInfo));
         }
 
         [Fact]
@@ -51,14 +50,14 @@ namespace M2MCommunicationUnitTest
         {
             ConsumerBindingFactory factory = new ConsumerBindingFactory();
             UATypeInfo typeInfo = new UATypeInfo(BuiltInType.NodeId, -2, new int[] { });
-            Assert.Throws<UnsupportedTypeException>(() => factory.GetConsumerBinding(repositoryGroup, typeName, typeInfo));
+            Assert.Throws<UnsupportedTypeException>(() => factory.GetConsumerBinding(_typeMetadata.RepositoryGroupName, _typeMetadata.TypeName, typeInfo));
         }
 
         [Fact]
         public void SubscribeNotBoundTypeTest()
         {
             ConsumerBindingFactory factory = new ConsumerBindingFactory();
-            Assert.Throws<UnsupportedTypeException>(() => factory.Subscribe(typeName, (sender, args) => { }));
+            Assert.Throws<UnsupportedTypeException>(() => factory.Subscribe(_typeMetadata, (sender, args) => { }));
         }
 
         [Fact]
@@ -66,10 +65,10 @@ namespace M2MCommunicationUnitTest
         {
             ConsumerBindingFactory factory = new ConsumerBindingFactory();
             UATypeInfo typeInfo = new UATypeInfo(BuiltInType.Byte, -1, new int[] { });
-            IConsumerBinding binding = factory.GetConsumerBinding(repositoryGroup, typeName, typeInfo);
-            ISubscription subscription = factory.Subscribe(typeName, (sender, args) => { });
+            IConsumerBinding binding = factory.GetConsumerBinding(_typeMetadata.RepositoryGroupName, _typeMetadata.TypeName, typeInfo);
+            ISubscription subscription = factory.Subscribe(_typeMetadata, (sender, args) => { });
             Assert.NotNull(subscription);
-            Assert.Equal(typeName, subscription.TypeName);
+            Assert.Equal(_typeMetadata, subscription.UaTypeMetadata);
             Assert.Equal(binding, subscription.Value);
         }
 
@@ -78,9 +77,9 @@ namespace M2MCommunicationUnitTest
         {
             ConsumerBindingFactory factory = new ConsumerBindingFactory();
             UATypeInfo typeInfo = new UATypeInfo(BuiltInType.Byte, -1, new int[] { });
-            IConsumerBinding binding = factory.GetConsumerBinding(repositoryGroup, typeName, typeInfo);
+            IConsumerBinding binding = factory.GetConsumerBinding(_typeMetadata.RepositoryGroupName, _typeMetadata.TypeName, typeInfo);
             bool invoked = false;
-            ISubscription subscription = factory.Subscribe(typeName, (sender, args) => invoked = true);
+            ISubscription subscription = factory.Subscribe(_typeMetadata, (sender, args) => invoked = true);
             subscription.Value = null;
             Assert.True(invoked);
         }

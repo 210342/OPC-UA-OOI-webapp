@@ -99,7 +99,7 @@ An implementation of a service locator design pattern.
 
 > Implements `IDisposable`
 
-An implementation of a service locator design pattern.
+A class used to initialise a container for the `UaooiServiceLocator` to use. Requires `UaLibrary` section from application settings.
 
 #### Constructors
 

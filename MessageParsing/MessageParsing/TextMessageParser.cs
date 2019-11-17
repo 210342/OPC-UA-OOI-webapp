@@ -17,7 +17,7 @@ namespace MessageParsing
             Properties.Clear();
             foreach (ISubscription subscription in Subscribe(handler))
             {
-                Properties.Add(new PrintableProperty(subscription, new PropertyTemplate(subscription.TypeName, null, Color.Black, null)));
+                Properties.Add(new PrintableProperty(subscription, new PropertyTemplate(subscription.UaTypeMetadata.TypeName, null, Color.Black, null)));
             }
         }
     }
