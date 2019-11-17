@@ -28,7 +28,7 @@ An implementation of the `ISubscription` interface used in `ISubscriptionFactory
 
 | Type | Name | Accessors | Description |
 |:----:|:----:|:---------:|:------------|
-|`UaTypeMetadata`|**UaTypeMetadata**| get; | Metadata of the type subscribed |
+|`UaTypeMetadata`|UaTypeMetadata| get; | Metadata of the type subscribed |
 | `UATypeInfo` | TypeInfo | get; | Description of the type provided from UAOOI library |
 | `object` | Value | get; set; | The subscribed object |
 
