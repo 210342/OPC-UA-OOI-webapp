@@ -43,6 +43,7 @@
 
   <ItemGroup>
     <Folder Include="Properties\" />
+    <Folder Include="wwwroot\Images\Boiler\" />
   </ItemGroup>
 
   <ItemGroup>
