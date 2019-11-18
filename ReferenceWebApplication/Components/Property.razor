@@ -2,7 +2,7 @@
 @using System.Text
 @using InterfaceModel.Model
 
-<span class="drawable-property" style="@Style">
+<span class="drawable-property font-bordered" style="@Style">
     @DrawableProperty.Subscription.Value?.ToString()
 </span>
 
@@ -14,9 +14,8 @@
         ? string.Empty
         : new StringBuilder()
             .Append("position: absolute;")
-            .Append("left: ").Append(Decimal.Round(DrawableProperty.Template.Location.Value.X)).Append("px;")
-            .Append("top: ").Append(Decimal.Round(DrawableProperty.Template.Location.Value.Y)).Append("px;")
-            .Append("background-color: ").Append(ColorTranslator.ToHtml(DrawableProperty.Template.BackgroundColor.Value)).Append(";")
-            .Append("color: ").Append(ColorTranslator.ToHtml(DrawableProperty.Template.FontColor.Value)).Append(";")
+            .Append("left: ").Append(DrawableProperty.Template.Location?.X).Append("px;")
+            .Append("top: ").Append(DrawableProperty.Template.Location?.Y).Append("px;")
+            .Append("color: ").Append(DrawableProperty.Template?.HexColor ?? "black").Append(";")
             .ToString();
 }

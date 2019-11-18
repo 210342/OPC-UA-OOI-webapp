@@ -1,11 +1,12 @@
 ﻿using InterfaceModel.Model;
 using System;
+using System.Threading.Tasks;
 
 namespace InterfaceModel.Repositories
 {
     public interface IImageTemplateRepository
     {
-        ImageTemplate GetImageTemplateByName(string name);
-        ImageTemplate GetImageTemplateById(Guid id);
+        Task<ImageTemplate> GetImageTemplateByNameAsync(string name);
+        Task<ImageTemplate> GetImageTemplateByIdAsync(Guid id);
     }
 }

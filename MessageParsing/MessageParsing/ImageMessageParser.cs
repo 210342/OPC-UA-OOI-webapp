@@ -22,7 +22,7 @@ namespace MessageParsing
             ImageTemplateRepository = imageTemplateRepository;
         }
 
-        public override void Initialise(Func<Task> handler)
+        public override async Task InitialiseAsync(Func<Task> handler)
         {
             ImageTemplates.Clear();
 
@@ -30,8 +30,8 @@ namespace MessageParsing
                 (key, group) => new { RepositoryGroupName = key, Subscriptions = group }))
             {
                 ImageTemplates.Add(
-                    ImageTemplateRepository
-                        .GetImageTemplateByName(repository.RepositoryGroupName)
+                    (await ImageTemplateRepository
+                        .GetImageTemplateByNameAsync(repository.RepositoryGroupName))
                         .Initialise(repository.Subscriptions));
             }
         }

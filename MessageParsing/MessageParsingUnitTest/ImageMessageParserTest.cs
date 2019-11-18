@@ -25,25 +25,6 @@ namespace MessageParsingUnitTest
         }
 
         [Fact]
-        public void InitialiseTest()
-        {
-            using (ImageMessageParser sut = new ImageMessageParser(GetTestConfigurationService(), GetTestSubscriptionService(), new TestImageTemplateRepository()))
-            {
-                sut.Initialise(async () => await Task.Run(() => { }));
-                Assert.NotNull(sut.ImageTemplates);
-                Assert.NotEmpty(sut.ImageTemplates);
-                foreach (var template in sut.ImageTemplates)
-                {
-                    Assert.NotNull(template.Properties);
-                    Assert.NotEmpty(template.Properties);
-                    Assert.NotEmpty(template.DrawableProperties);
-                    Assert.NotEmpty(template.PrintableProperties);
-                }
-                Assert.NotEmpty(sut.PrintableProperties);
-            }
-        }
-
-        [Fact]
         public async Task InitialiseAsyncTest()
         {
             using (ImageMessageParser sut = new ImageMessageParser(GetTestConfigurationService(), GetTestSubscriptionService(), new TestImageTemplateRepository()))

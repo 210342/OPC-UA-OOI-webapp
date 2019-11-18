@@ -1,0 +1,39 @@
+{
+  "RelativePath": "Images\\Template\\Image.png",
+  "Width": 1300,
+  "Height": 480,
+  "PropertyTemplates": [
+    {
+      "HexColor": "#ffffff",
+      "Name": "BoolToggle",
+      "Location": {
+        "X": 700,
+        "Y": 200
+      }
+    },
+    {
+      "HexColor": "#bf060f",
+      "Name": "ValueInt32",
+      "Location": {
+        "X": 1100,
+        "Y": 100
+      }
+    },
+    {
+      "HexColor": "#ffffff",
+      "Name": "Int32Fast",
+      "Location": {
+        "X": 420,
+        "Y": 420
+      }
+    },
+    {
+      "HexColor": "#ff0000",
+      "Name": "ValueDateTime",
+      "Location": {
+        "X": 800,
+        "Y": 350
+      }
+    }
+  ]
+}

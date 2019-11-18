@@ -9,7 +9,6 @@ namespace MessageParsing
     {
         IEnumerable<PrintableProperty> PrintableProperties { get; }
 
-        void Initialise(Func<Task> handler);
         Task InitialiseAsync(Func<Task> handler);
     }
 }

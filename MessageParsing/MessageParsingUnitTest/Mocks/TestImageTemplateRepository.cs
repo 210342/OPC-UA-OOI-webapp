@@ -1,24 +1,28 @@
 ﻿using InterfaceModel.Model;
 using InterfaceModel.Repositories;
 using System;
-using System.Drawing;
+using System.Threading.Tasks;
 
 namespace MessageParsingUnitTest.Mocks
 {
     class TestImageTemplateRepository : IImageTemplateRepository
     {
-        public ImageTemplate GetImageTemplateById(Guid id)
+        public Task<ImageTemplate> GetImageTemplateByIdAsync(Guid id)
         {
-            ImageTemplate imageTemplate = new ImageTemplate(id, @"", 1920, 1080);
-            imageTemplate.PropertyTemplates.Add(new PropertyTemplate("Second type name", new Point(0, 0), Color.White, Color.Black));
-            return imageTemplate;
+            ImageTemplate imageTemplate = new ImageTemplate(@"", 1920, 1080)
+            {
+                PropertyTemplates = new[] { new PropertyTemplate("Second type name", new Point(0, 0), "white") }
+            };
+            return Task.FromResult(imageTemplate);
         }
 
-        public ImageTemplate GetImageTemplateByName(string name)
+        public Task<ImageTemplate> GetImageTemplateByNameAsync(string name)
         {
-            ImageTemplate imageTemplate = new ImageTemplate(Guid.NewGuid(), @"", 1920, 1080);
-            imageTemplate.PropertyTemplates.Add(new PropertyTemplate("Second type name", new Point(0, 0), Color.White, Color.Black));
-            return imageTemplate;
+            ImageTemplate imageTemplate = new ImageTemplate(@"", 1920, 1080)
+            {
+                PropertyTemplates = new[] { new PropertyTemplate("Second type name", new Point(0, 0), "white") }
+            };
+            return Task.FromResult(imageTemplate);
         }
     }
 }

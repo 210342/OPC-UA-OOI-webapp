@@ -1,5 +1,4 @@
 @page "/detailed-message"
-@using System.IO
 @using Microsoft.Extensions.Localization
 @using Microsoft.Extensions.Logging
 @using M2MCommunication.Core
@@ -10,14 +9,14 @@
 @implements IDisposable
 
 <div class="container-fluid">
-    <h1 class="text-danger text-center">@ExceptionMessage</h1>
+    <h3 class="text-danger text-center">@ExceptionMessage</h3>
     @if (!IsLayoutHorizontal)
     {
         <div class="row my-1">
-            <div class="col-6 text-center py-2">
-                <h3><span class="badge badge-primary">Packages received: @PackagesReceived</span></h3>
+            <div class="col-6 text-center py-1">
+                <h3><span class="badge @PackagesReceivedStyle">Packages received: @PackagesReceived</span></h3>
             </div>
-            <div class="col-6 text-center py-2">
+            <div class="col-6 text-center py-1">
                 <h3><span class="badge @BytesReceivedStyle">Bytes received: @BytesReceived</span></h3>
             </div>
         </div>
@@ -48,7 +47,7 @@
     </div>
     <div class="row my-3">
         <div class="col-12">
-            <h2 class="mt-6 mb-3">Other properties</h2>
+            <h2 class="mt-6 mb-3" style="font-weight: bold;">Other properties</h2>
             <ReferenceWebApplication.Components.TextMessageParser Parser="Parser" />
         </div>
     </div>
@@ -62,7 +61,8 @@
 @code
 {
     private IMessageBus Bus => BusService?.MessageBus;
-    private string BytesReceivedStyle => BytesReceived > 2048 ? "badge-warning" : "badge-info";
+    private string PackagesReceivedStyle => PackagesReceived > 2048 ? "badge-danger" : "badge-primary";
+    private string BytesReceivedStyle => BytesReceived > 65536 ? "badge-warning" : "badge-info";
     private string ImageColumnClass => IsLayoutHorizontal ? "col-9" : "col-12";
 
     public int BytesReceived { get; private set; } = 0;
@@ -72,44 +72,35 @@
 
     protected override async Task OnInitializedAsync()
     {
-        await Task.Run(() =>
+        try
         {
-            try
-            {
-                Bus?.Initialise(settings);
-                Parser?.Initialise(OnPropertyChangedAsync);
-            }
-            catch (ConfigurationFileNotFoundException ex)
-            {
-                Logger.LogError(ex, ex.Message);
-                ExceptionMessage = Localizer.GetString("ConfigurationFileNotFound");
-            }
-            catch (UnsupportedTypeException ex)
-            {
-                Logger.LogError(ex, ex.Message);
-                ExceptionMessage = Localizer.GetString("UnsupportedDataType");
-            }
-            catch (ValueRankOutOfRangeException ex)
-            {
-                Logger.LogError(ex, ex.Message);
-                ExceptionMessage = Localizer.GetString("UnsupportedValueRank");
-            }
-            catch (ComponentNotIntialisedException ex)
-            {
-                Logger.LogError(ex, ex.Message);
-                ExceptionMessage = $"{Localizer.GetString("ComponentNotInitialisedException")} {ex.Message}";
-            }
-            catch (Exception ex)
-            {
-                Logger.LogError(ex, ex.Message);
-                ExceptionMessage = ex.Message;
-            }
-        });
-    }
-
-    protected void ExceptionHandler(Exception ex)
-    {
-
+            await Parser?.InitialiseAsync(OnPropertyChangedAsync);
+        }
+        catch (ConfigurationFileNotFoundException ex)
+        {
+            Logger.LogError(ex, ex.Message);
+            ExceptionMessage = Localizer.GetString("ConfigurationFileNotFound");
+        }
+        catch (UnsupportedTypeException ex)
+        {
+            Logger.LogError(ex, ex.Message);
+            ExceptionMessage = Localizer.GetString("UnsupportedDataType");
+        }
+        catch (ValueRankOutOfRangeException ex)
+        {
+            Logger.LogError(ex, ex.Message);
+            ExceptionMessage = Localizer.GetString("UnsupportedValueRank");
+        }
+        catch (ComponentNotIntialisedException ex)
+        {
+            Logger.LogError(ex, ex.Message);
+            ExceptionMessage = $"{Localizer.GetString("ComponentNotInitialisedException")} {ex.Message}";
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, ex.Message);
+            ExceptionMessage = ex.Message;
+        }
     }
 
     protected async Task OnPropertyChangedAsync()
