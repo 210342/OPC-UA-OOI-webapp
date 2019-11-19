@@ -1,4 +1,4 @@
-@page "/detailed-message"
+@page "/hmi"
 @using Microsoft.Extensions.Localization
 @using Microsoft.Extensions.Logging
 @using M2MCommunication.Core
@@ -56,8 +56,8 @@
 @inject MessageBusService BusService
 @inject UaLibrarySettings settings
 @inject IMessageParser Parser
-@inject ILogger<DetailedMessage> Logger
-@inject IStringLocalizer<DetailedMessage> Localizer
+@inject ILogger<HMI> Logger
+@inject IStringLocalizer<HMI> Localizer
 @code
 {
     private IMessageBus Bus => BusService?.MessageBus;
