@@ -1,6 +1,6 @@
 # OPC-UA-OOI-webapp
 
-Web application built using ASP.NET Core 3.0 as an example usage of OPC-UA PubSub Standard
+Web application built using ASP.NET Core 3.0 with Blazor Server as an example usage of OPC-UA PubSub Standard
 
 Application depends on open-source NuGet packages developed by [Mariusz Postół on github](https://github.com/mpostol/OPC-UA-OOI).
 
