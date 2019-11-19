@@ -1,0 +1,39 @@
+{
+  "RelativePath": "Images\\Boiler\\Boiler.png",
+  "Width": 400,
+  "Height": 500,
+  "PropertyTemplates": [
+    {
+      "HexColor": "#ffffff",
+      "Name": "BoolToggle",
+      "Location": {
+        "X": 185,
+        "Y": 10
+      }
+    },
+    {
+      "HexColor": "#bf060f",
+      "Name": "ValueInt32",
+      "Location": {
+        "X": 80,
+        "Y": 430
+      }
+    },
+    {
+      "HexColor": "#54c9ff",
+      "Name": "Int32Fast",
+      "Location": {
+        "X": 280,
+        "Y": 430
+      }
+    },
+    {
+      "HexColor": "#ff0000",
+      "Name": "ValueDateTime",
+      "Location": {
+        "X": 300,
+        "Y": 5
+      }
+    }
+  ]
+}

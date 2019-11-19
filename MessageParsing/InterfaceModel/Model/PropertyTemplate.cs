@@ -1,20 +1,18 @@
-﻿using System.Drawing;
-
-namespace InterfaceModel.Model
+﻿namespace InterfaceModel.Model
 {
     public class PropertyTemplate : IPropertyTemplate
     {
         public string Name { get; set; }
-        public Point? Location { get; set; }
-        public Color? FontColor { get; set; }
-        public Color? BackgroundColor { get; set; }
+        public Point Location { get; set; }
+        public string HexColor { get; set; }
 
-        public PropertyTemplate(string name, Point? location, Color? fontColor, Color? backgroundColor)
+        public PropertyTemplate() { }
+
+        public PropertyTemplate(string name, Point location, string hexColor)
         {
             Name = name;
             Location = location;
-            FontColor = fontColor;
-            BackgroundColor = backgroundColor;
+            HexColor = hexColor;
         }
     }
 }

@@ -7,9 +7,9 @@ namespace InterfaceModel.Model
     {
         public PrintableProperty(ISubscription subscription, IPropertyTemplate template) : base(subscription, template) { }
 
-        public DrawableProperty MapToDrawable(Point location, Color backgroundColor)
+        public DrawableProperty MapToDrawable(Point location)
         {
-            return new DrawableProperty(Subscription, new PropertyTemplate(Template.Name, location, Template.FontColor, backgroundColor));
+            return new DrawableProperty(Subscription, new PropertyTemplate(Template.Name, location, Template.HexColor));
         }
     }
 }

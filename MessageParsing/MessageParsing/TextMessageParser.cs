@@ -15,13 +15,22 @@ namespace MessageParsing
         public TextMessageParser(ConfigurationService configuration, SubscriptionFactoryService subscriptionFactory)
             : base(configuration, subscriptionFactory) { }
 
-        public override void Initialise(Func<Task> handler)
+        public void Initialise(Func<Task> handler)
         {
             PrintableProperties.Clear();
             foreach (ISubscription subscription in Subscribe(handler))
             {
-                PrintableProperties.Add(new PrintableProperty(subscription, new PropertyTemplate(subscription.UaTypeMetadata.TypeName, null, Color.Black, null)));
+                PrintableProperties.Add(new PrintableProperty(subscription, new PropertyTemplate(subscription.UaTypeMetadata.TypeName, null, "#ffffff")));
             }
+        }
+
+        public override async Task InitialiseAsync(Func<Task> handler)
+        {
+            await Task.Run(() =>
+            {
+                Initialise(handler);
+            })
+            .ConfigureAwait(true);
         }
     }
 }

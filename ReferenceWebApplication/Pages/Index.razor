@@ -1,5 +1,20 @@
 ﻿@page "/"
 
-<h1>Hello, world!</h1>
+<article class="markdown-body entry-content py-2 px-3" itemprop="text" style="font-size: 1.2rem;">
+    <h1 class="mb-3"><span style="font-size: 1.2em;"></span>Object Oriented Internet WebApplication</h1>
+    <hr class="border-info" />
+    <p class="pl-3">Web application built using ASP.NET Core 3.0 with Blazor Server as an example usage of OPC-UA Pub/Sub Standard.</p>
+    <p class="pl-3">Application depends on open-source NuGet packages developed by <a href="https://github.com/mpostol/OPC-UA-OOI" class="light-link">Mariusz Postół on github</a>.</p>
+    <h2 class="my-2">Goals</h2>
+    <ul>
+        <li>Implementing OPC-UA Part 14 PubSub protocol for m2m communication</li>
+        <li>Designing application architecture based on dependency injection</li>
+        <li>Handling and displaying asynchronous data from IoT machines</li>
+        <li>Designing graphical interface which changes based on the type of the data received</li>
+    </ul>
+</article>
 
-Welcome to your new app.
+<div class="text-center font-bordered">
+    <h4 class="my-2">Move to the <a href="configuration" class="light-link font-weight-bold">configuration page</a> to change consumer's configuration</h4>
+    <h4 class="my-2">or jump straight to the <a href="hmi" class="light-link font-weight-bold">interface page</a> to observe received data</h4>
+</div>

@@ -1,3 +1,4 @@
+using InterfaceModel.Configuration;
 using InterfaceModel.Repositories;
 using M2MCommunication.Core;
 using M2MCommunication.Services;
@@ -28,13 +29,15 @@ namespace ReferenceWebApplication
             services.AddServerSideBlazor();
             services.AddLocalization();
             services.Configure<UaLibrarySettings>(Configuration.GetSection("UaLibrary"));
+            services.Configure<RepositoryConfiguration>(Configuration.GetSection("ImageRepository"));
             services.AddSingleton(s => s.GetRequiredService<IOptions<UaLibrarySettings>>().Value);
+            services.AddSingleton(s => s.GetRequiredService<IOptions<RepositoryConfiguration>>().Value);
             services.AddSingleton<ServiceContainerSetup>();
             services.AddSingleton<SubscriptionFactoryService>();
-            services.AddSingleton<MessageBusService>();
             services.AddSingleton<ConfigurationService>();
+            services.AddTransient<MessageBusService>();
             services.AddTransient<IMessageParser, ImageMessageParser>();
-            services.AddTransient<IImageTemplateRepository, ImageTemplateRepository>();
+            services.AddTransient<IImageTemplateRepository, JsonFileImageTemplateRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

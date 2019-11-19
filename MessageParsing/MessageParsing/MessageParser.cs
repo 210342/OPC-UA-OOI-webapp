@@ -20,17 +20,7 @@ namespace MessageParsing
             SubscriptionFactory = subscriptionFactory.SubscriptionFactory;
         }
 
-
-        public abstract void Initialise(Func<Task> handler);
-
-        public async Task InitialiseAsync(Func<Task> handler)
-        {
-            await Task.Run(() =>
-            {
-                Initialise(handler);
-            })
-            .ConfigureAwait(true);
-        }
+        public abstract Task InitialiseAsync(Func<Task> handler);
 
         protected internal IEnumerable<ISubscription> Subscribe(Func<Task> handler)
         {

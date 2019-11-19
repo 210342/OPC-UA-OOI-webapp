@@ -8,9 +8,10 @@ namespace M2MCommunication.Services
     {
         public IMessageBus MessageBus { get; }
 
-        public MessageBusService()
+        public MessageBusService(UaLibrarySettings uaLibrarySettings)
         {
             MessageBus = ServiceLocator.Current.GetInstance<IMessageBus>();
+            MessageBus?.Initialise(uaLibrarySettings);
         }
 
         public void Dispose()

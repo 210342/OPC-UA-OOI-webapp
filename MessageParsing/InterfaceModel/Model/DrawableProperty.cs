@@ -8,7 +8,7 @@ namespace InterfaceModel.Model
 
         public PrintableProperty MapToPrintable()
         {
-            return new PrintableProperty(Subscription, new PropertyTemplate(Template.Name, null, Template.FontColor, null));
+            return new PrintableProperty(Subscription, new PropertyTemplate(Template.Name, null, Template.HexColor));
         }
     }
 }

@@ -5,13 +5,17 @@
 {
     @foreach (ImageTemplate image in ImageParser.ImageTemplates)
     {
-        <h3>@image.Properties.FirstOrDefault()?.Subscription?.UaTypeMetadata?.RepositoryGroupName</h3>
-        <div class="d-flex justify-content-center">
-            <div class="overflow-auto" style="position: relative;">
+        <h3 class="text-center my-1">
+            <span class="badge badge-pill badge-light">
+                @image.Properties.FirstOrDefault()?.Subscription?.UaTypeMetadata?.RepositoryGroupName
+            </span>
+        </h3>
+        <div class="d-flex justify-content-center mt-2 mb-5">
+            <div class="overflow-auto border border-light image-container rounded-lg" style="position: relative;">
                 <img class="rounded float-left"
                      src="@image?.RelativePath"
                      alt="Message background"
-                     style=@($"width: {image.Width}px; height: {image.Height}px;") />
+                     style=@($"width: {image?.Width}px; height: {image?.Height}px;") />
                 @foreach (DrawableProperty property in image.DrawableProperties)
                 {
                     <Property @key="property" DrawableProperty="property" />

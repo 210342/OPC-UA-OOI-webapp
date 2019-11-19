@@ -8,19 +8,28 @@ namespace InterfaceModel.Model
 {
     public class ImageTemplate
     {
-        public Guid MessageTypeGuid { get; set; }
+        #region Serializable properties
+
         public int Width { get; set; }
         public int Height { get; set; }
         public string RelativePath { get; set; }
-        public ICollection<IPropertyTemplate> PropertyTemplates { get; } = new List<IPropertyTemplate>();
+        public IEnumerable<PropertyTemplate> PropertyTemplates { get; set; }
+
+        #endregion
+
+        #region Logic properties
+
         public ICollection<IProperty> Properties { get; } = new List<IProperty>();
-        public IEnumerable<DrawableProperty> DrawableProperties => Properties?.OfType<DrawableProperty>() ?? Enumerable.Empty<DrawableProperty>();
-        public IEnumerable<PrintableProperty> PrintableProperties => Properties?.OfType<PrintableProperty>() ?? Enumerable.Empty<PrintableProperty>();
+        public IEnumerable<DrawableProperty> DrawableProperties => Properties?.OfType<DrawableProperty>() 
+            ?? Enumerable.Empty<DrawableProperty>();
+        public IEnumerable<PrintableProperty> PrintableProperties => Properties?.OfType<PrintableProperty>() 
+            ?? Enumerable.Empty<PrintableProperty>();
+
+        #endregion
 
         public ImageTemplate() { }
-        public ImageTemplate(Guid messageTypeGuid, string relativePath, int width, int height)
+        public ImageTemplate(string relativePath, int width, int height)
         {
-            MessageTypeGuid = messageTypeGuid;
             Width = width;
             Height = height;
             RelativePath = relativePath;
@@ -40,7 +49,7 @@ namespace InterfaceModel.Model
                 {
                     Properties.Add(new PrintableProperty(
                         subscription, 
-                        new PropertyTemplate(subscription.UaTypeMetadata.TypeName, null, Color.Black, null)
+                        new PropertyTemplate(subscription.UaTypeMetadata.TypeName, null, "#ffffff")
                     ));
                 }
             }
