@@ -72,15 +72,15 @@
       "Name": "PipeX001_FTX001_Output",
       "Location": {
         "X": 840,
-        "Y": 470
+        "Y": 370
       }
     },
     {
       "HexColor": "#ffc90e",
       "Name": "PipeX002_FTX002_Output",
       "Location": {
-        "X": 840,
-        "Y": 590
+        "X": 1150,
+        "Y": 370
       }
     },
     {
