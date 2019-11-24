@@ -14,4 +14,8 @@ In the process of parsing, for each of the `PropertyTemplates` parser creates a 
 
 ## Repositories
 
-The only repository is a temporary mock.
+The repositories provide means to persist and read templates for the HMI. Currently there is only one repository `JsonFileImageTemplateRepository` that uses server's static resources and saves templates as serialized JSON objects with paths to the images.
+
+## Configuration
+
+Contains model for repositories' configuration.
