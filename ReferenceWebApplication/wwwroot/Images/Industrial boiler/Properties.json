@@ -1,0 +1,95 @@
+{
+  "RelativePath": "Images\\Industrial Boiler\\Boiler.png",
+  "Width": 1286,
+  "Height": 680,
+  "PropertyTemplates": [
+    {
+      "HexColor": "#ff7f27",
+      "Name": "FCX001_SetPoint",
+      "Location": {
+        "X": 130,
+        "Y": 245
+      }
+    },
+    {
+      "HexColor": "#ffffff",
+      "Name": "FCX001_ControlOut",
+      "Location": {
+        "X": 275,
+        "Y": 400
+      }
+    },
+    {
+      "HexColor": "#ffffff",
+      "Name": "FCX001_Measurement",
+      "Location": {
+        "X": 90,
+        "Y": 422
+      }
+    },
+    {
+      "HexColor": "#ffc90e",
+      "Name": "DrumX001_LIX001_Output",
+      "Location": {
+        "X": 540,
+        "Y": 310
+      }
+    },
+    {
+      "HexColor": "#ff7f27",
+      "Name": "LCX001_SetPoint",
+      "Location": {
+        "X": 150,
+        "Y": 360
+      }
+    },
+    {
+      "HexColor": "#ffffff",
+      "Name": "LCX001_Measurement",
+      "Location": {
+        "X": 347,
+        "Y": 345
+      }
+    },
+    {
+      "HexColor": "#ffffff",
+      "Name": "LCX001_ControlOut",
+      "Location": {
+        "X": 430,
+        "Y": 290
+      }
+    },
+    {
+      "HexColor": "#ffc90e",
+      "Name": "PipeX001_ValveX001_Input",
+      "Location": {
+        "X": 525,
+        "Y": 600
+      }
+    },
+    {
+      "HexColor": "#ffc90e",
+      "Name": "PipeX001_FTX001_Output",
+      "Location": {
+        "X": 840,
+        "Y": 470
+      }
+    },
+    {
+      "HexColor": "#ffc90e",
+      "Name": "PipeX002_FTX002_Output",
+      "Location": {
+        "X": 840,
+        "Y": 590
+      }
+    },
+    {
+      "HexColor": "#ffffff",
+      "Name": "Simulation_UpdateRate",
+      "Location": {
+        "X": 5,
+        "Y": 5
+      }
+    }
+  ]
+}

@@ -45,12 +45,15 @@
             </div>
         }
     </div>
-    <div class="row my-3">
-        <div class="col-12">
-            <h2 class="mt-6 mb-3" style="font-weight: bold;">Other properties</h2>
-            <ReferenceWebApplication.Components.TextMessageParser Parser="Parser" />
+    @if (Parser.PrintableProperties.Any())
+    {
+        <div class="row my-3">
+            <div class="col-12">
+                <h2 class="mt-6 mb-3" style="font-weight: bold;">Other properties</h2>
+                <ReferenceWebApplication.Components.TextMessageParser Parser="Parser" />
+            </div>
         </div>
-    </div>
+    }
 </div>
 
 @inject MessageBusService BusService

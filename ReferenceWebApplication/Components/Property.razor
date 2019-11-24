@@ -1,9 +1,8 @@
-﻿@using System.Drawing
-@using System.Text
+﻿@using System.Text
 @using InterfaceModel.Model
 
 <span class="drawable-property font-bordered" style="@Style">
-    @DrawableProperty.Subscription.Value?.ToString()
+    @PrintedString
 </span>
 
 @code
@@ -18,4 +17,8 @@
             .Append("top: ").Append(DrawableProperty.Template.Location?.Y).Append("px;")
             .Append("color: ").Append(DrawableProperty.Template?.HexColor ?? "black").Append(";")
             .ToString();
+    private string PropertyString => DrawableProperty.Subscription.Value?.ToString();
+    private string PrintedString => PropertyString.Equals(string.Empty)
+        ? string.Empty
+        : PropertyString.Substring(0, Math.Min(PropertyString.Length, PropertyString.Contains("-") ? 6 : 5));
 }
