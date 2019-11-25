@@ -5,22 +5,23 @@
     <table class="table table-sm table-dark">
         <thead class="thead-light">
             <tr>
-                <th style="width: 30%;">Property</th>
-                <th style="width: 70%;">Value</th>
+                <th style="width: 25%;">Repository</th>
+                <th style="width: 25%;">Property</th>
+                <th style="width: 50%;">Value</th>
             </tr>
         </thead>
         <tbody class="table-striped">
             @foreach (PrintableProperty property in Parser.PrintableProperties)
             {
                 <tr>
-                    <th scope="row">@property.Template.Name</th>
+                    <td>@property.Subscription.UaTypeMetadata.RepositoryGroupName</td>
+                    <td>@property.Template.Name</td>
                     <td>@(property.Subscription.ToString() ?? "null")</td>
                 </tr>
             }
         </tbody>
     </table>
 </div>
-
 @code 
 {
     [Parameter]

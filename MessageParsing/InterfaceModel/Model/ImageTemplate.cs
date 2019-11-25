@@ -13,7 +13,7 @@ namespace InterfaceModel.Model
         public int Width { get; set; }
         public int Height { get; set; }
         public string RelativePath { get; set; }
-        public IEnumerable<PropertyTemplate> PropertyTemplates { get; set; }
+        public IEnumerable<PropertyTemplate> PropertyTemplates { get; set; } = Enumerable.Empty<PropertyTemplate>();
 
         #endregion
 

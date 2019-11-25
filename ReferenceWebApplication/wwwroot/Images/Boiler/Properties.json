@@ -5,7 +5,7 @@
   "PropertyTemplates": [
     {
       "HexColor": "#ffffff",
-      "Name": "BoolToggle",
+      "Name": "CCX001_Input1",
       "Location": {
         "X": 185,
         "Y": 10
@@ -13,7 +13,7 @@
     },
     {
       "HexColor": "#bf060f",
-      "Name": "ValueInt32",
+      "Name": "CCX001_Input2",
       "Location": {
         "X": 80,
         "Y": 430
@@ -21,7 +21,7 @@
     },
     {
       "HexColor": "#54c9ff",
-      "Name": "Int32Fast",
+      "Name": "CCX001_Input3",
       "Location": {
         "X": 280,
         "Y": 430
@@ -29,10 +29,90 @@
     },
     {
       "HexColor": "#ff0000",
-      "Name": "ValueDateTime",
+      "Name": "DrumX001_LIX001_Output",
       "Location": {
         "X": 300,
         "Y": 5
+      }
+    },
+    {
+      "HexColor": "#ff0000",
+      "Name": "CCX001_ControlOut",
+      "Location": {
+        "X": 175,
+        "Y": 230
+      }
+    },
+    {
+      "HexColor": "#ffffff",
+      "Name": "FCX001_ControlOut",
+      "Location": {
+        "X": 150,
+        "Y": 255
+      }
+    },
+    {
+      "HexColor": "#ffffff",
+      "Name": "FCX001_SetPoint",
+      "Location": {
+        "X": 350,
+        "Y": 55
+      }
+    },
+    {
+      "HexColor": "#ffffff",
+      "Name": "PipeX001_FTX001_Output",
+      "Location": {
+        "X": 325,
+        "Y": 80
+      }
+    },
+    {
+      "HexColor": "#ffffff",
+      "Name": "PipeX001_ValveX001_Input",
+      "Location": {
+        "X": 300,
+        "Y": 105
+      }
+    },
+    {
+      "HexColor": "#ffffff",
+      "Name": "LCX001_ControlOut",
+      "Location": {
+        "X": 275,
+        "Y": 130
+      }
+    },
+    {
+      "HexColor": "#ffffff",
+      "Name": "LCX001_Measurement",
+      "Location": {
+        "X": 250,
+        "Y": 155
+      }
+    },
+    {
+      "HexColor": "#ffffff",
+      "Name": "LCX001_SetPoint",
+      "Location": {
+        "X": 225,
+        "Y": 180
+      }
+    },
+    {
+      "HexColor": "#ffffff",
+      "Name": "PipeX002_FTX002_Output",
+      "Location": {
+        "X": 200,
+        "Y": 205
+      }
+    },
+    {
+      "HexColor": "#ffffff",
+      "Name": "Simulation_UpdateRate",
+      "Location": {
+        "X": 0,
+        "Y": 0
       }
     }
   ]
