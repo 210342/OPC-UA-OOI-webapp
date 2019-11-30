@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace M2MCommunication.Core
 {
@@ -28,7 +26,7 @@ namespace M2MCommunication.Core
         {
             if (obj is UaTypeMetadata typeMetadata)
             {
-                return TypeName.Equals(typeMetadata.TypeName) 
+                return TypeName.Equals(typeMetadata.TypeName)
                     && RepositoryGroupName.Equals(typeMetadata.RepositoryGroupName);
             }
             else

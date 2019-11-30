@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace InterfaceModel.Model
+﻿namespace InterfaceModel.Model
 {
     public class Point
     {

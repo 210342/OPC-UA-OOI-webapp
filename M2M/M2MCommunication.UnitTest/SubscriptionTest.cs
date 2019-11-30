@@ -15,7 +15,7 @@ namespace M2MCommunicationUnitTest
         public void ConstructorTest()
         {
             UATypeInfo typeInfo = new UATypeInfo(BuiltInType.DateTime);
-            Subscription subscription = new Subscription(typeInfo, _typMetadata, DateTime.MinValue);
+            Subscription subscription = new Subscription(typeInfo, _typMetadata, "alias", DateTime.MinValue);
             Assert.NotNull(subscription.TypeInfo);
             Assert.NotNull(subscription.Value);
             Assert.NotNull(subscription.UaTypeMetadata);
@@ -27,14 +27,14 @@ namespace M2MCommunicationUnitTest
         [Fact]
         public void ConstructorTypeNameNullTest()
         {
-            Assert.Throws<ArgumentNullException>(() => new Subscription(new UATypeInfo(BuiltInType.DateTime), null, DateTime.MinValue));
+            Assert.Throws<ArgumentNullException>(() => new Subscription(new UATypeInfo(BuiltInType.DateTime), null, "alias", DateTime.MinValue));
         }
 
         [Fact]
         public void EnableTest()
         {
             bool raised = false;
-            Subscription subscription = new Subscription(new UATypeInfo(BuiltInType.DateTime), _typMetadata, DateTime.MinValue);
+            Subscription subscription = new Subscription(new UATypeInfo(BuiltInType.DateTime), _typMetadata, "alias", DateTime.MinValue);
             subscription.Enable((sender, args) => raised = true);
             subscription.Value = DateTime.UtcNow;
             Assert.True(raised);
@@ -43,7 +43,7 @@ namespace M2MCommunicationUnitTest
         [Fact]
         public void DisableTest()
         {
-            Subscription subscription = new Subscription(new UATypeInfo(BuiltInType.DateTime), _typMetadata, DateTime.MinValue);
+            Subscription subscription = new Subscription(new UATypeInfo(BuiltInType.DateTime), _typMetadata, "alias", DateTime.MinValue);
             subscription.Disable();
             Assert.Null(subscription
                 .GetType()

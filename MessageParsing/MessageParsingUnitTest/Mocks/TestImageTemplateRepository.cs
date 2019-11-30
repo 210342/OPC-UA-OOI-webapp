@@ -7,16 +7,15 @@ namespace MessageParsingUnitTest.Mocks
 {
     class TestImageTemplateRepository : IImageTemplateRepository
     {
-        public Task<ImageTemplate> GetImageTemplateByIdAsync(Guid id)
+        public ImageTemplate GetImageTemplateByAlias(string alias)
         {
-            ImageTemplate imageTemplate = new ImageTemplate(@"", 1920, 1080)
+            return new ImageTemplate(@"", 1920, 1080)
             {
                 PropertyTemplates = new[] { new PropertyTemplate("Second type name", new Point(0, 0), "white") }
             };
-            return Task.FromResult(imageTemplate);
         }
 
-        public Task<ImageTemplate> GetImageTemplateByNameAsync(string name)
+        public Task<ImageTemplate> GetImageTemplateByAliasAsync(string name)
         {
             ImageTemplate imageTemplate = new ImageTemplate(@"", 1920, 1080)
             {

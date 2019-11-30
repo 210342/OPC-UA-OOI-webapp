@@ -1,5 +1,4 @@
 ﻿using CommonServiceLocator;
-using InterfaceModel.Model;
 using M2MCommunication.Core;
 using M2MCommunication.Services;
 using MessageParsing;
@@ -14,33 +13,31 @@ namespace MessageParsingUnitTest
 {
     public class MessageParserTest
     {
+        protected internal UaLibrarySettings Settings => new UaLibrarySettings()
+        {
+            ResourcesDirectory = "dir",
+            ConsumerConfigurationFile = "file",
+            LibraryDirectory = "lib"
+        };
+
         public MessageParserTest()
         {
             ServiceLocator.SetLocatorProvider(() => new TestServiceLocator());
         }
 
-        protected internal ConfigurationService GetTestConfigurationService()
+        protected internal MessageBusService GetMessageBusService()
         {
-            ConfigurationService service = new ConfigurationService();
+            MessageBusService service = new MessageBusService(Settings);
             service.GetType()
-                .GetProperty("Configuration", BindingFlags.Instance | BindingFlags.Public)
-                .SetValue(service, new TestConfigurationService());
-            return service;
-        }
-
-        protected internal SubscriptionFactoryService GetTestSubscriptionService()
-        {
-            SubscriptionFactoryService service = new SubscriptionFactoryService();
-            service.GetType()
-                .GetProperty("SubscriptionFactory", BindingFlags.Instance | BindingFlags.Public)
-                .SetValue(service, new TestSubscriptionService());
+                .GetProperty("MessageBus", BindingFlags.Instance | BindingFlags.Public)
+                .SetValue(service, new TestMessageBusService());
             return service;
         }
 
         [Fact]
         public void ConstructorTest()
         {
-            using (MessageParser sut = new TextMessageParser(GetTestConfigurationService(), GetTestSubscriptionService()))
+            using (ImageMessageParser sut = new ImageMessageParser(GetMessageBusService(), Settings, new TestImageTemplateRepository()))
             {
                 Assert.NotNull(sut.GetType().GetProperty("Configuration", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(sut));
                 Assert.NotNull(sut.GetType().GetProperty("SubscriptionFactory", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(sut));
@@ -52,7 +49,7 @@ namespace MessageParsingUnitTest
         [Fact]
         public void SubscribeTest()
         {
-            using (MessageParser sut = new TextMessageParser(GetTestConfigurationService(), GetTestSubscriptionService()))
+            using (ImageMessageParser sut = new ImageMessageParser(GetMessageBusService(), Settings, new TestImageTemplateRepository()))
             {
                 sut.GetType()
                     .GetMethod("Subscribe", BindingFlags.Instance | BindingFlags.NonPublic)
@@ -69,7 +66,7 @@ namespace MessageParsingUnitTest
         [Fact]
         public void DisposeTest()
         {
-            MessageParser sut = new TextMessageParser(GetTestConfigurationService(), GetTestSubscriptionService());
+            ImageMessageParser sut = new ImageMessageParser(GetMessageBusService(), Settings, new TestImageTemplateRepository());
             sut.Dispose();
             Assert.True(typeof(MessageParser)
                 .GetField("disposedValue", BindingFlags.Instance | BindingFlags.NonPublic)

@@ -11,6 +11,8 @@ namespace MessageParsingUnitTest.Mocks
 
         public UaTypeMetadata UaTypeMetadata { get; set; }
 
+        public string TypeAlias { get; } = "Alias";
+
         public event PropertyChangedEventHandler ValueUpdated;
 
         public void Disable()

@@ -54,21 +54,6 @@ namespace M2MCommunicationUnitTest
             Assert.NotNull(LoadConfig(configuration));
         }
 
-        [Fact]
-        public void GetDataTypeNamesEmptyTest()
-        {
-            Assert.Throws<ComponentNotIntialisedException>(() => new Configuration().GetTypeMetadata());
-        }
-
-        [Fact]
-        public void GetDataTypeNamesNotEmptyTest()
-        {
-            Configuration configuration = new Configuration();
-            configuration.Initialise(_configurationFileName);
-            LoadConfig(configuration);
-            Assert.NotEmpty(configuration.GetTypeMetadata());
-        }
-
         private ConfigurationData LoadConfig(Configuration config)
         {
             return config.GetType()

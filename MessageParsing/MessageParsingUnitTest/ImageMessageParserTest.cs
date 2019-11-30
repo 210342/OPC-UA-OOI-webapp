@@ -1,7 +1,5 @@
-﻿using InterfaceModel.Model;
-using MessageParsing;
+﻿using MessageParsing;
 using MessageParsingUnitTest.Mocks;
-using System.Collections.Generic;
 using System.Reflection;
 using System.Threading.Tasks;
 using Xunit;
@@ -14,7 +12,7 @@ namespace MessageParsingUnitTest
         [Fact]
         public void ImageConstructorTest()
         {
-            using (ImageMessageParser sut = new ImageMessageParser(GetTestConfigurationService(), GetTestSubscriptionService(), new TestImageTemplateRepository()))
+            using (ImageMessageParser sut = new ImageMessageParser(GetMessageBusService(), Settings, new TestImageTemplateRepository()))
             {
                 Assert.NotNull(sut.GetType().GetProperty("Configuration", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(sut));
                 Assert.NotNull(sut.GetType().GetProperty("SubscriptionFactory", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(sut));
@@ -27,12 +25,12 @@ namespace MessageParsingUnitTest
         [Fact]
         public async Task InitialiseAsyncTest()
         {
-            using (ImageMessageParser sut = new ImageMessageParser(GetTestConfigurationService(), GetTestSubscriptionService(), new TestImageTemplateRepository()))
+            using (ImageMessageParser sut = new ImageMessageParser(GetMessageBusService(), Settings, new TestImageTemplateRepository()))
             {
                 await sut.InitialiseAsync(async () => await Task.Run(() => { }));
                 Assert.NotNull(sut.ImageTemplates);
                 Assert.NotEmpty(sut.ImageTemplates);
-                foreach (var template in sut.ImageTemplates)
+                foreach (InterfaceModel.Model.ImageTemplate template in sut.ImageTemplates.Values)
                 {
                     Assert.NotNull(template.Properties);
                     Assert.NotEmpty(template.Properties);

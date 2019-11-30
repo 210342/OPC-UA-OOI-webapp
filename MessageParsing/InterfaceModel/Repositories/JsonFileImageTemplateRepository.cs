@@ -1,8 +1,6 @@
 ﻿using InterfaceModel.Configuration;
 using InterfaceModel.Model;
-using System;
 using System.IO;
-using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -20,21 +18,36 @@ namespace InterfaceModel.Repositories
             _configuration = configuration;
         }
 
-        public Task<ImageTemplate> GetImageTemplateByIdAsync(Guid id)
+        public ImageTemplate GetImageTemplateByAlias(string alias)
         {
-            return Deserialise(_configuration.Mappings
-                            .FirstOrDefault(mapping => mapping.Id.Equals(id))
-                            ?.Directory);
+            return Deserialise(alias);
         }
 
-        public Task<ImageTemplate> GetImageTemplateByNameAsync(string name)
+        public Task<ImageTemplate> GetImageTemplateByAliasAsync(string alias)
         {
-            return Deserialise(_configuration.Mappings
-                            .FirstOrDefault(mapping => mapping.Name.Equals(name))
-                            ?.Directory);
+            return DeserialiseAsync(alias);
         }
 
-        private async Task<ImageTemplate> Deserialise(string path)
+        private ImageTemplate Deserialise(string path)
+        {
+            if (!string.IsNullOrEmpty(path))
+            {
+                string json = File.ReadAllText(
+                    Path.Combine(
+                        _configuration.Directory,
+                        path,
+                        _configuration.PropertiesFileName
+                    )
+                );
+                return JsonSerializer.Deserialize<ImageTemplate>(json);
+            }
+            else
+            {
+                return new ImageTemplate();
+            }
+        }
+
+        private async Task<ImageTemplate> DeserialiseAsync(string path)
         {
             if (!string.IsNullOrEmpty(path))
             {

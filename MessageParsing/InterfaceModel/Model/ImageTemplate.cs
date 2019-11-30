@@ -1,7 +1,5 @@
 ﻿using M2MCommunication.Core;
-using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 
 namespace InterfaceModel.Model
@@ -20,9 +18,9 @@ namespace InterfaceModel.Model
         #region Logic properties
 
         public ICollection<IProperty> Properties { get; } = new List<IProperty>();
-        public IEnumerable<DrawableProperty> DrawableProperties => Properties?.OfType<DrawableProperty>() 
+        public IEnumerable<DrawableProperty> DrawableProperties => Properties?.OfType<DrawableProperty>()
             ?? Enumerable.Empty<DrawableProperty>();
-        public IEnumerable<PrintableProperty> PrintableProperties => Properties?.OfType<PrintableProperty>() 
+        public IEnumerable<PrintableProperty> PrintableProperties => Properties?.OfType<PrintableProperty>()
             ?? Enumerable.Empty<PrintableProperty>();
 
         #endregion
@@ -39,19 +37,25 @@ namespace InterfaceModel.Model
         {
             foreach (ISubscription subscription in subscriptions)
             {
-                if (PropertyTemplates
+                Subscribe(subscription);
+            }
+            return this;
+        }
+
+        public ImageTemplate Subscribe(ISubscription subscription)
+        {
+            if (PropertyTemplates
                         .Where(template => template.Name.Equals(subscription.UaTypeMetadata.TypeName))
                         .FirstOrDefault() is PropertyTemplate propertyTemplate)
-                {
-                    Properties.Add(new DrawableProperty(subscription, propertyTemplate));
-                }
-                else
-                {
-                    Properties.Add(new PrintableProperty(
-                        subscription, 
-                        new PropertyTemplate(subscription.UaTypeMetadata.TypeName, null, "#ffffff")
-                    ));
-                }
+            {
+                Properties.Add(new DrawableProperty(subscription, propertyTemplate));
+            }
+            else
+            {
+                Properties.Add(new PrintableProperty(
+                    subscription,
+                    new PropertyTemplate(subscription.UaTypeMetadata.TypeName, null, "#ffffff")
+                ));
             }
             return this;
         }

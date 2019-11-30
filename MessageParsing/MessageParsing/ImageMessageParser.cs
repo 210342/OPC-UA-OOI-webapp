@@ -4,35 +4,46 @@ using M2MCommunication.Core;
 using M2MCommunication.Services;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace MessageParsing
 {
     public class ImageMessageParser : MessageParser
     {
         protected internal IImageTemplateRepository ImageTemplateRepository { get; }
-        public override IEnumerable<PrintableProperty> PrintableProperties => ImageTemplates.SelectMany(template => template.PrintableProperties);
-        public ICollection<ImageTemplate> ImageTemplates { get; } = new List<ImageTemplate>();
+        public override IEnumerable<PrintableProperty> PrintableProperties => ImageTemplates.Values.SelectMany(template => template.PrintableProperties);
+        public IDictionary<string, ImageTemplate> ImageTemplates { get; } = new Dictionary<string, ImageTemplate>();
 
-        public ImageMessageParser(ConfigurationService configuration, SubscriptionFactoryService subscriptionFactory, IImageTemplateRepository imageTemplateRepository)
-            : base(configuration, subscriptionFactory)
+        public event EventHandler OnImageTemplateAdded;
+
+        public ImageMessageParser(MessageBusService messageBus, UaLibrarySettings settings, IImageTemplateRepository imageTemplateRepository)
+            : base(messageBus, settings)
         {
             ImageTemplateRepository = imageTemplateRepository;
         }
 
-        public override async Task InitialiseAsync(Func<Task> handler)
+        public override void RefreshConfiguration()
         {
             ImageTemplates.Clear();
+            base.RefreshConfiguration();
+        }
 
-            foreach (dynamic repository in Subscribe(handler).GroupBy(sub => sub.UaTypeMetadata.RepositoryGroupName, 
-                (key, group) => new { RepositoryGroupName = key, Subscriptions = group }))
+        protected internal override void OnSubscriptionReceived(ISubscription subscription)
+        {
+            lock (this)
             {
-                ImageTemplates.Add(
-                    (await ImageTemplateRepository
-                        .GetImageTemplateByNameAsync(repository.RepositoryGroupName))
-                        .Initialise(repository.Subscriptions));
+                if (ImageTemplates.TryGetValue(subscription.UaTypeMetadata.RepositoryGroupName, out ImageTemplate template))
+                {
+                    template.Subscribe(subscription);
+                }
+                else
+                {
+                    ImageTemplates.Add(
+                        subscription.UaTypeMetadata.RepositoryGroupName,
+                        ImageTemplateRepository.GetImageTemplateByAlias(subscription?.TypeAlias).Subscribe(subscription)
+                    );
+                    OnImageTemplateAdded?.Invoke(this, new EventArgs());
+                }
             }
         }
     }

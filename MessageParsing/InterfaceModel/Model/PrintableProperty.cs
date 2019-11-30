@@ -1,5 +1,4 @@
 ﻿using M2MCommunication.Core;
-using System.Drawing;
 
 namespace InterfaceModel.Model
 {

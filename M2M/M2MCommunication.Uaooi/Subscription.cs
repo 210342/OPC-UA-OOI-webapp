@@ -10,6 +10,7 @@ namespace M2MCommunication.Uaooi
         private object _value;
 
         public UaTypeMetadata UaTypeMetadata { get; }
+        public string TypeAlias { get; }
         public UATypeInfo TypeInfo { get; }
         public object Value
         {
@@ -23,10 +24,11 @@ namespace M2MCommunication.Uaooi
 
         internal event PropertyChangedEventHandler ValueUpdated;
 
-        public Subscription(UATypeInfo typeInfo, UaTypeMetadata uaTypeMetadata, object value)
+        public Subscription(UATypeInfo typeInfo, UaTypeMetadata uaTypeMetadata, string typeAlias, object value)
         {
             TypeInfo = typeInfo;
-            UaTypeMetadata  = uaTypeMetadata?? throw new ArgumentNullException(nameof(uaTypeMetadata));
+            UaTypeMetadata = uaTypeMetadata ?? throw new ArgumentNullException(nameof(uaTypeMetadata));
+            TypeAlias = typeAlias;
             Value = value;
         }
 

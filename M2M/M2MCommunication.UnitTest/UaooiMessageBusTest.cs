@@ -1,8 +1,8 @@
 ﻿using CommonServiceLocator;
-using M2MCommunication.Core;
 using M2MCommunication.Services;
 using M2MCommunication.Uaooi.Injections;
 using System.Reflection;
+using UAOOI.Configuration.Networking;
 using UAOOI.Networking.Core;
 using UAOOI.Networking.SemanticData;
 using Xunit;
@@ -22,9 +22,9 @@ namespace M2MCommunicationUnitTest
                     .GetProperty("DisposableServiceLocator", BindingFlags.NonPublic | BindingFlags.Instance)
                     .GetValue(setup) as IServiceLocator;
                 using (UaooiMessageBus bus = new UaooiMessageBus(
-                    serviceLocator.GetInstance<IConfiguration>(),
+                    serviceLocator.GetInstance<IConfigurationFactory>(),
                     serviceLocator.GetInstance<IEncodingFactory>(),
-                    serviceLocator.GetInstance<ISubscriptionFactory>(),
+                    serviceLocator.GetInstance<IBindingFactory>(),
                     serviceLocator.GetInstance<IMessageHandlerFactory>()
                     ))
                 {
@@ -55,13 +55,13 @@ namespace M2MCommunicationUnitTest
                     .GetProperty("DisposableServiceLocator", BindingFlags.NonPublic | BindingFlags.Instance)
                     .GetValue(setup) as IServiceLocator;
                 using (UaooiMessageBus bus = new UaooiMessageBus(
-                    serviceLocator.GetInstance<IConfiguration>(),
+                    serviceLocator.GetInstance<IConfigurationFactory>(),
                     serviceLocator.GetInstance<IEncodingFactory>(),
-                    serviceLocator.GetInstance<ISubscriptionFactory>(),
+                    serviceLocator.GetInstance<IBindingFactory>(),
                     serviceLocator.GetInstance<IMessageHandlerFactory>()
                 ))
                 {
-                    bus.Initialise(ServiceContainerSetupTest.Settings);
+                    bus.Initialise(ServiceContainerSetupTest.Settings, (_, __) => { });
                     Assert.NotNull(bus.ConfigurationFactory);
                     Assert.NotNull(bus.EncodingFactory);
                     Assert.NotNull(bus.BindingFactory);

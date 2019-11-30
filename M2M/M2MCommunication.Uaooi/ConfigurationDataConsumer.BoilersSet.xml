@@ -661,4 +661,10 @@
       </ConsumerAssociationConfigurations>
     </MessageHandlerConfiguration>
   </MessageHandlers>
+  <InformationModelAliases>
+    <InformationModelAlias>
+      <Alias>Industrial Boiler</Alias>
+      <InformationModelURI>http://commsvr.com/UA/Examples/BoilersSet</InformationModelURI>
+    </InformationModelAlias>
+  </InformationModelAliases>
 </ConfigurationData>

@@ -11,7 +11,6 @@ namespace M2MCommunication.Services
         public MessageBusService(UaLibrarySettings uaLibrarySettings)
         {
             MessageBus = ServiceLocator.Current.GetInstance<IMessageBus>();
-            MessageBus?.Initialise(uaLibrarySettings);
         }
 
         public void Dispose()

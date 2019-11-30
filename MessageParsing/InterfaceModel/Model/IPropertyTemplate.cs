@@ -1,6 +1,4 @@
-﻿using System.Drawing;
-
-namespace InterfaceModel.Model
+﻿namespace InterfaceModel.Model
 {
     public interface IPropertyTemplate
     {

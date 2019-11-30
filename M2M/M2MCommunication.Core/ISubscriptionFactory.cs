@@ -1,9 +1,11 @@
-﻿using System.ComponentModel;
+﻿using System;
 
 namespace M2MCommunication.Core
 {
     public interface ISubscriptionFactory
     {
-        ISubscription Subscribe(UaTypeMetadata uaTypeMetadata, PropertyChangedEventHandler handler);
+        event EventHandler<ISubscription> SubscriptionAdded;
+
+        void Initialise(IConfiguration configuration);
     }
 }

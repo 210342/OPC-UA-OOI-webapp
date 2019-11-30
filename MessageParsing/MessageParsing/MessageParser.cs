@@ -10,25 +10,32 @@ namespace MessageParsing
 {
     public abstract class MessageParser : IMessageParser
     {
-        protected internal IConfiguration Configuration { get; }
-        protected internal ISubscriptionFactory SubscriptionFactory { get; }
-        public virtual IEnumerable<PrintableProperty> PrintableProperties { get; } = new List<PrintableProperty>();
+        private readonly UaLibrarySettings uaLibrarySettings;
+        protected internal IMessageBus MessageBus { get; private set; }
 
-        public MessageParser(ConfigurationService configuration, SubscriptionFactoryService subscriptionFactory)
+        public virtual IEnumerable<PrintableProperty> PrintableProperties => new List<PrintableProperty>();
+
+        public MessageParser(MessageBusService messageBus, UaLibrarySettings settings)
         {
-            Configuration = configuration.Configuration;
-            SubscriptionFactory = subscriptionFactory.SubscriptionFactory;
+            MessageBus = messageBus.MessageBus;
+            uaLibrarySettings = settings;
         }
 
-        public abstract Task InitialiseAsync(Func<Task> handler);
-
-        protected internal IEnumerable<ISubscription> Subscribe(Func<Task> handler)
+        public virtual Task InitialiseAsync(Func<Task> handler)
         {
-            _subscriptions = Configuration
-                .GetTypeMetadata()
-                .Select(uaTypeMetadata => SubscriptionFactory.Subscribe(uaTypeMetadata, (sender, args) => Task.Run(() => handler?.Invoke())));
-            return _subscriptions;
+            return MessageBus.InitialiseAsync(uaLibrarySettings, (obj, sub) =>
+                {
+                    sub.Enable((obj, args) => handler());
+                    OnSubscriptionReceived(sub);
+                }
+            );
         }
+        public virtual void RefreshConfiguration()
+        {
+            MessageBus.RefreshConfiguration();
+        }
+
+        protected internal abstract void OnSubscriptionReceived(ISubscription subscription);
 
         #region IDisposable Support
         /// <summary>
@@ -44,9 +51,11 @@ namespace MessageParsing
                 if (disposing)
                 {
                     _subscriptions?.ToList()?.ForEach(subscription => subscription.Disable());
+                    MessageBus.Dispose();
                 }
 
                 _subscriptions = Enumerable.Empty<ISubscription>();
+                MessageBus = null;
 
                 disposedValue = true;
             }
@@ -58,6 +67,7 @@ namespace MessageParsing
             // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
             Dispose(true);
         }
+
         #endregion
     }
 }
