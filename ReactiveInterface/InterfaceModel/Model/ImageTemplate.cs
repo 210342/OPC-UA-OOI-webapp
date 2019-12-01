@@ -33,15 +33,6 @@ namespace InterfaceModel.Model
             RelativePath = relativePath;
         }
 
-        public ImageTemplate Initialise(IEnumerable<ISubscription> subscriptions)
-        {
-            foreach (ISubscription subscription in subscriptions)
-            {
-                Subscribe(subscription);
-            }
-            return this;
-        }
-
         public ImageTemplate Subscribe(ISubscription subscription)
         {
             if (PropertyTemplates

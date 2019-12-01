@@ -4,4 +4,4 @@ Project that targets handling received data from M2M communication. Contains a s
 
 ## UML class diagram
 
-![Reactive interface class diagram](MessageParsingUML.png)
+![Reactive interface class diagram](ReactiveInterfaceUML.png)
