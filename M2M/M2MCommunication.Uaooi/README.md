@@ -10,6 +10,7 @@ The goal of this project is to implement the [UAOOI](https://https://github.com/
 | `Configuration` | Represents the configuration of the OPC-UA consumer; extends `ConfigurationFactoryBase` and implements `IConfiguration` |
 | `ConsumerBindingFactory` | Implementation of `IBindingFactory` and `ISubscriptionFactory` |
 | `UaooiMessageBus` | Represents the message bus; extends `DataManagementSetup` and implements `IMessageBus` |
+| `ConfigurationExtension` | A type that extends `ConfigurationData` and provides mappings of types used in the configuration to aliases used to create interfaces for the types | 
 | `UATypeInfoExtensions` | A set of extension methods for `UATypeInfo` type |
 
 ### *Subscription*

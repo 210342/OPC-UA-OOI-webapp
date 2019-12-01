@@ -31,9 +31,4 @@
 
     [Parameter]
     public IMessageParser Parser { get; set; }
-
-    protected override void OnInitialized()
-    {
-        ImageParser.OnImageTemplateAdded += (_, __) => InvokeAsync(() => StateHasChanged());
-    }
 }

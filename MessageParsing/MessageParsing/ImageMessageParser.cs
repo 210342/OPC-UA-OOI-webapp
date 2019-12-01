@@ -14,8 +14,6 @@ namespace MessageParsing
         public override IEnumerable<PrintableProperty> PrintableProperties => ImageTemplates.Values.SelectMany(template => template.PrintableProperties);
         public IDictionary<string, ImageTemplate> ImageTemplates { get; } = new Dictionary<string, ImageTemplate>();
 
-        public event EventHandler OnImageTemplateAdded;
-
         public ImageMessageParser(MessageBusService messageBus, UaLibrarySettings settings, IImageTemplateRepository imageTemplateRepository)
             : base(messageBus, settings)
         {
@@ -42,7 +40,6 @@ namespace MessageParsing
                         subscription.UaTypeMetadata.RepositoryGroupName,
                         ImageTemplateRepository.GetImageTemplateByAlias(subscription?.TypeAlias).Subscribe(subscription)
                     );
-                    OnImageTemplateAdded?.Invoke(this, new EventArgs());
                 }
             }
         }

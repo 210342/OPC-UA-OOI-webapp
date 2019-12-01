@@ -1,6 +1,6 @@
 # Interface model
 
-This project contains the model used for displaying data (Model) to the end user and provides means to persist them (Repositories).
+This project contains the model used for displaying data (Model) to the end user and provides means to persist them (Repositories) with a way to configure it (Configuration).
 
 ## Model
 
