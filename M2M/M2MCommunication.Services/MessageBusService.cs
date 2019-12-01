@@ -6,7 +6,7 @@ namespace M2MCommunication.Services
 {
     public class MessageBusService : IDisposable
     {
-        public IMessageBus MessageBus { get; }
+        public IMessageBus MessageBus { get; private set; }
 
         public MessageBusService(UaLibrarySettings uaLibrarySettings)
         {

@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MessageParsing\MessageParsing.csproj" />
+    <ProjectReference Include="..\ReactiveInterface\ReactiveInterface.csproj" />
   </ItemGroup>
 
 </Project>

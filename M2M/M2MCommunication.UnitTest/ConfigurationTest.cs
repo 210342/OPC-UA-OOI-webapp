@@ -35,15 +35,8 @@ namespace M2MCommunicationUnitTest
         public void InitialiseWrongFileNameTest()
         {
             Configuration configuration = new Configuration();
-            configuration.Initialise(_configurationFileName.Replace("xml", "pdf"));
-            try
-            {
-                LoadConfig(configuration);
-            }
-            catch (TargetInvocationException ex)
-            {
-                Assert.IsType<ConfigurationFileNotFoundException>(ex.InnerException);
-            }
+            Assert.Throws<ConfigurationFileNotFoundException>(() => 
+            configuration.Initialise(_configurationFileName.Replace("xml", "pdf")));
         }
 
         [Fact]

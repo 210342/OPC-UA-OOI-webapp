@@ -7,11 +7,6 @@ The goal of this project is to implement the [UAOOI](https://https://github.com/
 | Name | Description |
 |:----:|:------------|
 | `Subscription` | An implementation of the `ISubscription` interface used in `ISubscriptionFactory` implementation in this project |
-| `Configuration` | Represents the configuration of the OPC-UA consumer; extends `ConfigurationFactoryBase` and implements `IConfiguration` |
-| `ConsumerBindingFactory` | Implementation of `IBindingFactory` and `ISubscriptionFactory` |
-| `UaooiMessageBus` | Represents the message bus; extends `DataManagementSetup` and implements `IMessageBus` |
-| `ConfigurationExtension` | A type that extends `ConfigurationData` and provides mappings of types used in the configuration to aliases used to create interfaces for the types | 
-| `UATypeInfoExtensions` | A set of extension methods for `UATypeInfo` type |
 
 ### *Subscription*
 
@@ -23,13 +18,14 @@ An implementation of the `ISubscription` interface used in `ISubscriptionFactory
 
 | Name | Description |
 |:----:|:------------|
-| Subscription(`UATypeInfo` typeInfo, `UaTypeMetadata` uaTypeMetadata, `object` value) | Constructs the object and initialises it with provided values |
+| Subscription(`UATypeInfo` typeInfo, `UaTypeMetadata` uaTypeMetadata, `string` alias, `object` value) | Constructs the object and initialises it with provided values |
 
 #### Properties
 
 | Type | Name | Accessors | Description |
 |:----:|:----:|:---------:|:------------|
-|`UaTypeMetadata`|UaTypeMetadata| get; | Metadata of the type subscribed |
+| `UaTypeMetadata` | UaTypeMetadata | get; | Metadata of the type subscribed |
+| `string` | TypeAlias | get; | Alias used by the reactive interface to understand how to represent the type |
 | `UATypeInfo` | TypeInfo | get; | Description of the type provided from UAOOI library |
 | `object` | Value | get; set; | The subscribed object |
 
@@ -39,6 +35,15 @@ An implementation of the `ISubscription` interface used in `ISubscriptionFactory
 |:-----------:|:----:|:------------|
 | `void` | Enable(`PropertyChangedEventHandler` handler) | Removes all existing event handlers and then adds the provided handler |
 | `void` | Disable() | Removes all existing event handlers |
+
+
+## Injections
+
+| Name | Description |
+|:----:|:------------|
+| `Configuration` | Represents the configuration of the OPC-UA consumer; extends `ConfigurationFactoryBase` and implements `IConfiguration` |
+| `ConsumerBindingFactory` | Implementation of `IBindingFactory` and `ISubscriptionFactory` |
+| `UaooiMessageBus` | Represents the message bus; extends `DataManagementSetup` and implements `IMessageBus` |
 
 ### *Configuration*
 
@@ -66,7 +71,7 @@ A representation of the consumer's configuration.
 | Return type | Name | Description |
 |:-----------:|:----:|:------------|
 | `void` | Initialise(`string` configurationFileName) | Initialises neccessary values that are not provided through dependency injection |
-| `IEnumerable<UaTypeMetadata>` | GetTypeMetadata() | Used to retrieve metadata of all of the types specified in the configuration |
+| `IDictionary<string, string>` | GetRepositoryGroupAliases() | Used to read all mappings of the configured types to the aliases known to the reactive interface |
 
 ### *ConsumerBindingFactory*
 
@@ -78,7 +83,13 @@ An implementation of `IBindingFactory` and `ISubscriptionFactory` which provides
 
 | Name | Description |
 |:----:|:------------|
-| Configuration() | Default constructor; Initialises the object |
+| ConsumerBindingFactory() | Default constructor; Initialises the object |
+
+#### Events
+
+| Type | Name | Description |
+|:----:|:----:|:------------|
+| `EventHandler<ISubscription>` | SubscriptionAdded | Invoked after generating a binding and creating a subscription that wraps it |
 
 #### Methods
 
@@ -86,7 +97,6 @@ An implementation of `IBindingFactory` and `ISubscriptionFactory` which provides
 |:-----------:|:----:|:------------|
 | `IConsumerBinding` | GetConsumerBinding(`string` repositoryGroup, `string` processValueName, `UATypeInfo` fieldTypeInfo) | Gets a consumer binding for a type specified by the parameters |
 | `IProducerBinding` | GetProducerBinding(`string` repositoryGroup, `string` processValueName, `UATypeInfo` fieldTypeInfo) | Throws `NotSupportedException` since the application works only in the consumer mode |
-| `ISubscription` | Subscribe(`UaTypeMetadata` uaTypeMetadata, `PropertyChangedEventHandler` handler) | Gets a subscription for a type specified by the `uaTypeMetadata`. Can throw an `UnsupportedTypeException` when the specified type was not bound |
 
 ### *UaooiMessageBus*
 
@@ -116,6 +126,16 @@ Represents a message bus which notifies subscribers about updates in the data th
 | Return type | Name | Description |
 |:-----------:|:----:|:------------|
 | `void` | Initialise(`UaLibrarySettings` settings) | Starts this instance - Initializes the data set infrastructure, enables all associations and starts pumping the data |
+| `void` | RefreshConfiguration() | Reads the configuration again and restarts the process of reading data |
+
+
+## Extensions
+
+| Name | Description |
+|:----:|:------------|
+| `ConfigurationExtension` | A type that extends `ConfigurationData` and provides mappings of types used in the configuration to aliases used to create interfaces for the types | 
+| `InformationModelAlias` | A serializable POCO object representing mappings of the UA types to aliases recognised by the reactive interface | 
+| `UATypeInfoExtensions` | A set of extension methods for `UATypeInfo` type |
 
 ### UATypeInfoExtensions
 
@@ -127,3 +147,26 @@ A set of extension methods for the `UATypeInfo` type
 |:-----------:|:----:|:------------|
 | `bool` | ContainsArray(`this UATypeInfo` typeInfo) | Checks whether the specified `typeInfo` definitely describes an array |
 | `bool` | ContainsMultidimensionalArray(`this UATypeInfo` typeInfo) | Checks whether the specified `typeInfo` definitely describes an array of multiple dimensions |
+
+### ConfigurationExtension
+
+> Extends `ConfigurationData`
+
+An extension of the `ConfigurationData` type. Adds type-alias mapping to the consumer configuration
+
+#### Properties
+
+| Type | Name | Accessors | Description |
+|:----:|:----:|:---------:|:------------|
+| `IEnumerable<InformationModelAlias>` | Aliases | get; | Array of UA type aliases |
+
+### InformationModelAlias
+
+A POCO object representing a type-alias mapping
+
+#### Properties
+
+| Type | Name | Accessors | Description |
+|:----:|:----:|:---------:|:------------|
+| `Uri` | InformationModelUri | get; set; | URI of the UA type |
+| `string` | Alias | get; set; | Alias of the type used by the reactive interface |

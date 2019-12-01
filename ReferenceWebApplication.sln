@@ -1,4 +1,3 @@
-﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28803.202
@@ -11,20 +10,26 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "M2MCommunication.Uaooi", "M2M\M2MCommunication.Uaooi\M2MCommunication.Uaooi.csproj", "{7358ED00-7AF8-4C1E-A621-C67C34572BB7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "M2M", "M2M", "{6BC219BE-5C42-4BBB-9788-EFBA2C5C0D63}"
+	ProjectSection(SolutionItems) = preProject
+		M2M\README.md = M2M\README.md
+	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MessageParsing", "MessageParsing\MessageParsing\MessageParsing.csproj", "{E5FBEAE7-9E36-4DB7-A6D0-C0919882671B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReactiveInterface", "ReactiveInterface\ReactiveInterface\ReactiveInterface.csproj", "{E5FBEAE7-9E36-4DB7-A6D0-C0919882671B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "M2MCommunication.UnitTest", "M2M\M2MCommunication.UnitTest\M2MCommunication.UnitTest.csproj", "{400F1367-6349-4C4E-A33B-C43F888D4B55}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MessageParsingUnitTest", "MessageParsing\MessageParsingUnitTest\MessageParsingUnitTest.csproj", "{AB6D12D1-36D6-4EA6-86C6-1080E677E6FC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReactiveInterfaceUnitTest", "ReactiveInterface\ReactiveInterfaceUnitTest\ReactiveInterfaceUnitTest.csproj", "{AB6D12D1-36D6-4EA6-86C6-1080E677E6FC}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "M2MCommunication.Core", "M2M\M2MCommunication.Core\M2MCommunication.Core.csproj", "{FDC21CF4-4C4D-4664-BC54-E654A46E12B1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "M2MCommunication.Services", "M2M\M2MCommunication.Services\M2MCommunication.Services.csproj", "{D246D52E-AB5A-4611-82F6-B15FA8BCF226}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MessageParsing", "MessageParsing", "{2EA6E60B-78D7-467A-9110-C82366663634}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ReactiveInterface", "ReactiveInterface", "{2EA6E60B-78D7-467A-9110-C82366663634}"
+	ProjectSection(SolutionItems) = preProject
+		ReactiveInterface\README.md = ReactiveInterface\README.md
+	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InterfaceModel", "MessageParsing\InterfaceModel\InterfaceModel.csproj", "{91C5851C-09C5-4519-AC4A-6EBA44F7D940}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InterfaceModel", "ReactiveInterface\InterfaceModel\InterfaceModel.csproj", "{91C5851C-09C5-4519-AC4A-6EBA44F7D940}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -19,8 +19,9 @@ An interface for a subscription to implement.
 
 | Type | Name | Accessors | Description |
 |:----:|:----:|:---------:|:------------|
-|`UaTypeMetadata`|**UaTypeMetadata**| get; | Metadata of the type subscribed |
-|`object`|**Value**| get; set; | Current value of this subscription |
+| `UaTypeMetadata` | UaTypeMetadata | get; | Metadata of the type subscribed |
+| `string` | TypeAlias | get; | Alias used by the reactive interface to understand how to represent the type |
+| `object` | Value | get; set; | Current value of this subscription |
 
 #### Methods
 
@@ -33,11 +34,17 @@ An interface for a subscription to implement.
 
 An interface for an implementation of configuration for either a consumer or producer
 
+#### Events
+
+| Delegate type | Name |  Description |
+|:-----------:|:----:|:-------------|
+| `EventHandler<ISubscription>` | SubscriptionAdded | Invoked after generating a binding and creating a subscription that wraps it |
+
 #### Methods
 
 | Return type | Name |  Description |
 |:-----------:|:----:|:-------------|
-| `ISubscription` | Subscribe(`UaTypeMetadata` uaTypeMetadata, `PropertyChangedEventHandler` handler) | Used to return a subscription for the specified type and with the specified event handler |
+| `void` | Initialise(`IConfiguration` configuration) | Initialises the instance by providing the configuration. It is used to map types onto their aliases for the reactive interface to use |
 
 ### *IConfiguration*
 
@@ -47,7 +54,7 @@ An interface for an implementation of configuration for either a consumer or pro
 
 | Return type | Name |  Description |
 |:-----------:|:----:|:-------------|
-| `IEnumerable<UaTypeMetadata>` | GetTypeMetadata() | Used to retrieve metadata of all of the configured data types |
+| `IDictionary<string, string>` | GetRepositoryGroupAliases() | Provides mappings of the repository group to its alias |
 
 ### *IMessageBus*
 
@@ -59,6 +66,7 @@ An interface for an object representing a bus that will notify subscribers about
 |:-----------:|:----:|:-------------|
 | `void` | Initialise(`UaLibrarySettings` settings)| Initialises the message bus with the specified settings |
 | `Task` | InitialiseAsync(`UaLibrarySettings` settings)| Initialises the message bus with the specified settings asynchronously |
+| `void` | RefreshConfiguration() | Reads the configuration again and restarts the process of reading data |
 
 ## Common types
 
@@ -75,9 +83,9 @@ A POCO object representing the configuration of the adapted OPC-UA library
 
 | Type | Name | Accessors | Description |
 |:----:|:----:|:---------:|:------------|
-|`string`|ConsumerConfigurationFile| get; set; | Name of the file containing a configuration of the consumer |
-|`string`|ResourcesDirectory| get; set; | Path to the direcotry of the application's resources |
-|`string`|LibraryDirectory| get; set; | Path to the direcotry of the OPC-UA library relative to the resources directory |
+| `string` | ConsumerConfigurationFile | get; set; | Name of the file containing a configuration of the consumer |
+| `string` | ResourcesDirectory | get; set; | Path to the direcotry of the application's resources |
+| `string` | LibraryDirectory | get; set; | Path to the direcotry of the OPC-UA library relative to the resources directory |
 
 ### *UaTypeMetadata*
 

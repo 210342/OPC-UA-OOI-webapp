@@ -124,7 +124,8 @@ namespace M2MCommunication.Uaooi.Injections
                     subscription.Value = sender;
                 }
             };
-            _subscriptions[typeMetadata] = new Subscription(typeInfo, typeMetadata, _aliases[typeMetadata.RepositoryGroupName], binding);
+            _aliases.TryGetValue(typeMetadata.RepositoryGroupName, out string alias);
+            _subscriptions[typeMetadata] = new Subscription(typeInfo, typeMetadata, alias ?? string.Empty, binding);
             SubscriptionAdded?.Invoke(this, _subscriptions[typeMetadata]);
             return binding;
         }

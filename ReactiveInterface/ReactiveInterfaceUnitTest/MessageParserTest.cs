@@ -39,27 +39,9 @@ namespace MessageParsingUnitTest
         {
             using (ImageMessageParser sut = new ImageMessageParser(GetMessageBusService(), Settings, new TestImageTemplateRepository()))
             {
-                Assert.NotNull(sut.GetType().GetProperty("Configuration", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(sut));
-                Assert.NotNull(sut.GetType().GetProperty("SubscriptionFactory", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(sut));
+                Assert.NotNull(sut.GetType().GetProperty("MessageBus", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(sut));
                 Assert.NotNull(sut.PrintableProperties);
                 Assert.Empty(sut.PrintableProperties);
-            }
-        }
-
-        [Fact]
-        public void SubscribeTest()
-        {
-            using (ImageMessageParser sut = new ImageMessageParser(GetMessageBusService(), Settings, new TestImageTemplateRepository()))
-            {
-                sut.GetType()
-                    .GetMethod("Subscribe", BindingFlags.Instance | BindingFlags.NonPublic)
-                    .Invoke(sut, new object[] { new Func<Task>(async () => await Task.Run(() => { })) });
-                Assert.NotNull(typeof(MessageParser)
-                    .GetField("_subscriptions", BindingFlags.Instance | BindingFlags.NonPublic)
-                    .GetValue(sut) as IEnumerable<ISubscription>);
-                Assert.NotEmpty(typeof(MessageParser)
-                    .GetField("_subscriptions", BindingFlags.Instance | BindingFlags.NonPublic)
-                    .GetValue(sut) as IEnumerable<ISubscription>);
             }
         }
 
@@ -74,6 +56,9 @@ namespace MessageParsingUnitTest
             Assert.Empty(typeof(MessageParser)
                 .GetField("_subscriptions", BindingFlags.Instance | BindingFlags.NonPublic)
                 .GetValue(sut) as IEnumerable<ISubscription>);
+            Assert.Null(typeof(MessageParser)
+                .GetProperty("MessageBus", BindingFlags.Instance | BindingFlags.NonPublic)
+                .GetValue(sut) as IMessageBus);
         }
     }
 }

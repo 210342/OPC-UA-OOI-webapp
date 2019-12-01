@@ -10,7 +10,7 @@ namespace MessageParsing
 {
     public abstract class MessageParser : IMessageParser
     {
-        private readonly UaLibrarySettings uaLibrarySettings;
+        private readonly UaLibrarySettings _uaLibrarySettings;
         protected internal IMessageBus MessageBus { get; private set; }
 
         public virtual IEnumerable<PrintableProperty> PrintableProperties => new List<PrintableProperty>();
@@ -18,12 +18,12 @@ namespace MessageParsing
         public MessageParser(MessageBusService messageBus, UaLibrarySettings settings)
         {
             MessageBus = messageBus.MessageBus;
-            uaLibrarySettings = settings;
+            _uaLibrarySettings = settings;
         }
 
         public virtual Task InitialiseAsync(Func<Task> handler)
         {
-            return MessageBus.InitialiseAsync(uaLibrarySettings, (obj, sub) =>
+            return MessageBus.InitialiseAsync(_uaLibrarySettings, (obj, sub) =>
                 {
                     sub.Enable((obj, args) => handler());
                     OnSubscriptionReceived(sub);
