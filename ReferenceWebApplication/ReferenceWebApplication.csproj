@@ -48,8 +48,8 @@
   <ItemGroup>
     <ProjectReference Include="..\M2M\M2MCommunication.Core\M2MCommunication.Core.csproj" />
     <ProjectReference Include="..\M2M\M2MCommunication.Services\M2MCommunication.Services.csproj" />
-    <ProjectReference Include="..\MessageParsing\InterfaceModel\InterfaceModel.csproj" />
-    <ProjectReference Include="..\MessageParsing\MessageParsing\MessageParsing.csproj" />
+    <ProjectReference Include="..\ReactiveInterface\InterfaceModel\InterfaceModel.csproj" />
+    <ProjectReference Include="..\ReactiveInterface\ReactiveInterface\ReactiveInterface.csproj" />
   </ItemGroup>
 
 </Project>

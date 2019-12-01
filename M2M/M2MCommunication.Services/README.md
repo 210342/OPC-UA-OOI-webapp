@@ -6,29 +6,12 @@ The goal of this project is to provide an additional layer of abstraction, so th
 
 | Name | Description |
 |:----:|:-----|
-| `ConfigurationService` | A wrapper for an injected `IConfiguration` implementation |
 | `MessageBusService` | A wrapper for an injected `IMessageBus` implementation |
 | `SubscriptionFactoryService` | A wrapper for an injected `ISubscriptionFactory` implementation |
 
-### *ConfigurationService*
-
-A wrapper for an injected `IConfiguration` implementation
-
-#### Constructors
-
-| Name | Description |
-|:----:|:------------|
-|ConfigurationService()| Default constructor, tries to inject an instance of `IConfiguration` implementation into its property |
-
-#### Properties
-
-| Type | Name | Accessors | Description |
-|:----:|:----:|:---------:|:------------|
-| `IConfiguration` |**Configuration**| get; | Injected `IConfiguration` service |
-
 ### *SubscriptionFactoryService*
 
-A wrapper for an injected `IConfiguration` implementation
+A wrapper for an injected `ISubscriptionFactory` implementation
 
 #### Constructors
 
@@ -46,7 +29,7 @@ A wrapper for an injected `IConfiguration` implementation
 
 > Implements `IDisposable`
 
-A wrapper for an injected `IConfiguration` implementation
+A wrapper for an injected `IMessageBus` implementation
 
 #### Constructors
 

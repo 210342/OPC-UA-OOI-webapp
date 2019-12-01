@@ -1,18 +1,19 @@
 ﻿using M2MCommunication.Core;
 using M2MCommunication.Core.Exceptions;
+using M2MCommunication.Uaooi.Extensions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.IO;
 using System.Linq;
 using UAOOI.Configuration.Networking;
-using UAOOI.Configuration.Networking.Serialization;
 using UAOOI.Configuration.Networking.Serializers;
 
 namespace M2MCommunication.Uaooi.Injections
 {
+    [Export(typeof(IConfigurationFactory))]
     [Export(typeof(IConfiguration))]
-    public class Configuration : ConfigurationFactoryBase<ConfigurationData>, IConfiguration
+    public class Configuration : ConfigurationFactoryBase<ConfigurationExtension>, IConfiguration
     {
         protected internal string _configurationFileName = string.Empty;
 
@@ -31,9 +32,10 @@ namespace M2MCommunication.Uaooi.Injections
         public void Initialise(string configurationFileName)
         {
             _configurationFileName = configurationFileName;
+            GetConfiguration();
         }
 
-        private ConfigurationData LoadConfig()
+        private ConfigurationExtension LoadConfig()
         {
             if (string.IsNullOrWhiteSpace(_configurationFileName))
             {
@@ -43,7 +45,7 @@ namespace M2MCommunication.Uaooi.Injections
             FileInfo configurationFile = new FileInfo(_configurationFileName);
             if (configurationFile.Exists)
             {
-                return ConfigurationDataFactoryIO.Load(() => XmlDataContractSerializers.Load<ConfigurationData>(configurationFile, (x, y, z) => { }), RaiseEvents);
+                return ConfigurationDataFactoryIO.Load(() => XmlDataContractSerializers.Load<ConfigurationExtension>(configurationFile, (x, y, z) => { }), RaiseEvents);
             }
             else
             {
@@ -57,13 +59,21 @@ namespace M2MCommunication.Uaooi.Injections
             OnMessageHandlerConfigurationChange?.Invoke(this, EventArgs.Empty);
         }
 
-        public IEnumerable<UaTypeMetadata> GetTypeMetadata()
+        public IDictionary<string, string> GetRepositoryGroupAliases()
         {
-            return GetConfiguration()
-                ?.DataSets
-                ?.GroupBy(dataset => dataset.RepositoryGroup, (key, group) => (key, group.SelectMany(g => g.DataSet.Select(ds => ds.ProcessValueName))))
-                ?.SelectMany(pair => pair.Item2.Select(typeName => new UaTypeMetadata(pair.key, typeName)))
-                    ?? Enumerable.Empty<UaTypeMetadata>();
+            IDictionary<string, string> result = new Dictionary<string, string>();
+            foreach (UAOOI.Configuration.Networking.Serialization.DataSetConfiguration dataset in Configuration.DataSets)
+            {
+                string alias = Configuration
+                    ?.Aliases
+                    ?.FirstOrDefault(repoAlias => repoAlias.InformationModelUri.ToString().Equals(dataset.InformationModelURI))
+                    ?.Alias;
+                if (!string.IsNullOrEmpty(alias))
+                {
+                    result.Add(dataset.RepositoryGroup, alias);
+                }
+            }
+            return result;
         }
     }
 }

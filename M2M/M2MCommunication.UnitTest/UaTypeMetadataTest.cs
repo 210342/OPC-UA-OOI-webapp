@@ -1,7 +1,6 @@
 ﻿using M2MCommunication.Core;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace M2MCommunicationUnitTest

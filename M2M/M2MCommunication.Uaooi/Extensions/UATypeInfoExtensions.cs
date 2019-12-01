@@ -1,6 +1,4 @@
-﻿using M2MCommunication.Core.Exceptions;
-using System;
-using UAOOI.Configuration.Networking.Serialization;
+﻿using UAOOI.Configuration.Networking.Serialization;
 
 namespace M2MCommunication.Uaooi.Extensions
 {

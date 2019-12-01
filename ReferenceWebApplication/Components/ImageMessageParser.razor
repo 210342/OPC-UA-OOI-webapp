@@ -3,20 +3,20 @@
 
 @if (ImageParser.ImageTemplates != null)
 {
-    @foreach (ImageTemplate image in ImageParser.ImageTemplates)
+    @foreach (var pair in ImageParser.ImageTemplates)
     {
         <h3 class="text-center my-1">
             <span class="badge badge-pill badge-light">
-                @image.Properties.FirstOrDefault()?.Subscription?.UaTypeMetadata?.RepositoryGroupName
+                @pair.Key
             </span>
         </h3>
         <div class="d-flex justify-content-center mt-2 mb-5">
             <div class="overflow-auto border border-light image-container rounded-lg" style="position: relative;">
                 <img class="rounded float-left"
-                     src="@image?.RelativePath"
+                     src="@pair.Value?.RelativePath"
                      alt="Message background"
-                     style=@($"width: {image?.Width}px; height: {image?.Height}px;") />
-                @foreach (DrawableProperty property in image.DrawableProperties)
+                     style=@($"width: {pair.Value?.Width}px; height: {pair.Value?.Height}px;") />
+                @foreach (DrawableProperty property in pair.Value.DrawableProperties)
                 {
                     <Property @key="property" DrawableProperty="property" />
                 }

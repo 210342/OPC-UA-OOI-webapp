@@ -15,15 +15,16 @@ namespace M2MCommunication.Uaooi.Injections
     {
         [ImportingConstructor]
         public UaooiMessageBus(
-            IConfiguration configuration,
+            IConfigurationFactory configurationFactory,
             IEncodingFactory encodingFactory,
-            ISubscriptionFactory subscriptionFactory,
+            IBindingFactory subscriptionFactory,
             IMessageHandlerFactory messageHandlerFactory)
         {
-            ConfigurationFactory = configuration as IConfigurationFactory;
+            ConfigurationFactory = configurationFactory
+                ?? throw new ComponentNotIntialisedException(nameof(configurationFactory));
             EncodingFactory = encodingFactory
                 ?? throw new ComponentNotIntialisedException(nameof(encodingFactory));
-            BindingFactory = subscriptionFactory as IBindingFactory
+            BindingFactory = subscriptionFactory
                 ?? throw new ComponentNotIntialisedException(nameof(subscriptionFactory));
             MessageHandlerFactory = messageHandlerFactory
                 ?? throw new ComponentNotIntialisedException(nameof(messageHandlerFactory));
@@ -37,11 +38,13 @@ namespace M2MCommunication.Uaooi.Injections
         /// <exception cref="ConfigurationFileNotFoundException"></exception>
         /// <exception cref="UnsupportedTypeException"></exception>
         /// <exception cref="ValueRankOutOfRangeException"></exception>
-        public void Initialise(UaLibrarySettings settings)
+        public void Initialise(UaLibrarySettings settings, Action<object, ISubscription> onSubsctiptionAdded)
         {
             AssertComponentsAreNotNull();
             (ConfigurationFactory as Configuration)
                 ?.Initialise(Path.Combine(Directory.GetCurrentDirectory(), settings.ResourcesDirectory, settings.LibraryDirectory, settings.ConsumerConfigurationFile));
+            (BindingFactory as ISubscriptionFactory).Initialise(CommonServiceLocator.ServiceLocator.Current.GetInstance<IConfiguration>());
+            (BindingFactory as ISubscriptionFactory).SubscriptionAdded += new EventHandler<ISubscription>(onSubsctiptionAdded);
             Start();
         }
 
@@ -53,9 +56,16 @@ namespace M2MCommunication.Uaooi.Injections
         /// <exception cref="ConfigurationFileNotFoundException"></exception>
         /// <exception cref="UnsupportedTypeException"></exception>
         /// <exception cref="ValueRankOutOfRangeException"></exception>
-        public async Task InitialiseAsync(UaLibrarySettings settings)
+        public async Task InitialiseAsync(UaLibrarySettings settings, Action<object, ISubscription> onSubsctiptionAdded)
         {
-            await Task.Run(() => Initialise(settings));
+            await Task.Run(() => Initialise(settings, onSubsctiptionAdded));
+        }
+
+        public void RefreshConfiguration()
+        {
+            ConfigurationFactory.GetConfiguration();
+            (BindingFactory as ISubscriptionFactory).Initialise(CommonServiceLocator.ServiceLocator.Current.GetInstance<IConfiguration>());
+            Start();
         }
 
         private void AssertComponentsAreNotNull()

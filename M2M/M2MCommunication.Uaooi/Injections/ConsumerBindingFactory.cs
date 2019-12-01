@@ -3,7 +3,6 @@ using M2MCommunication.Core.Exceptions;
 using M2MCommunication.Uaooi.Extensions;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.ComponentModel.Composition;
 using UAOOI.Configuration.Networking.Serialization;
 using UAOOI.Networking.SemanticData;
@@ -11,29 +10,14 @@ using UAOOI.Networking.SemanticData.DataRepository;
 
 namespace M2MCommunication.Uaooi.Injections
 {
+    [Export(typeof(IBindingFactory))]
     [Export(typeof(ISubscriptionFactory))]
     public class ConsumerBindingFactory : IBindingFactory, ISubscriptionFactory
     {
-        public IDictionary<UaTypeMetadata, ISubscription> Subscriptions { get; } = new Dictionary<UaTypeMetadata, ISubscription>();
+        private readonly IDictionary<UaTypeMetadata, ISubscription> _subscriptions = new Dictionary<UaTypeMetadata, ISubscription>();
+        private IDictionary<string, string> _aliases = new Dictionary<string, string>();
 
-        /// <summary>
-        /// Returns a subscriptions for the specified type by name
-        /// </summary>
-        /// <param name="subscriptionName">Name of the type to subscribe to</param>
-        /// <param name="handler">Callback method of the subscription</param>
-        /// <returns></returns>
-        public ISubscription Subscribe(UaTypeMetadata uaTypeMetadata, PropertyChangedEventHandler handler)
-        {
-            if (Subscriptions.TryGetValue(uaTypeMetadata, out ISubscription subscription))
-            {
-                subscription.Enable(handler);
-                return subscription;
-            }
-            else
-            {
-                throw new UnsupportedTypeException($"Type {uaTypeMetadata.ToString()} is not supported");
-            }
-        }
+        public event EventHandler<ISubscription> SubscriptionAdded;
 
         public IConsumerBinding GetConsumerBinding(string repositoryGroup, string processValueName, UATypeInfo fieldTypeInfo)
         {
@@ -125,17 +109,24 @@ namespace M2MCommunication.Uaooi.Injections
             throw new NotSupportedException();
         }
 
+        public void Initialise(IConfiguration configuration)
+        {
+            _aliases = configuration.GetRepositoryGroupAliases();
+        }
+
         private IConsumerBinding Bind<type>(UaTypeMetadata typeMetadata, UATypeInfo typeInfo)
         {
             ConsumerBindingMonitoredValue<type> binding = new ConsumerBindingMonitoredValue<type>(typeInfo);
             binding.PropertyChanged += (sender, args) =>
             {
-                if (Subscriptions.TryGetValue(typeMetadata, out ISubscription subscription))
+                if (_subscriptions.TryGetValue(typeMetadata, out ISubscription subscription))
                 {
                     subscription.Value = sender;
                 }
             };
-            Subscriptions[typeMetadata] = new Subscription(typeInfo, typeMetadata, binding);
+            _aliases.TryGetValue(typeMetadata.RepositoryGroupName, out string alias);
+            _subscriptions[typeMetadata] = new Subscription(typeInfo, typeMetadata, alias ?? string.Empty, binding);
+            SubscriptionAdded?.Invoke(this, _subscriptions[typeMetadata]);
             return binding;
         }
     }

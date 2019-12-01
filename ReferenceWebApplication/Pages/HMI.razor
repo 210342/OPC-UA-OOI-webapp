@@ -1,49 +1,25 @@
 @page "/hmi"
+@using M2MCommunication.Core.Exceptions
+@using MessageParsing
 @using Microsoft.Extensions.Localization
 @using Microsoft.Extensions.Logging
-@using M2MCommunication.Core
-@using M2MCommunication.Core.Exceptions
-@using M2MCommunication.Services
-@using MessageParsing
-
-@implements IDisposable
 
 <div class="container-fluid">
-    <h3 class="text-danger text-center">@ExceptionMessage</h3>
-    @if (!IsLayoutHorizontal)
-    {
-        <div class="row my-1">
-            <div class="col-6 text-center py-1">
-                <h3><span class="badge @PackagesReceivedStyle">Packages received: @PackagesReceived</span></h3>
-            </div>
-            <div class="col-6 text-center py-1">
-                <h3><span class="badge @BytesReceivedStyle">Bytes received: @BytesReceived</span></h3>
-            </div>
+    <h3 class="text-danger text-center font-bordered">@ExceptionMessage</h3>
+    <div class="row my-1">
+        <div class="col-6 text-center py-1">
+            <h3><span class="badge @PackagesReceivedStyle">Packages received: @PackagesReceived</span></h3>
         </div>
-    }
+        <div class="col-6 text-center py-1">
+            <button class="badge-button" @onclick="RefreshConfiguration">
+                <h3><span class="badge badge-success">Refresh configuration</span></h3>
+            </button>
+        </div>
+    </div>
     <div class="row my-3 no-gutters">
-        <div class="@ImageColumnClass">
+        <div class="col-12">
             <ReferenceWebApplication.Components.ImageMessageParser Parser="Parser" />
         </div>
-        @if (IsLayoutHorizontal)
-        {
-            <div class="col-3">
-                <div class="row my-2">
-                    <div class="col-12">
-                        <div class="text-center">
-                            <h3><span class="badge badge-primary">Packages received: @PackagesReceived</span></h3>
-                        </div>
-                    </div>
-                </div>
-                <div class="row my-2">
-                    <div class="col-12">
-                        <div class="text-center">
-                            <h3><span class="badge @BytesReceivedStyle">Bytes received: @BytesReceived</span></h3>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        }
     </div>
     @if (Parser.PrintableProperties.Any())
     {
@@ -56,21 +32,15 @@
     }
 </div>
 
-@inject MessageBusService BusService
-@inject UaLibrarySettings settings
+@implements IDisposable
 @inject IMessageParser Parser
 @inject ILogger<HMI> Logger
 @inject IStringLocalizer<HMI> Localizer
 @code
 {
-    private IMessageBus Bus => BusService?.MessageBus;
     private string PackagesReceivedStyle => PackagesReceived > 2048 ? "badge-danger" : "badge-primary";
-    private string BytesReceivedStyle => BytesReceived > 65536 ? "badge-warning" : "badge-info";
-    private string ImageColumnClass => IsLayoutHorizontal ? "col-9" : "col-12";
 
-    public int BytesReceived { get; private set; } = 0;
     public int PackagesReceived { get; private set; } = 0;
-    public bool IsLayoutHorizontal { get; set; } = false;
     public string ExceptionMessage { get; private set; } = string.Empty;
 
     protected override async Task OnInitializedAsync()
@@ -115,9 +85,13 @@
         });
     }
 
+    private void RefreshConfiguration()
+    {
+        Parser.RefreshConfiguration();
+    }
+
     public void Dispose()
     {
-        BusService.Dispose();
         Parser.Dispose();
     }
 }

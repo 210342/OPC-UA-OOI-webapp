@@ -26,8 +26,6 @@ namespace M2MCommunicationUnitTest
             UATypeInfo typeInfo = new UATypeInfo(BuiltInType.Byte, -1, new int[] { });
             IConsumerBinding binding = factory.GetConsumerBinding(_typeMetadata.RepositoryGroupName, _typeMetadata.TypeName, typeInfo);
             Assert.NotNull(binding);
-            Assert.True(factory.Subscriptions.ContainsKey(_typeMetadata));
-            Assert.NotNull(factory.Subscriptions[_typeMetadata]);
         }
 
         [Fact]
@@ -51,37 +49,6 @@ namespace M2MCommunicationUnitTest
             ConsumerBindingFactory factory = new ConsumerBindingFactory();
             UATypeInfo typeInfo = new UATypeInfo(BuiltInType.NodeId, -2, new int[] { });
             Assert.Throws<UnsupportedTypeException>(() => factory.GetConsumerBinding(_typeMetadata.RepositoryGroupName, _typeMetadata.TypeName, typeInfo));
-        }
-
-        [Fact]
-        public void SubscribeNotBoundTypeTest()
-        {
-            ConsumerBindingFactory factory = new ConsumerBindingFactory();
-            Assert.Throws<UnsupportedTypeException>(() => factory.Subscribe(_typeMetadata, (sender, args) => { }));
-        }
-
-        [Fact]
-        public void SubscribeBoundTypeTest()
-        {
-            ConsumerBindingFactory factory = new ConsumerBindingFactory();
-            UATypeInfo typeInfo = new UATypeInfo(BuiltInType.Byte, -1, new int[] { });
-            IConsumerBinding binding = factory.GetConsumerBinding(_typeMetadata.RepositoryGroupName, _typeMetadata.TypeName, typeInfo);
-            ISubscription subscription = factory.Subscribe(_typeMetadata, (sender, args) => { });
-            Assert.NotNull(subscription);
-            Assert.Equal(_typeMetadata, subscription.UaTypeMetadata);
-            Assert.Equal(binding, subscription.Value);
-        }
-
-        [Fact]
-        public void SubscriptionPropertyChangedEventHandlerTest()
-        {
-            ConsumerBindingFactory factory = new ConsumerBindingFactory();
-            UATypeInfo typeInfo = new UATypeInfo(BuiltInType.Byte, -1, new int[] { });
-            IConsumerBinding binding = factory.GetConsumerBinding(_typeMetadata.RepositoryGroupName, _typeMetadata.TypeName, typeInfo);
-            bool invoked = false;
-            ISubscription subscription = factory.Subscribe(_typeMetadata, (sender, args) => invoked = true);
-            subscription.Value = null;
-            Assert.True(invoked);
         }
     }
 }

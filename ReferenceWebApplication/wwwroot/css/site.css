@@ -19,7 +19,7 @@ app {
     background-image: linear-gradient(130deg, #1e7dfa 28%, #4fb3ff);
     position: sticky;
     top: 0;
-    width: 100vw;
+    width: auto;
     font-size: 1.5rem;
     z-index: 9999;
 }
@@ -76,8 +76,16 @@ app {
     padding-top: 1.2rem;
 }
 
+.multiple-image-container {
+    display: grid;
+}
+
 .image-container {
     border-width: 2px !important;
+    object-fit: contain;
+}
+
+.drawable-property {
 }
 
 .font-bordered {
@@ -86,6 +94,12 @@ app {
 
 .light-link {
     color: #d0ffba;
+}
+
+.badge-button {
+    color: transparent;
+    background-color: transparent;
+    border-color: transparent;
 }
 
 @media (max-width: 992px) {
