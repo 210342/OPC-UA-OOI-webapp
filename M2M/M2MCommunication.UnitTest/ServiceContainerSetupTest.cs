@@ -1,6 +1,7 @@
 ﻿using CommonServiceLocator;
 using M2MCommunication.Core;
 using M2MCommunication.Services;
+using System;
 using System.ComponentModel.Composition.Hosting;
 using System.IO;
 using System.Linq;
@@ -18,10 +19,26 @@ namespace M2MCommunicationUnitTest
             ConsumerConfigurationFile = "ConfigurationDataConsumer.xml"
         };
 
+        internal class TestLogger : ILogger
+        {
+
+            public void LogError(Exception exception, string message, string callerName = "", string callerPath = "")
+            {
+            }
+
+            public void LogInfo(string message, string callerName = "", string callerPath = "")
+            {
+            }
+
+            public void LogWarning(Exception exception, string message, string callerName = "", string callerPath = "")
+            {
+            }
+        }
+
         [Fact]
         public void ConstructorTest()
         {
-            using (ServiceContainerSetup setup = new ServiceContainerSetup(Settings))
+            using (ServiceContainerSetup setup = new ServiceContainerSetup(Settings, new TestLogger()))
             {
                 Assert.Equal(Settings, setup.GetType()
                     .GetField("_uaLibrarySettings", BindingFlags.NonPublic | BindingFlags.Instance)
@@ -44,7 +61,7 @@ namespace M2MCommunicationUnitTest
         [Fact]
         public void InitialiseTest()
         {
-            using (ServiceContainerSetup setup = new ServiceContainerSetup(Settings))
+            using (ServiceContainerSetup setup = new ServiceContainerSetup(Settings, new TestLogger()))
             {
                 setup.Initialise();
                 AggregateCatalog catalog = setup.GetType().GetProperty("AggregateCatalog", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(setup) as AggregateCatalog;
@@ -68,7 +85,7 @@ namespace M2MCommunicationUnitTest
         [Fact]
         public void DisposeTest()
         {
-            ServiceContainerSetup setup = new ServiceContainerSetup(Settings);
+            ServiceContainerSetup setup = new ServiceContainerSetup(Settings, new TestLogger());
             setup.Dispose();
             Assert.True(setup.GetType().GetField("disposedValue", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(setup) as bool?);
         }

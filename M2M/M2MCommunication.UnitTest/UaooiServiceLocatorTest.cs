@@ -14,6 +14,8 @@ namespace M2MCommunicationUnitTest
     [Collection("DI")]
     public class UaooiServiceLocatorTest
     {
+        internal ILogger Logger => new ServiceContainerSetupTest.TestLogger();
+
         [Fact]
         public void ConstructorTest()
         {
@@ -30,7 +32,7 @@ namespace M2MCommunicationUnitTest
                         .DefinedTypes
                         .Where(type => type.Name.Equals("UaooiServiceLocator"))
                         .FirstOrDefault(),
-                    new[] { container }
+                    new object[] { container, Logger }
                 ) as IServiceLocator;
                 Assert.NotNull(serviceLocator);
                 Assert.NotEqual(container, serviceLocator.GetType().GetField("_container", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(serviceLocator) as CompositionContainer);
@@ -47,7 +49,7 @@ namespace M2MCommunicationUnitTest
                         .DefinedTypes
                         .Where(type => type.Name.Equals("UaooiServiceLocator"))
                         .FirstOrDefault(),
-                    new[] { (CompositionContainer)null }
+                    new object[] { (CompositionContainer)null, null }
                 );
             }
             catch (TargetInvocationException ex)
@@ -72,7 +74,7 @@ namespace M2MCommunicationUnitTest
                         .DefinedTypes
                         .Where(type => type.Name.Equals("UaooiServiceLocator"))
                         .FirstOrDefault(),
-                    new[] { container }
+                    new object[] { container, Logger }
                 ) as IServiceLocator;
                 ServiceLocator.SetLocatorProvider(() => serviceLocator);
                 System.Collections.Generic.IEnumerable<Lazy<object, object>> tmp = container?.GetExports(typeof(IMessageBus), null, null);
@@ -96,7 +98,7 @@ namespace M2MCommunicationUnitTest
                         .DefinedTypes
                         .Where(type => type.Name.Equals("UaooiServiceLocator"))
                         .FirstOrDefault(),
-                    new[] { container }
+                    new object[] { container, Logger }
                 ) as IServiceLocator;
                 ServiceLocator.SetLocatorProvider(() => serviceLocator);
                 Assert.Throws<NullReferenceException>(() => serviceLocator.GetAllInstances(null));
@@ -119,7 +121,7 @@ namespace M2MCommunicationUnitTest
                         .DefinedTypes
                         .Where(type => type.Name.Equals("UaooiServiceLocator"))
                         .FirstOrDefault(),
-                    new[] { container }
+                    new object[] { container, Logger }
                 ) as IServiceLocator;
                 ServiceLocator.SetLocatorProvider(() => serviceLocator);
                 Assert.Empty(serviceLocator.GetAllInstances(typeof(UaooiServiceLocatorTest)));

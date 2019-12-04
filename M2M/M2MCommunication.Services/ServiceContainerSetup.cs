@@ -3,6 +3,8 @@ using M2MCommunication.Core;
 using System;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
+using System.ComponentModel.Composition.Primitives;
+using System.Composition.Hosting;
 using System.IO;
 using System.Reflection;
 
@@ -11,13 +13,17 @@ namespace M2MCommunication.Services
     public class ServiceContainerSetup : IDisposable
     {
         private readonly UaLibrarySettings _uaLibrarySettings;
+        private readonly ILogger _logger;
+
+
         internal AggregateCatalog AggregateCatalog { get; private set; }
         internal CompositionContainer Container { get; private set; }
         internal IServiceLocator DisposableServiceLocator { get; private set; }
 
-        public ServiceContainerSetup(UaLibrarySettings settings)
+        public ServiceContainerSetup(UaLibrarySettings settings, ILogger logger)
         {
             _uaLibrarySettings = settings;
+            _logger = logger;
         }
 
         public ServiceContainerSetup Initialise()
@@ -29,8 +35,9 @@ namespace M2MCommunication.Services
             );
             Container = new CompositionContainer(AggregateCatalog);
             Container.ComposeExportedValue(AggregateCatalog);
-            DisposableServiceLocator = new UaooiServiceLocator(Container);
+            DisposableServiceLocator = new UaooiServiceLocator(Container, _logger);
             ServiceLocator.SetLocatorProvider(() => DisposableServiceLocator);
+            var o = ServiceLocator.Current.GetInstance<ILogger>();
             return this;
         }
 
@@ -45,7 +52,7 @@ namespace M2MCommunication.Services
                 {
                     Container?.Dispose();
                     AggregateCatalog?.Dispose();
-                    (DisposableServiceLocator as UaooiServiceLocator)?.Dispose();
+                    (DisposableServiceLocator as IDisposable)?.Dispose();
                 }
                 Container = null;
                 AggregateCatalog = null;

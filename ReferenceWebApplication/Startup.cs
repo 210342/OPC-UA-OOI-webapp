@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
+using ReferenceWebApplication.Services;
 
 namespace ReferenceWebApplication
 {
@@ -32,6 +33,7 @@ namespace ReferenceWebApplication
             services.Configure<RepositoryConfiguration>(Configuration.GetSection("ImageRepository"));
             services.AddSingleton(s => s.GetRequiredService<IOptions<UaLibrarySettings>>().Value);
             services.AddSingleton(s => s.GetRequiredService<IOptions<RepositoryConfiguration>>().Value);
+            services.AddSingleton<ILogger, Logger>();
             services.AddSingleton<ServiceContainerSetup>();
             services.AddSingleton<SubscriptionFactoryService>();
             services.AddTransient<MessageBusService>();

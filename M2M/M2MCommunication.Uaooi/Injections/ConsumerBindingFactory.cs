@@ -14,6 +14,8 @@ namespace M2MCommunication.Uaooi.Injections
     [Export(typeof(ISubscriptionFactory))]
     public class ConsumerBindingFactory : IBindingFactory, ISubscriptionFactory
     {
+        private Lazy<ILogger> _logger = new Lazy<ILogger>(() => CommonServiceLocator.ServiceLocator.Current?.GetInstance<ILogger>());
+
         private readonly IDictionary<UaTypeMetadata, ISubscription> _subscriptions = new Dictionary<UaTypeMetadata, ISubscription>();
         private IDictionary<string, string> _aliases = new Dictionary<string, string>();
 
@@ -121,6 +123,7 @@ namespace M2MCommunication.Uaooi.Injections
             {
                 if (_subscriptions.TryGetValue(typeMetadata, out ISubscription subscription))
                 {
+                    _logger.Value?.LogInfo($"Value updated to {sender.ToString()} for subscription {subscription.UaTypeMetadata.ToString()}");
                     subscription.Value = sender;
                 }
             };

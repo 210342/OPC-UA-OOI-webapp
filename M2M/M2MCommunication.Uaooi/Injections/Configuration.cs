@@ -39,7 +39,7 @@ namespace M2MCommunication.Uaooi.Injections
         {
             if (string.IsNullOrWhiteSpace(_configurationFileName))
             {
-                throw new ComponentNotIntialisedException($"{nameof(_configurationFileName)} was not initialised");
+                throw new ComponentNotInitialisedException($"{nameof(_configurationFileName)} was not initialised");
             }
 
             FileInfo configurationFile = new FileInfo(_configurationFileName);

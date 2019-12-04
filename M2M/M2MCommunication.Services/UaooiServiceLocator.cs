@@ -1,4 +1,5 @@
 ﻿using CommonServiceLocator;
+using M2MCommunication.Core;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition.Hosting;
@@ -9,12 +10,14 @@ namespace M2MCommunication.Services
     internal class UaooiServiceLocator : ServiceLocatorImplBase, IDisposable
     {
         private readonly CompositionContainer _container;
+        private readonly ILogger _logger;
 
-        public UaooiServiceLocator(CompositionContainer compositionContainer)
+        public UaooiServiceLocator(CompositionContainer compositionContainer, ILogger logger)
         {
             _container = compositionContainer is null
                 ? throw new ArgumentNullException(nameof(compositionContainer))
                 : new CompositionContainer(compositionContainer.Catalog, compositionContainer.Providers.ToArray());
+            _logger = logger;
         }
 
         protected override IEnumerable<object> DoGetAllInstances(Type serviceType)
@@ -22,6 +25,10 @@ namespace M2MCommunication.Services
             if (serviceType is null)
             {
                 throw new ArgumentNullException(nameof(serviceType));
+            }
+            if (serviceType.IsAssignableFrom(typeof(ILogger)))
+            {
+                return new object[] { _logger };
             }
             return _container?.GetExports(serviceType, null, null)?.Select(e => e.Value) ?? Enumerable.Empty<object>();
         }
@@ -31,6 +38,10 @@ namespace M2MCommunication.Services
             if (serviceType is null)
             {
                 throw new ArgumentNullException(nameof(serviceType));
+            }
+            if (serviceType.IsAssignableFrom(typeof(ILogger)))
+            {
+                return _logger;
             }
             return _container?.GetExports(serviceType, null, key)?.Select(e => e.Value)?.SingleOrDefault();
         }

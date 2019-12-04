@@ -64,7 +64,7 @@
             Logger.LogError(ex, ex.Message);
             ExceptionMessage = Localizer.GetString("UnsupportedValueRank");
         }
-        catch (ComponentNotIntialisedException ex)
+        catch (ComponentNotInitialisedException ex)
         {
             Logger.LogError(ex, ex.Message);
             ExceptionMessage = $"{Localizer.GetString("ComponentNotInitialisedException")} {ex.Message}";

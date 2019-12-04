@@ -1,4 +1,5 @@
 ﻿using CommonServiceLocator;
+using M2MCommunication.Core;
 using M2MCommunication.Services;
 using M2MCommunication.Uaooi.Injections;
 using System.Reflection;
@@ -14,13 +15,14 @@ namespace M2MCommunicationUnitTest
         [Fact]
         public void ConstructorTest()
         {
-            using (ServiceContainerSetup setup = new ServiceContainerSetup(ServiceContainerSetupTest.Settings))
+            using (ServiceContainerSetup setup = new ServiceContainerSetup(ServiceContainerSetupTest.Settings, new ServiceContainerSetupTest.TestLogger()))
             {
                 setup.Initialise();
                 IServiceLocator serviceLocator = setup
                     .GetType()
                     .GetProperty("DisposableServiceLocator", BindingFlags.NonPublic | BindingFlags.Instance)
                     .GetValue(setup) as IServiceLocator;
+                ServiceLocator.SetLocatorProvider(() => serviceLocator);
                 using (UaooiMessageBus bus = new UaooiMessageBus(
                     serviceLocator.GetInstance<IConfigurationFactory>(),
                     serviceLocator.GetInstance<IEncodingFactory>(),
@@ -47,7 +49,7 @@ namespace M2MCommunicationUnitTest
         [Fact]
         public void InitialiseTest()
         {
-            using (ServiceContainerSetup setup = new ServiceContainerSetup(ServiceContainerSetupTest.Settings))
+            using (ServiceContainerSetup setup = new ServiceContainerSetup(ServiceContainerSetupTest.Settings, new ServiceContainerSetupTest.TestLogger()))
             {
                 setup.Initialise();
                 IServiceLocator serviceLocator = setup

@@ -13,6 +13,8 @@ namespace M2MCommunication.Uaooi.Injections
     [Export(typeof(IMessageBus))]
     public class UaooiMessageBus : DataManagementSetup, IMessageBus
     {
+        private readonly ILogger _logger;
+
         [ImportingConstructor]
         public UaooiMessageBus(
             IConfigurationFactory configurationFactory,
@@ -21,30 +23,38 @@ namespace M2MCommunication.Uaooi.Injections
             IMessageHandlerFactory messageHandlerFactory)
         {
             ConfigurationFactory = configurationFactory
-                ?? throw new ComponentNotIntialisedException(nameof(configurationFactory));
+                ?? throw new ComponentNotInitialisedException(nameof(configurationFactory));
             EncodingFactory = encodingFactory
-                ?? throw new ComponentNotIntialisedException(nameof(encodingFactory));
+                ?? throw new ComponentNotInitialisedException(nameof(encodingFactory));
             BindingFactory = subscriptionFactory
-                ?? throw new ComponentNotIntialisedException(nameof(subscriptionFactory));
+                ?? throw new ComponentNotInitialisedException(nameof(subscriptionFactory));
             MessageHandlerFactory = messageHandlerFactory
-                ?? throw new ComponentNotIntialisedException(nameof(messageHandlerFactory));
+                ?? throw new ComponentNotInitialisedException(nameof(messageHandlerFactory));
+            _logger = CommonServiceLocator.ServiceLocator.Current.GetInstance<ILogger>();
         }
 
         /// <summary>
         /// Starts this instance - Initializes the data set infrastructure, enables all associations and starts pumping the data;
         /// </summary>
         /// <param name="settings">Object containing application settings targeting Unified Architecture library</param>
-        /// <exception cref="ComponentNotIntialisedException"></exception>
+        /// <exception cref="ComponentNotInitialisedException"></exception>
         /// <exception cref="ConfigurationFileNotFoundException"></exception>
         /// <exception cref="UnsupportedTypeException"></exception>
         /// <exception cref="ValueRankOutOfRangeException"></exception>
         public void Initialise(UaLibrarySettings settings, Action<object, ISubscription> onSubsctiptionAdded)
         {
             AssertComponentsAreNotNull();
+            _logger?.LogInfo("Reading configuration");
             (ConfigurationFactory as Configuration)
                 ?.Initialise(Path.Combine(Directory.GetCurrentDirectory(), settings.ResourcesDirectory, settings.LibraryDirectory, settings.ConsumerConfigurationFile));
+            _logger?.LogInfo("Initialising subscription logic");
             (BindingFactory as ISubscriptionFactory).Initialise(CommonServiceLocator.ServiceLocator.Current.GetInstance<IConfiguration>());
-            (BindingFactory as ISubscriptionFactory).SubscriptionAdded += new EventHandler<ISubscription>(onSubsctiptionAdded);
+            (BindingFactory as ISubscriptionFactory).SubscriptionAdded += new EventHandler<ISubscription>((sender, subscription) =>
+            {
+                _logger?.LogInfo($"Adding a subscription for: {subscription.UaTypeMetadata.ToString()}");
+                onSubsctiptionAdded(sender, subscription);
+            });
+            _logger?.LogInfo("Starting communication");
             Start();
         }
 
@@ -52,7 +62,7 @@ namespace M2MCommunication.Uaooi.Injections
         /// Starts this instance - Initializes the data set infrastructure, enables all associations and starts pumping the data;
         /// </summary>
         /// <param name="settings">Object containing application settings targeting Unified Architecture library</param>
-        /// <exception cref="ComponentNotIntialisedException"></exception>
+        /// <exception cref="ComponentNotInitialisedException"></exception>
         /// <exception cref="ConfigurationFileNotFoundException"></exception>
         /// <exception cref="UnsupportedTypeException"></exception>
         /// <exception cref="ValueRankOutOfRangeException"></exception>
@@ -63,8 +73,10 @@ namespace M2MCommunication.Uaooi.Injections
 
         public void RefreshConfiguration()
         {
+            _logger?.LogInfo("Reloading consumer configuration");
             ConfigurationFactory.GetConfiguration();
             (BindingFactory as ISubscriptionFactory).Initialise(CommonServiceLocator.ServiceLocator.Current.GetInstance<IConfiguration>());
+            _logger?.LogInfo("Consumer configuration reloaded, starting communication");
             Start();
         }
 
@@ -72,19 +84,27 @@ namespace M2MCommunication.Uaooi.Injections
         {
             if (ConfigurationFactory is null)
             {
-                throw new ComponentNotIntialisedException(nameof(ConfigurationFactory));
+                var exception = new ComponentNotInitialisedException(nameof(ConfigurationFactory));
+                _logger?.LogError(exception, exception.Message);
+                throw exception;
             }
-            if (EncodingFactory is null)
+            else if (EncodingFactory is null)
             {
-                throw new ComponentNotIntialisedException(nameof(EncodingFactory));
+                var exception = new ComponentNotInitialisedException(nameof(EncodingFactory));
+                _logger?.LogError(exception, exception.Message);
+                throw exception;
             }
-            if (BindingFactory is null)
+            else if (BindingFactory is null)
             {
-                throw new ComponentNotIntialisedException(nameof(BindingFactory));
+                var exception = new ComponentNotInitialisedException(nameof(BindingFactory));
+                _logger?.LogError(exception, exception.Message);
+                throw exception;
             }
-            if (MessageHandlerFactory is null)
+            else if (MessageHandlerFactory is null)
             {
-                throw new ComponentNotIntialisedException(nameof(MessageHandlerFactory));
+                var exception = new ComponentNotInitialisedException(nameof(MessageHandlerFactory));
+                _logger?.LogError(exception, exception.Message);
+                throw exception;
             }
         }
     }
