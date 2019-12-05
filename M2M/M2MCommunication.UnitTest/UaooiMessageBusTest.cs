@@ -1,4 +1,5 @@
 ﻿using CommonServiceLocator;
+using M2MCommunication.Core;
 using M2MCommunication.Services;
 using M2MCommunication.Uaooi.Injections;
 using System.Reflection;
@@ -14,7 +15,7 @@ namespace M2MCommunicationUnitTest
         [Fact]
         public void ConstructorTest()
         {
-            using (ServiceContainerSetup setup = new ServiceContainerSetup(ServiceContainerSetupTest.Settings))
+            using (ServiceContainerSetup setup = new ServiceContainerSetup(ServiceContainerSetupTest.Settings, new ServiceContainerSetupTest.TestLogger()))
             {
                 setup.Initialise();
                 IServiceLocator serviceLocator = setup
@@ -25,7 +26,8 @@ namespace M2MCommunicationUnitTest
                     serviceLocator.GetInstance<IConfigurationFactory>(),
                     serviceLocator.GetInstance<IEncodingFactory>(),
                     serviceLocator.GetInstance<IBindingFactory>(),
-                    serviceLocator.GetInstance<IMessageHandlerFactory>()
+                    serviceLocator.GetInstance<IMessageHandlerFactory>(),
+                    serviceLocator.GetInstance<ILogger>()
                     ))
                 {
                     Assert.NotNull(bus.ConfigurationFactory);
@@ -47,7 +49,7 @@ namespace M2MCommunicationUnitTest
         [Fact]
         public void InitialiseTest()
         {
-            using (ServiceContainerSetup setup = new ServiceContainerSetup(ServiceContainerSetupTest.Settings))
+            using (ServiceContainerSetup setup = new ServiceContainerSetup(ServiceContainerSetupTest.Settings, new ServiceContainerSetupTest.TestLogger()))
             {
                 setup.Initialise();
                 IServiceLocator serviceLocator = setup
@@ -58,7 +60,8 @@ namespace M2MCommunicationUnitTest
                     serviceLocator.GetInstance<IConfigurationFactory>(),
                     serviceLocator.GetInstance<IEncodingFactory>(),
                     serviceLocator.GetInstance<IBindingFactory>(),
-                    serviceLocator.GetInstance<IMessageHandlerFactory>()
+                    serviceLocator.GetInstance<IMessageHandlerFactory>(),
+                    serviceLocator.GetInstance<ILogger>()
                 ))
                 {
                     bus.Initialise(ServiceContainerSetupTest.Settings, (_, __) => { });

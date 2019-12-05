@@ -12,7 +12,7 @@ namespace M2MCommunicationUnitTest
         [Fact]
         public void ConstructorTest()
         {
-            Configuration configuration = new Configuration();
+            Configuration configuration = new Configuration(null);
             Assert.NotNull(configuration
                 .GetType()
                 .GetProperty("Loader", BindingFlags.NonPublic | BindingFlags.Instance)
@@ -22,7 +22,7 @@ namespace M2MCommunicationUnitTest
         [Fact]
         public void InitialiseTest()
         {
-            Configuration configuration = new Configuration();
+            Configuration configuration = new Configuration(null);
             configuration.Initialise(_configurationFileName);
             Assert.Equal(_configurationFileName, configuration
                 .GetType()
@@ -34,7 +34,7 @@ namespace M2MCommunicationUnitTest
         [Fact]
         public void InitialiseWrongFileNameTest()
         {
-            Configuration configuration = new Configuration();
+            Configuration configuration = new Configuration(null);
             Assert.Throws<ConfigurationFileNotFoundException>(() => 
             configuration.Initialise(_configurationFileName.Replace("xml", "pdf")));
         }
@@ -42,7 +42,7 @@ namespace M2MCommunicationUnitTest
         [Fact]
         public void LoadConfigTest()
         {
-            Configuration configuration = new Configuration();
+            Configuration configuration = new Configuration(null);
             configuration.Initialise(_configurationFileName);
             Assert.NotNull(LoadConfig(configuration));
         }

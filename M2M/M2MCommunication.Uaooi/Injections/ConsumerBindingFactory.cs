@@ -14,10 +14,18 @@ namespace M2MCommunication.Uaooi.Injections
     [Export(typeof(ISubscriptionFactory))]
     public class ConsumerBindingFactory : IBindingFactory, ISubscriptionFactory
     {
+        private readonly ILogger _logger;
+
         private readonly IDictionary<UaTypeMetadata, ISubscription> _subscriptions = new Dictionary<UaTypeMetadata, ISubscription>();
         private IDictionary<string, string> _aliases = new Dictionary<string, string>();
 
         public event EventHandler<ISubscription> SubscriptionAdded;
+
+        [ImportingConstructor]
+        public ConsumerBindingFactory(ILogger logger)
+        {
+            _logger = logger;
+        }
 
         public IConsumerBinding GetConsumerBinding(string repositoryGroup, string processValueName, UATypeInfo fieldTypeInfo)
         {
@@ -121,6 +129,7 @@ namespace M2MCommunication.Uaooi.Injections
             {
                 if (_subscriptions.TryGetValue(typeMetadata, out ISubscription subscription))
                 {
+                    _logger?.LogInfo($"Value updated to {sender.ToString()} for subscription {subscription.UaTypeMetadata.ToString()}");
                     subscription.Value = sender;
                 }
             };

@@ -16,13 +16,13 @@ namespace M2MCommunicationUnitTest
         public void GetProducerBindingTest()
         {
             Assert.Throws<NotSupportedException>(() =>
-                new ConsumerBindingFactory().GetProducerBinding(string.Empty, string.Empty, null));
+                new ConsumerBindingFactory(null).GetProducerBinding(string.Empty, string.Empty, null));
         }
 
         [Fact]
         public void GetConsumerBindingTest()
         {
-            ConsumerBindingFactory factory = new ConsumerBindingFactory();
+            ConsumerBindingFactory factory = new ConsumerBindingFactory(null);
             UATypeInfo typeInfo = new UATypeInfo(BuiltInType.Byte, -1, new int[] { });
             IConsumerBinding binding = factory.GetConsumerBinding(_typeMetadata.RepositoryGroupName, _typeMetadata.TypeName, typeInfo);
             Assert.NotNull(binding);
@@ -31,14 +31,14 @@ namespace M2MCommunicationUnitTest
         [Fact]
         public void GetConsumerBindingForNullTypeTest()
         {
-            ConsumerBindingFactory factory = new ConsumerBindingFactory();
+            ConsumerBindingFactory factory = new ConsumerBindingFactory(null);
             Assert.Throws<ArgumentNullException>(() => factory.GetConsumerBinding(_typeMetadata.RepositoryGroupName, _typeMetadata.TypeName, null));
         }
 
         [Fact]
         public void GetConsumerBindingForMultidimensionalTypeTest()
         {
-            ConsumerBindingFactory factory = new ConsumerBindingFactory();
+            ConsumerBindingFactory factory = new ConsumerBindingFactory(null);
             UATypeInfo typeInfo = new UATypeInfo(BuiltInType.Byte, 2, new int[] { 21, 37 });
             Assert.Throws<ValueRankOutOfRangeException>(() => factory.GetConsumerBinding(_typeMetadata.RepositoryGroupName, _typeMetadata.TypeName, typeInfo));
         }
@@ -46,7 +46,7 @@ namespace M2MCommunicationUnitTest
         [Fact]
         public void GetConsumerBindingForNotSupportedTypeTest()
         {
-            ConsumerBindingFactory factory = new ConsumerBindingFactory();
+            ConsumerBindingFactory factory = new ConsumerBindingFactory(null);
             UATypeInfo typeInfo = new UATypeInfo(BuiltInType.NodeId, -2, new int[] { });
             Assert.Throws<UnsupportedTypeException>(() => factory.GetConsumerBinding(_typeMetadata.RepositoryGroupName, _typeMetadata.TypeName, typeInfo));
         }

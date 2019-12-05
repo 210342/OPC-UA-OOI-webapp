@@ -27,7 +27,7 @@ namespace MessageParsingUnitTest
 
         protected internal MessageBusService GetMessageBusService()
         {
-            MessageBusService service = new MessageBusService(Settings);
+            MessageBusService service = new MessageBusService();
             service.GetType()
                 .GetProperty("MessageBus", BindingFlags.Instance | BindingFlags.Public)
                 .SetValue(service, new TestMessageBusService());

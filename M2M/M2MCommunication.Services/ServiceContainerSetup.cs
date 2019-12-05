@@ -11,25 +11,28 @@ namespace M2MCommunication.Services
     public class ServiceContainerSetup : IDisposable
     {
         private readonly UaLibrarySettings _uaLibrarySettings;
-        internal AggregateCatalog AggregateCatalog { get; private set; }
-        internal CompositionContainer Container { get; private set; }
+        private readonly ILogger _logger;
+
         internal IServiceLocator DisposableServiceLocator { get; private set; }
 
-        public ServiceContainerSetup(UaLibrarySettings settings)
+        public ServiceContainerSetup(UaLibrarySettings settings, ILogger logger)
         {
             _uaLibrarySettings = settings;
+            _logger = logger;
         }
 
         public ServiceContainerSetup Initialise()
         {
-            AggregateCatalog = new AggregateCatalog(
+            _logger?.LogInfo("Initialising Managed Extensibility Framework container");
+            AggregateCatalog AggregateCatalog = new AggregateCatalog(
                 new DirectoryCatalog(
                     Path.Combine(Path.GetDirectoryName(Assembly.GetCallingAssembly().Location), _uaLibrarySettings.LibraryDirectory)
                 )
             );
-            Container = new CompositionContainer(AggregateCatalog);
-            Container.ComposeExportedValue(AggregateCatalog);
+            CompositionContainer Container = new CompositionContainer(AggregateCatalog);
+            Container.ComposeExportedValue(_logger);
             DisposableServiceLocator = new UaooiServiceLocator(Container);
+            _logger?.LogInfo("Setting a service locator");
             ServiceLocator.SetLocatorProvider(() => DisposableServiceLocator);
             return this;
         }
@@ -43,12 +46,8 @@ namespace M2MCommunication.Services
             {
                 if (disposing)
                 {
-                    Container?.Dispose();
-                    AggregateCatalog?.Dispose();
-                    (DisposableServiceLocator as UaooiServiceLocator)?.Dispose();
+                    (DisposableServiceLocator as IDisposable)?.Dispose();
                 }
-                Container = null;
-                AggregateCatalog = null;
                 DisposableServiceLocator = null;
 
                 disposedValue = true;

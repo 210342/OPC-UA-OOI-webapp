@@ -12,9 +12,7 @@ namespace M2MCommunication.Services
 
         public UaooiServiceLocator(CompositionContainer compositionContainer)
         {
-            _container = compositionContainer is null
-                ? throw new ArgumentNullException(nameof(compositionContainer))
-                : new CompositionContainer(compositionContainer.Catalog, compositionContainer.Providers.ToArray());
+            _container = compositionContainer ?? throw new ArgumentNullException(nameof(compositionContainer));
         }
 
         protected override IEnumerable<object> DoGetAllInstances(Type serviceType)

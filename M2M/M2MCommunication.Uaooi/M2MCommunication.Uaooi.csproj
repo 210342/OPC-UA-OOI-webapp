@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
     <RootNamespace>M2MCommunication.Uaooi</RootNamespace>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
@@ -28,9 +28,9 @@
     <ItemGroup>
       <UaooiConfiguration Include="$(ProjectDir)*Configuration*.xml" />
     </ItemGroup>
-    <MakeDir Directories="$(ProjectDir)\..\M2MCommunication.UnitTest\bin\$(ConfigurationName)\netcoreapp2.2\M2MCommunication.Uaooi" />
-    <Copy SourceFiles="@(UaooiLibraries)" DestinationFolder="$(ProjectDir)\..\M2MCommunication.UnitTest\bin\$(ConfigurationName)\netcoreapp2.2\M2MCommunication.Uaooi" />
-    <Copy SourceFiles="@(UaooiConfiguration)" DestinationFolder="$(ProjectDir)\..\M2MCommunication.UnitTest\bin\$(ConfigurationName)\netcoreapp2.2\M2MCommunication.Uaooi" /> 
+    <MakeDir Directories="$(ProjectDir)\..\M2MCommunication.UnitTest\bin\$(ConfigurationName)\netcoreapp3.0\M2MCommunication.Uaooi" />
+    <Copy SourceFiles="@(UaooiLibraries)" DestinationFolder="$(ProjectDir)\..\M2MCommunication.UnitTest\bin\$(ConfigurationName)\netcoreapp3.0\M2MCommunication.Uaooi" />
+    <Copy SourceFiles="@(UaooiConfiguration)" DestinationFolder="$(ProjectDir)\..\M2MCommunication.UnitTest\bin\$(ConfigurationName)\netcoreapp3.0\M2MCommunication.Uaooi" /> 
   </Target>
   
   <ItemGroup>
