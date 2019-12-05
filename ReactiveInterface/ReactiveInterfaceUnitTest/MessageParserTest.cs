@@ -13,13 +13,6 @@ namespace MessageParsingUnitTest
 {
     public class MessageParserTest
     {
-        protected internal UaLibrarySettings Settings => new UaLibrarySettings()
-        {
-            ResourcesDirectory = "dir",
-            ConsumerConfigurationFile = "file",
-            LibraryDirectory = "lib"
-        };
-
         public MessageParserTest()
         {
             ServiceLocator.SetLocatorProvider(() => new TestServiceLocator());
@@ -37,7 +30,7 @@ namespace MessageParsingUnitTest
         [Fact]
         public void ConstructorTest()
         {
-            using (ImageMessageParser sut = new ImageMessageParser(GetMessageBusService(), Settings, new TestImageTemplateRepository()))
+            using (ImageMessageParser sut = new ImageMessageParser(GetMessageBusService(), new TestImageTemplateRepository()))
             {
                 Assert.NotNull(sut.GetType().GetProperty("MessageBus", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(sut));
                 Assert.NotNull(sut.PrintableProperties);
@@ -48,7 +41,7 @@ namespace MessageParsingUnitTest
         [Fact]
         public void DisposeTest()
         {
-            ImageMessageParser sut = new ImageMessageParser(GetMessageBusService(), Settings, new TestImageTemplateRepository());
+            ImageMessageParser sut = new ImageMessageParser(GetMessageBusService(), new TestImageTemplateRepository());
             sut.Dispose();
             Assert.True(typeof(MessageParser)
                 .GetField("disposedValue", BindingFlags.Instance | BindingFlags.NonPublic)

@@ -1,9 +1,7 @@
-﻿using System.Collections.Generic;
-
-namespace M2MCommunication.Core
+﻿namespace M2MCommunication.Core
 {
     public interface IConfiguration
     {
-        IDictionary<string, string> GetRepositoryGroupAliases();
+        string GetAliasForRepositoryGroup(string repositoryGroupName);
     }
 }

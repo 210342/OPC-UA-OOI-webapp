@@ -1,4 +1,6 @@
-﻿namespace M2MCommunication.Core
+﻿using System;
+
+namespace M2MCommunication.Core
 {
     public class UaLibrarySettings
     {
@@ -8,7 +10,7 @@
 
         public override int GetHashCode()
         {
-            return base.GetHashCode();
+            return HashCode.Combine(ConsumerConfigurationFile, LibraryDirectory, ResourcesDirectory);
         }
 
         public override bool Equals(object obj)

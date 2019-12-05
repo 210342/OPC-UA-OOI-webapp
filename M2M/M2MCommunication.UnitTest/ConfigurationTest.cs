@@ -9,21 +9,15 @@ namespace M2MCommunicationUnitTest
     public class ConfigurationTest
     {
         private static readonly string _configurationFileName = @"M2MCommunication.UAOOI\ConfigurationDataConsumer.xml";
+
         [Fact]
         public void ConstructorTest()
         {
-            Configuration configuration = new Configuration(null);
+            Configuration configuration = new Configuration(null, _configurationFileName);
             Assert.NotNull(configuration
                 .GetType()
                 .GetProperty("Loader", BindingFlags.NonPublic | BindingFlags.Instance)
                 .GetValue(configuration));
-        }
-
-        [Fact]
-        public void InitialiseTest()
-        {
-            Configuration configuration = new Configuration(null);
-            configuration.Initialise(_configurationFileName);
             Assert.Equal(_configurationFileName, configuration
                 .GetType()
                 .GetField("_configurationFileName", BindingFlags.NonPublic | BindingFlags.Instance)
@@ -32,18 +26,17 @@ namespace M2MCommunicationUnitTest
         }
 
         [Fact]
-        public void InitialiseWrongFileNameTest()
+        public void ConstructorWrongFileNameTest()
         {
-            Configuration configuration = new Configuration(null);
+            Configuration configuration = new Configuration(null, _configurationFileName.Replace("xml", "pdf"));
             Assert.Throws<ConfigurationFileNotFoundException>(() => 
-            configuration.Initialise(_configurationFileName.Replace("xml", "pdf")));
+            configuration.GetConfiguration());
         }
 
         [Fact]
         public void LoadConfigTest()
         {
-            Configuration configuration = new Configuration(null);
-            configuration.Initialise(_configurationFileName);
+            Configuration configuration = new Configuration(null, _configurationFileName);
             Assert.NotNull(LoadConfig(configuration));
         }
 
