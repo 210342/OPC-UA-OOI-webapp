@@ -8,11 +8,10 @@ namespace MessageParsingUnitTest
 {
     public class ImageMessageParserTest : MessageParserTest
     {
-
         [Fact]
         public void ImageConstructorTest()
         {
-            using (ImageMessageParser sut = new ImageMessageParser(GetMessageBusService(), Settings, new TestImageTemplateRepository()))
+            using (ImageMessageParser sut = new ImageMessageParser(GetMessageBusService(), new TestImageTemplateRepository()))
             {
                 Assert.NotNull(sut.GetType().GetProperty("MessageBus", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(sut));
                 Assert.NotNull(sut.GetType().GetProperty("ImageTemplateRepository", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(sut));
@@ -24,7 +23,7 @@ namespace MessageParsingUnitTest
         [Fact]
         public async Task InitialiseAsyncTest()
         {
-            using (ImageMessageParser sut = new ImageMessageParser(GetMessageBusService(), Settings, new TestImageTemplateRepository()))
+            using (ImageMessageParser sut = new ImageMessageParser(GetMessageBusService(), new TestImageTemplateRepository()))
             {
                 await sut.InitialiseAsync(async () => await Task.Run(() => { }));
                 Assert.NotNull(sut.ImageTemplates);

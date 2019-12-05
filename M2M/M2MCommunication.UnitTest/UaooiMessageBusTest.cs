@@ -64,7 +64,7 @@ namespace M2MCommunicationUnitTest
                     serviceLocator.GetInstance<ILogger>()
                 ))
                 {
-                    bus.Initialise(ServiceContainerSetupTest.Settings, (_, __) => { });
+                    bus.Initialise((_, __) => { });
                     Assert.NotNull(bus.ConfigurationFactory);
                     Assert.NotNull(bus.EncodingFactory);
                     Assert.NotNull(bus.BindingFactory);

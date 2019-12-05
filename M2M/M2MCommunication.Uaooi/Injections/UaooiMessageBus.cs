@@ -37,24 +37,16 @@ namespace M2MCommunication.Uaooi.Injections
         /// <summary>
         /// Starts this instance - Initializes the data set infrastructure, enables all associations and starts pumping the data;
         /// </summary>
-        /// <param name="settings">Object containing application settings targeting Unified Architecture library</param>
         /// <param name="onSubsctiptionAdded">Callback invoked each time a subscription is created</param>
         /// <exception cref="ComponentNotInitialisedException"></exception>
         /// <exception cref="ConfigurationFileNotFoundException"></exception>
         /// <exception cref="UnsupportedTypeException"></exception>
         /// <exception cref="ValueRankOutOfRangeException"></exception>
-        public void Initialise(UaLibrarySettings settings, Action<object, ISubscription> onSubsctiptionAdded)
+        public void Initialise(Action<object, ISubscription> onSubsctiptionAdded)
         {
             AssertComponentsAreNotNull();
 
-            _logger?.LogInfo("Reading configuration");
-
-            (ConfigurationFactory as Configuration)
-                ?.Initialise(Path.Combine(Directory.GetCurrentDirectory(), settings.ResourcesDirectory, settings.LibraryDirectory, settings.ConsumerConfigurationFile));
-
             _logger?.LogInfo("Initialising subscription logic");
-
-            (BindingFactory as ISubscriptionFactory).Initialise(CommonServiceLocator.ServiceLocator.Current.GetInstance<IConfiguration>());
             (BindingFactory as ISubscriptionFactory).SubscriptionAdded += new EventHandler<ISubscription>((sender, subscription) =>
             {
                 _logger?.LogInfo($"Adding a subscription for: {subscription.UaTypeMetadata.ToString()}");
@@ -62,33 +54,25 @@ namespace M2MCommunication.Uaooi.Injections
             });
 
             _logger?.LogInfo("Starting communication");
-
             Start();
         }
 
         /// <summary>
         /// Starts this instance - Initializes the data set infrastructure, enables all associations and starts pumping the data;
         /// </summary>
-        /// <param name="settings">Object containing application settings targeting Unified Architecture library</param>
         /// <param name="onSubsctiptionAdded">Callback invoked each time a subscription is created</param>
         /// <exception cref="ComponentNotInitialisedException"></exception>
         /// <exception cref="ConfigurationFileNotFoundException"></exception>
         /// <exception cref="UnsupportedTypeException"></exception>
         /// <exception cref="ValueRankOutOfRangeException"></exception>
-        public async Task InitialiseAsync(UaLibrarySettings settings, Action<object, ISubscription> onSubsctiptionAdded)
+        public async Task InitialiseAsync(Action<object, ISubscription> onSubsctiptionAdded)
         {
-            await Task.Run(() => Initialise(settings, onSubsctiptionAdded));
+            await Task.Run(() => Initialise( onSubsctiptionAdded));
         }
 
         public void RefreshConfiguration()
         {
-            _logger?.LogInfo("Reloading consumer configuration");
-
-            ConfigurationFactory.GetConfiguration();
-            (BindingFactory as ISubscriptionFactory).Initialise(CommonServiceLocator.ServiceLocator.Current.GetInstance<IConfiguration>());
-
-            _logger?.LogInfo("Consumer configuration reloaded, starting communication");
-
+            _logger?.LogInfo("Reloading consumer configuration and restarting communication");
             Start();
         }
 

@@ -14,8 +14,8 @@ namespace MessageParsing
         public override IEnumerable<PrintableProperty> PrintableProperties => ImageTemplates.Values.SelectMany(template => template.PrintableProperties);
         public IDictionary<string, ImageTemplate> ImageTemplates { get; } = new Dictionary<string, ImageTemplate>();
 
-        public ImageMessageParser(MessageBusService messageBus, UaLibrarySettings settings, IImageTemplateRepository imageTemplateRepository)
-            : base(messageBus, settings)
+        public ImageMessageParser(MessageBusService messageBus, IImageTemplateRepository imageTemplateRepository)
+            : base(messageBus)
         {
             ImageTemplateRepository = imageTemplateRepository;
         }

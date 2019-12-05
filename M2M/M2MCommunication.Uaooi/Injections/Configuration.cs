@@ -2,7 +2,6 @@
 using M2MCommunication.Core.Exceptions;
 using M2MCommunication.Uaooi.Extensions;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.IO;
 using System.Linq;
@@ -16,26 +15,19 @@ namespace M2MCommunication.Uaooi.Injections
     public class Configuration : ConfigurationFactoryBase<ConfigurationExtension>, IConfiguration
     {
         private readonly ILogger _logger;
-        protected internal string _configurationFileName = string.Empty;
+        protected readonly internal string _configurationFileName = string.Empty;
 
         public override event EventHandler<EventArgs> OnAssociationConfigurationChange;
         public override event EventHandler<EventArgs> OnMessageHandlerConfigurationChange;
 
         [ImportingConstructor]
-        public Configuration(ILogger logger)
-        {
-            _logger = logger;
-            Loader = LoadConfig;
-        }
-
-        /// <summary>
-        /// Initialises neccessary values not provided through dependency injection
-        /// </summary>
-        /// <param name="configurationFileName">name of the file containing the consumer's configuration</param>
-        public void Initialise(string configurationFileName)
+        public Configuration(
+            ILogger logger, 
+            [Import(ContractNames.ConfigurationFileNameContract)] string configurationFileName)
         {
             _configurationFileName = configurationFileName;
-            GetConfiguration();
+            _logger = logger;
+            Loader = LoadConfig;
         }
 
         private ConfigurationExtension LoadConfig()
@@ -71,22 +63,18 @@ namespace M2MCommunication.Uaooi.Injections
             OnMessageHandlerConfigurationChange?.Invoke(this, EventArgs.Empty);
         }
 
-        public IDictionary<string, string> GetRepositoryGroupAliases()
+        public string GetAliasForRepositoryGroup(string repositoryGroupName)
         {
-            _logger?.LogInfo("Aliases requested");
-            IDictionary<string, string> result = new Dictionary<string, string>();
-            foreach (UAOOI.Configuration.Networking.Serialization.DataSetConfiguration dataset in Configuration.DataSets)
+            if (Configuration is null)
             {
-                string alias = Configuration
-                    ?.Aliases
-                    ?.FirstOrDefault(repoAlias => repoAlias.InformationModelUri.ToString().Equals(dataset.InformationModelURI))
-                    ?.Alias;
-                if (!string.IsNullOrEmpty(alias))
-                {
-                    result.Add(dataset.RepositoryGroup, alias);
-                }
+                return string.Empty;
             }
-            return result;
+            UAOOI.Configuration.Networking.Serialization.DataSetConfiguration dataset = 
+                Configuration.DataSets?.FirstOrDefault(d => 
+                    d.RepositoryGroup.ToLower().Equals(repositoryGroupName.ToLower()));
+            return Configuration.Aliases?.FirstOrDefault(repoAlias => 
+                repoAlias.InformationModelUri.ToString().Equals(dataset?.InformationModelURI))?.Alias
+                    ?? string.Empty;
         }
     }
 }
