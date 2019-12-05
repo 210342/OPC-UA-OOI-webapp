@@ -23,7 +23,7 @@ namespace ReferenceWebApplication
 
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
-#pragma warning disable CA1822
+#pragma warning disable CA1822, CA1303
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
@@ -65,8 +65,9 @@ namespace ReferenceWebApplication
                 endpoints.MapFallbackToPage("/_Host");
             });
 
+            (app?.ApplicationServices?.GetService(typeof(ILogger)) as ILogger)?.LogInfo("Starting application");
             (app?.ApplicationServices?.GetService(typeof(ServiceContainerSetup)) as ServiceContainerSetup)?.Initialise();
         }
-#pragma warning restore CA1822
+#pragma warning restore CA1822, CA1303
     }
 }

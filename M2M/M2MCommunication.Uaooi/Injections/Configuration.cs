@@ -15,13 +15,16 @@ namespace M2MCommunication.Uaooi.Injections
     [Export(typeof(IConfiguration))]
     public class Configuration : ConfigurationFactoryBase<ConfigurationExtension>, IConfiguration
     {
+        private readonly ILogger _logger;
         protected internal string _configurationFileName = string.Empty;
 
         public override event EventHandler<EventArgs> OnAssociationConfigurationChange;
         public override event EventHandler<EventArgs> OnMessageHandlerConfigurationChange;
 
-        public Configuration()
+        [ImportingConstructor]
+        public Configuration(ILogger logger)
         {
+            _logger = logger;
             Loader = LoadConfig;
         }
 
@@ -39,28 +42,38 @@ namespace M2MCommunication.Uaooi.Injections
         {
             if (string.IsNullOrWhiteSpace(_configurationFileName))
             {
-                throw new ComponentNotInitialisedException($"{nameof(_configurationFileName)} was not initialised");
+                var exception = new ComponentNotInitialisedException($"{nameof(_configurationFileName)} was not initialised");
+                _logger?.LogError(exception, exception.Message);
+                throw exception;
             }
 
             FileInfo configurationFile = new FileInfo(_configurationFileName);
             if (configurationFile.Exists)
             {
-                return ConfigurationDataFactoryIO.Load(() => XmlDataContractSerializers.Load<ConfigurationExtension>(configurationFile, (x, y, z) => { }), RaiseEvents);
+                return ConfigurationDataFactoryIO.Load(
+                    () => XmlDataContractSerializers.Load<ConfigurationExtension>(
+                        configurationFile,
+                        (x, y, z) => _logger?.LogInfo($"{x}-{y}: {z}")), 
+                    RaiseEvents);
             }
             else
             {
-                throw new ConfigurationFileNotFoundException($"{nameof(Configuration)} could not find the file {_configurationFileName}", _configurationFileName);
+                var exception = new ConfigurationFileNotFoundException($"{nameof(Configuration)} could not find the file {_configurationFileName}", _configurationFileName);
+                _logger?.LogError(exception, exception.Message);
+                throw exception;
             }
         }
 
         protected override void RaiseEvents()
         {
+            _logger?.LogInfo("IConfiguration events invoked");
             OnAssociationConfigurationChange?.Invoke(this, EventArgs.Empty);
             OnMessageHandlerConfigurationChange?.Invoke(this, EventArgs.Empty);
         }
 
         public IDictionary<string, string> GetRepositoryGroupAliases()
         {
+            _logger?.LogInfo("Aliases requested");
             IDictionary<string, string> result = new Dictionary<string, string>();
             foreach (UAOOI.Configuration.Networking.Serialization.DataSetConfiguration dataset in Configuration.DataSets)
             {

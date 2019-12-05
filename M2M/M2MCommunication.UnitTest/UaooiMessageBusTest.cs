@@ -22,12 +22,12 @@ namespace M2MCommunicationUnitTest
                     .GetType()
                     .GetProperty("DisposableServiceLocator", BindingFlags.NonPublic | BindingFlags.Instance)
                     .GetValue(setup) as IServiceLocator;
-                ServiceLocator.SetLocatorProvider(() => serviceLocator);
                 using (UaooiMessageBus bus = new UaooiMessageBus(
                     serviceLocator.GetInstance<IConfigurationFactory>(),
                     serviceLocator.GetInstance<IEncodingFactory>(),
                     serviceLocator.GetInstance<IBindingFactory>(),
-                    serviceLocator.GetInstance<IMessageHandlerFactory>()
+                    serviceLocator.GetInstance<IMessageHandlerFactory>(),
+                    serviceLocator.GetInstance<ILogger>()
                     ))
                 {
                     Assert.NotNull(bus.ConfigurationFactory);
@@ -60,7 +60,8 @@ namespace M2MCommunicationUnitTest
                     serviceLocator.GetInstance<IConfigurationFactory>(),
                     serviceLocator.GetInstance<IEncodingFactory>(),
                     serviceLocator.GetInstance<IBindingFactory>(),
-                    serviceLocator.GetInstance<IMessageHandlerFactory>()
+                    serviceLocator.GetInstance<IMessageHandlerFactory>(),
+                    serviceLocator.GetInstance<ILogger>()
                 ))
                 {
                     bus.Initialise(ServiceContainerSetupTest.Settings, (_, __) => { });

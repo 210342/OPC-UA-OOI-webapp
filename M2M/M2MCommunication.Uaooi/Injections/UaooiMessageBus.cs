@@ -20,7 +20,8 @@ namespace M2MCommunication.Uaooi.Injections
             IConfigurationFactory configurationFactory,
             IEncodingFactory encodingFactory,
             IBindingFactory subscriptionFactory,
-            IMessageHandlerFactory messageHandlerFactory)
+            IMessageHandlerFactory messageHandlerFactory,
+            ILogger logger)
         {
             ConfigurationFactory = configurationFactory
                 ?? throw new ComponentNotInitialisedException(nameof(configurationFactory));
@@ -30,7 +31,7 @@ namespace M2MCommunication.Uaooi.Injections
                 ?? throw new ComponentNotInitialisedException(nameof(subscriptionFactory));
             MessageHandlerFactory = messageHandlerFactory
                 ?? throw new ComponentNotInitialisedException(nameof(messageHandlerFactory));
-            _logger = CommonServiceLocator.ServiceLocator.Current.GetInstance<ILogger>();
+            _logger = logger;
         }
 
         /// <summary>
@@ -44,17 +45,23 @@ namespace M2MCommunication.Uaooi.Injections
         public void Initialise(UaLibrarySettings settings, Action<object, ISubscription> onSubsctiptionAdded)
         {
             AssertComponentsAreNotNull();
+
             _logger?.LogInfo("Reading configuration");
+
             (ConfigurationFactory as Configuration)
                 ?.Initialise(Path.Combine(Directory.GetCurrentDirectory(), settings.ResourcesDirectory, settings.LibraryDirectory, settings.ConsumerConfigurationFile));
+
             _logger?.LogInfo("Initialising subscription logic");
+
             (BindingFactory as ISubscriptionFactory).Initialise(CommonServiceLocator.ServiceLocator.Current.GetInstance<IConfiguration>());
             (BindingFactory as ISubscriptionFactory).SubscriptionAdded += new EventHandler<ISubscription>((sender, subscription) =>
             {
                 _logger?.LogInfo($"Adding a subscription for: {subscription.UaTypeMetadata.ToString()}");
                 onSubsctiptionAdded(sender, subscription);
             });
+
             _logger?.LogInfo("Starting communication");
+
             Start();
         }
 
@@ -74,9 +81,12 @@ namespace M2MCommunication.Uaooi.Injections
         public void RefreshConfiguration()
         {
             _logger?.LogInfo("Reloading consumer configuration");
+
             ConfigurationFactory.GetConfiguration();
             (BindingFactory as ISubscriptionFactory).Initialise(CommonServiceLocator.ServiceLocator.Current.GetInstance<IConfiguration>());
+
             _logger?.LogInfo("Consumer configuration reloaded, starting communication");
+
             Start();
         }
 

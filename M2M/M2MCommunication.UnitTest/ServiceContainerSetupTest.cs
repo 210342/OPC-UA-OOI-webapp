@@ -64,11 +64,9 @@ namespace M2MCommunicationUnitTest
             using (ServiceContainerSetup setup = new ServiceContainerSetup(Settings, new TestLogger()))
             {
                 setup.Initialise();
-                AggregateCatalog catalog = setup.GetType().GetProperty("AggregateCatalog", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(setup) as AggregateCatalog;
-                Assert.NotNull(catalog);
                 Assert.NotNull(setup
                     .GetType()
-                    .GetProperty("Container", BindingFlags.Instance | BindingFlags.NonPublic)
+                    .GetProperty("DisposableServiceLocator", BindingFlags.Instance | BindingFlags.NonPublic)
                     .GetValue(setup));
                 Assert.NotNull(ServiceLocator.Current);
                 Assert.IsType(
@@ -78,7 +76,6 @@ namespace M2MCommunicationUnitTest
                         .Where(type => type.Name.Equals("UaooiServiceLocator"))
                         .FirstOrDefault(),
                     ServiceLocator.Current);
-                Assert.NotEmpty(catalog);
             }
         }
 
