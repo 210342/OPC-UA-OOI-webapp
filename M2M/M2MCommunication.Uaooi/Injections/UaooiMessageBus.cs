@@ -72,10 +72,7 @@ namespace M2MCommunication.Uaooi.Injections
 
         public void RefreshConfiguration()
         {
-            _logger?.LogInfo("Reloading consumer configuration");
-            ConfigurationFactory.GetConfiguration();
-
-            _logger?.LogInfo("Consumer configuration reloaded, starting communication");
+            _logger?.LogInfo("Reloading consumer configuration and restarting communication");
             Start();
         }
 
