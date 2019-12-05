@@ -38,6 +38,7 @@ namespace M2MCommunication.Uaooi.Injections
         /// Starts this instance - Initializes the data set infrastructure, enables all associations and starts pumping the data;
         /// </summary>
         /// <param name="settings">Object containing application settings targeting Unified Architecture library</param>
+        /// <param name="onSubsctiptionAdded">Callback invoked each time a subscription is created</param>
         /// <exception cref="ComponentNotInitialisedException"></exception>
         /// <exception cref="ConfigurationFileNotFoundException"></exception>
         /// <exception cref="UnsupportedTypeException"></exception>
@@ -69,6 +70,7 @@ namespace M2MCommunication.Uaooi.Injections
         /// Starts this instance - Initializes the data set infrastructure, enables all associations and starts pumping the data;
         /// </summary>
         /// <param name="settings">Object containing application settings targeting Unified Architecture library</param>
+        /// <param name="onSubsctiptionAdded">Callback invoked each time a subscription is created</param>
         /// <exception cref="ComponentNotInitialisedException"></exception>
         /// <exception cref="ConfigurationFileNotFoundException"></exception>
         /// <exception cref="UnsupportedTypeException"></exception>

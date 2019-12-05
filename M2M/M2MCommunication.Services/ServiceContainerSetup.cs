@@ -13,7 +13,6 @@ namespace M2MCommunication.Services
         private readonly UaLibrarySettings _uaLibrarySettings;
         private readonly ILogger _logger;
 
-
         internal IServiceLocator DisposableServiceLocator { get; private set; }
 
         public ServiceContainerSetup(UaLibrarySettings settings, ILogger logger)
@@ -33,7 +32,7 @@ namespace M2MCommunication.Services
             CompositionContainer Container = new CompositionContainer(AggregateCatalog);
             Container.ComposeExportedValue(_logger);
             DisposableServiceLocator = new UaooiServiceLocator(Container);
-            _logger.LogInfo("Setting a service locator");
+            _logger?.LogInfo("Setting a service locator");
             ServiceLocator.SetLocatorProvider(() => DisposableServiceLocator);
             return this;
         }

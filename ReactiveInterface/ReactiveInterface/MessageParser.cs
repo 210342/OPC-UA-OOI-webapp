@@ -17,7 +17,7 @@ namespace MessageParsing
 
         public MessageParser(MessageBusService messageBus, UaLibrarySettings settings)
         {
-            MessageBus = messageBus?.MessageBus;
+            MessageBus = messageBus.MessageBus;
             _uaLibrarySettings = settings;
         }
 
