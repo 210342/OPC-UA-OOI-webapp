@@ -1,8 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using System;
-using System.ComponentModel.Composition;
 using System.IO;
-using System.Runtime.CompilerServices;
 
 namespace ReferenceWebApplication.Services
 {
@@ -20,10 +18,21 @@ namespace ReferenceWebApplication.Services
             _logger.LogInformation(CombineMessage(callerPath, callerName, message));
         }
 
+        public void LogWarning(string message, string callerName = "", string callerPath = "")
+        {
+            _logger.LogWarning(CombineMessage(callerPath, callerName, message));
+        }
+
         public void LogWarning(Exception exception, string message, string callerName = "", string callerPath = "")
         {
             _logger.LogWarning(exception, CombineMessage(callerPath, callerName, message));
         }
+
+        public void LogError(string message, string callerName = "", string callerPath = "")
+        {
+            _logger.LogError(CombineMessage(callerPath, callerName, message));
+        }
+
 
         public void LogError(Exception exception, string message, string callerName = "", string callerPath = "")
         {

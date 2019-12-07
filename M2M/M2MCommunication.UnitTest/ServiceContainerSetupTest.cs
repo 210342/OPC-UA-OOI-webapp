@@ -6,6 +6,7 @@ using System.ComponentModel.Composition.Hosting;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using Xunit;
 
 namespace M2MCommunicationUnitTest
@@ -26,11 +27,19 @@ namespace M2MCommunicationUnitTest
             {
             }
 
+            public void LogError(string message, string callerName = "", string callerPath = "")
+            {
+            }
+
             public void LogInfo(string message, string callerName = "", string callerPath = "")
             {
             }
 
             public void LogWarning(Exception exception, string message, string callerName = "", string callerPath = "")
+            {
+            }
+
+            public void LogWarning(string message, string callerName = "", string callerPath = "")
             {
             }
         }

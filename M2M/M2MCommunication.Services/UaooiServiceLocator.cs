@@ -47,6 +47,7 @@ namespace M2MCommunication.Services
                 disposedValue = true;
             }
         }
+
         public void Dispose()
         {
             // Do not change this code. Put cleanup code in Dispose(bool disposing) above.

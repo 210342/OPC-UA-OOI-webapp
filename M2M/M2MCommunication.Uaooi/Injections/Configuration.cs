@@ -23,7 +23,7 @@ namespace M2MCommunication.Uaooi.Injections
         [ImportingConstructor]
         public Configuration(
             ILogger logger, 
-            [Import(ContractNames.ConfigurationFileNameContract)] string configurationFileName)
+            [Import(UaContractNames.ConfigurationFileNameContract)] string configurationFileName)
         {
             _configurationFileName = configurationFileName;
             _logger = logger;
@@ -42,11 +42,12 @@ namespace M2MCommunication.Uaooi.Injections
             FileInfo configurationFile = new FileInfo(_configurationFileName);
             if (configurationFile.Exists)
             {
-                return ConfigurationDataFactoryIO.Load(
-                    () => XmlDataContractSerializers.Load<ConfigurationExtension>(
-                        configurationFile,
-                        (x, y, z) => _logger?.LogInfo($"{x}-{y}: {z}")), 
-                    RaiseEvents);
+                return ConfigurationDataFactoryIO.Load<ConfigurationExtension>(
+                    SerializerType.Xml,
+                    configurationFile,
+                    (x, y, z) => _logger?.LogInfo($"{x}-{y}: {z}"),
+                    RaiseEvents
+                );
             }
             else
             {
@@ -65,6 +66,7 @@ namespace M2MCommunication.Uaooi.Injections
 
         public string GetAliasForRepositoryGroup(string repositoryGroupName)
         {
+            _logger?.LogInfo($"Looking for an alias for {repositoryGroupName}");
             if (Configuration is null)
             {
                 return string.Empty;

@@ -30,16 +30,23 @@ namespace M2MCommunication.Services
                 )
             );
             CompositionContainer Container = new CompositionContainer(AggregateCatalog);
-            Container.ComposeExportedValue(ContractNames.ConfigurationFileNameContract, Path.Combine(
+
+            _logger?.LogInfo("Composing configuration file name and logger instance");
+            Container.ComposeExportedValue(UaContractNames.ConfigurationFileNameContract, Path.Combine(
                 Directory.GetCurrentDirectory(), 
                 _uaLibrarySettings.ResourcesDirectory, 
                 _uaLibrarySettings.LibraryDirectory, 
                 _uaLibrarySettings.ConsumerConfigurationFile)
             );
             Container.ComposeExportedValue(_logger);
-            DisposableServiceLocator = new UaooiServiceLocator(Container);
+
             _logger?.LogInfo("Setting a service locator");
+            DisposableServiceLocator = new UaooiServiceLocator(Container);
             ServiceLocator.SetLocatorProvider(() => DisposableServiceLocator);
+
+            _logger?.LogInfo("Composing a common logger for all components");
+            Container.GetExportedValue<ILoggerContainer>().EnableLoggers();
+
             return this;
         }
 

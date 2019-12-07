@@ -4,18 +4,13 @@ using System;
 
 namespace M2MCommunication.Services
 {
-    public class MessageBusService : IDisposable
+    public class MessageBusService
     {
         public IMessageBus MessageBus { get; private set; }
 
         public MessageBusService()
         {
             MessageBus = ServiceLocator.Current.GetInstance<IMessageBus>();
-        }
-
-        public void Dispose()
-        {
-            MessageBus?.Dispose();
         }
     }
 }
