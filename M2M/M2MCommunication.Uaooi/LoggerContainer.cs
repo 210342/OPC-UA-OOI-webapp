@@ -32,15 +32,15 @@ namespace M2MCommunication.Uaooi
         public void EnableLoggers()
         {
             _eventSourceProviders
-                .Select(p =>
+                ?.Select(p =>
                 {
                     ObservableEventListener eventListener = new ObservableEventListener();
                     eventListener.EnableEvents(p.GetPartEventSource(), EventLevel.LogAlways, Keywords.All);
                     return eventListener as IObservable<EventEntry>;
                 })
-                .Merge()
-                .ObserveOn(Scheduler.Default)
-                .Subscribe(TraceExternalLogs);
+                ?.Merge()
+                ?.ObserveOn(Scheduler.Default)
+                ?.Subscribe(TraceExternalLogs);
         }
 
         #endregion

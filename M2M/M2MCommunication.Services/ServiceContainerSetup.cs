@@ -62,6 +62,7 @@ namespace M2MCommunication.Services
                     (DisposableServiceLocator as IDisposable)?.Dispose();
                 }
                 DisposableServiceLocator = null;
+                ServiceLocator.SetLocatorProvider(() => null);
 
                 disposedValue = true;
             }
