@@ -1,10 +1,12 @@
 ﻿@using System.Text
 @using InterfaceModel.Model
+@using M2MCommunication.Core
 
 <span class="drawable-property font-bordered" style="@Style">
     @PrintedString
 </span>
 
+@inject ILogger Logger
 @code
 {
     [Parameter]
@@ -18,7 +20,21 @@
             .Append("color: ").Append(DrawableProperty.Template?.HexColor ?? "black").Append(";")
             .ToString();
     private string PropertyString => DrawableProperty.Subscription.Value?.ToString();
-    private string PrintedString => PropertyString.Equals(string.Empty)
-        ? string.Empty
-        : PropertyString.Substring(0, Math.Min(PropertyString.Length, PropertyString.Contains("-") ? 6 : 5));
+    private string PrintedString
+    {
+        get
+        {
+            try
+            {
+                return PropertyString.Equals(string.Empty)
+                    ? string.Empty
+                    : PropertyString.Substring(0, Math.Min(PropertyString.Length, PropertyString.Contains("-") ? 6 : 5));
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                Logger?.LogError(ex, $"{ex.Message} - {PropertyString}");
+                return PropertyString;
+            }
+        }
+    }
 }
