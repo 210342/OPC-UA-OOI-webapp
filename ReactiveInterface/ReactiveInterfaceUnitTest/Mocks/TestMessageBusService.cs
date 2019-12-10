@@ -7,13 +7,13 @@ namespace MessageParsingUnitTest.Mocks
     class TestMessageBusService : IMessageBus
     {
 
-        public void Initialise(Action<object, ISubscription> onSubsctiptionAdded)
+        public void Initialise(IConsumerViewModel viewModel)
         {
         }
 
-        public Task InitialiseAsync(Action<object, ISubscription> onSubsctiptionAdded)
+        public Task InitialiseAsync(IConsumerViewModel viewModel)
         {
-            return Task.Run(() => Initialise(onSubsctiptionAdded));
+            return Task.Run(() => Initialise(viewModel));
         }
 
         public void RefreshConfiguration()

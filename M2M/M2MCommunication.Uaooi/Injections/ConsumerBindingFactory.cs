@@ -11,15 +11,13 @@ using UAOOI.Networking.SemanticData.DataRepository;
 namespace M2MCommunication.Uaooi.Injections
 {
     [Export(typeof(IBindingFactory))]
-    [Export(typeof(ISubscriptionFactory))]
     public class ConsumerBindingFactory : IBindingFactory, ISubscriptionFactory
     {
         private readonly ILogger _logger;
         private readonly IConfiguration _configuration;
+        private IConsumerViewModel _consumerViewModel;
 
         private readonly IDictionary<UaTypeMetadata, ISubscription> _subscriptions = new Dictionary<UaTypeMetadata, ISubscription>();
-
-        public event EventHandler<ISubscription> SubscriptionAdded;
 
         [ImportingConstructor]
         public ConsumerBindingFactory(ILogger logger, IConfiguration configuration)
@@ -27,6 +25,12 @@ namespace M2MCommunication.Uaooi.Injections
             _configuration = configuration 
                 ?? throw new ComponentNotInitialisedException($"{nameof(configuration)} injected into {nameof(ConsumerBindingFactory)} is null");
             _logger = logger;
+        }
+
+        public void Initialise(IConsumerViewModel consumerViewModel)
+        {
+            _consumerViewModel = consumerViewModel
+                ?? throw new ComponentNotInitialisedException($"{nameof(consumerViewModel)} injected into {nameof(ConsumerBindingFactory)} is null");
         }
 
         public IConsumerBinding GetConsumerBinding(string repositoryGroup, string processValueName, UATypeInfo fieldTypeInfo)
@@ -130,13 +134,14 @@ namespace M2MCommunication.Uaooi.Injections
                     subscription.Value = sender;
                 }
             };
-            _subscriptions[typeMetadata] = new Subscription(
-                typeInfo, 
-                typeMetadata, 
-                _configuration.GetAliasForRepositoryGroup(typeMetadata.RepositoryGroupName), 
+            ISubscription subscription = new Subscription(
+                typeInfo,
+                typeMetadata,
+                _configuration.GetAliasForRepositoryGroup(typeMetadata.RepositoryGroupName),
                 binding
             );
-            SubscriptionAdded?.Invoke(this, _subscriptions[typeMetadata]);
+            _subscriptions[typeMetadata] = subscription;
+            _consumerViewModel.AddSubscription(subscription);
             return binding;
         }
     }

@@ -26,7 +26,7 @@ namespace MessageParsing
             base.RefreshConfiguration();
         }
 
-        protected internal override void OnSubscriptionReceived(ISubscription subscription)
+        public override void AddSubscription(ISubscription subscription)
         {
             lock (this)
             {
@@ -41,6 +41,7 @@ namespace MessageParsing
                         ImageTemplateRepository.GetImageTemplateByAlias(subscription?.TypeAlias).Subscribe(subscription)
                     );
                 }
+                subscription.Enable(async (sender, args) => await OnSubscriptionUpdated());
             }
         }
     }

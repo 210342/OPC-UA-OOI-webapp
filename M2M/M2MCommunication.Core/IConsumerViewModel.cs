@@ -4,8 +4,8 @@ using System.Text;
 
 namespace M2MCommunication.Core
 {
-    public interface ISubscriptionFactory
+    public interface IConsumerViewModel
     {
-        public void Initialise(IConsumerViewModel consumerViewModel);
+        void AddSubscription(ISubscription subscription);
     }
 }

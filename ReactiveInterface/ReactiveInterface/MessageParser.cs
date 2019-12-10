@@ -8,9 +8,10 @@ using System.Threading.Tasks;
 
 namespace MessageParsing
 {
-    public abstract class MessageParser : IMessageParser
+    public abstract class MessageParser : IMessageParser, IConsumerViewModel
     {
         protected internal IMessageBus MessageBus { get; private set; }
+        protected internal Func<Task> OnSubscriptionUpdated { get; private set; }
 
         public virtual IEnumerable<PrintableProperty> PrintableProperties => new List<PrintableProperty>();
 
@@ -21,19 +22,15 @@ namespace MessageParsing
 
         public virtual Task InitialiseAsync(Func<Task> handler)
         {
-            return MessageBus.InitialiseAsync((obj, sub) =>
-                {
-                    sub.Enable((obj, args) => handler());
-                    OnSubscriptionReceived(sub);
-                }
-            );
+            OnSubscriptionUpdated = handler;
+            return MessageBus.InitialiseAsync(this);
         }
         public virtual void RefreshConfiguration()
         {
             MessageBus.RefreshConfiguration();
         }
 
-        protected internal abstract void OnSubscriptionReceived(ISubscription subscription);
+        public abstract void AddSubscription(ISubscription subscription);
 
         #region IDisposable Support
         /// <summary>

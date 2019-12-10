@@ -34,17 +34,11 @@ An interface for a subscription to implement.
 
 An interface for an implementation of configuration for either a consumer or producer
 
-#### Events
-
-| Delegate type | Name |  Description |
-|:-----------:|:----:|:-------------|
-| `EventHandler<ISubscription>` | SubscriptionAdded | Invoked after generating a binding and creating a subscription that wraps it |
-
 #### Methods
 
 | Return type | Name |  Description |
 |:-----------:|:----:|:-------------|
-| `void` | Initialise(`IConfiguration` configuration) | Initialises the instance by providing the configuration. It is used to map types onto their aliases for the reactive interface to use |
+| `void` | Initialise(`IConsumerViewModel` consumerViewModel) | Initialises the instance by providing the view model of the consumner's interface |
 
 ### *IConfiguration*
 

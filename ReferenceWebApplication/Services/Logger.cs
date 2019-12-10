@@ -33,7 +33,6 @@ namespace ReferenceWebApplication.Services
             _logger.LogError(CombineMessage(callerPath, callerName, message));
         }
 
-
         public void LogError(Exception exception, string message, string callerName = "", string callerPath = "")
         {
             _logger.LogError(exception, CombineMessage(callerPath, callerName, message));

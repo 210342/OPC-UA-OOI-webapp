@@ -37,6 +37,7 @@ namespace ReferenceWebApplication
             services.AddSingleton<ServiceContainerSetup>();
             services.AddTransient<MessageBusService>();
             services.AddTransient<IMessageParser, ImageMessageParser>();
+            services.AddTransient<IConsumerViewModel, ImageMessageParser>();
             services.AddTransient<IImageTemplateRepository, JsonFileImageTemplateRepository>();
         }
 

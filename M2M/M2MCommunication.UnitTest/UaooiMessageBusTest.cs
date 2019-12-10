@@ -12,10 +12,21 @@ namespace M2MCommunicationUnitTest
 {
     public class UaooiMessageBusTest
     {
+        internal static IConsumerViewModel ConsumerViewModel => new ConsumerVM();
+
+        private class ConsumerVM : IConsumerViewModel
+        {
+            public void AddSubscription(ISubscription subscription)
+            {
+            }
+        }
+
         [Fact]
         public void ConstructorTest()
         {
-            using (ServiceContainerSetup setup = new ServiceContainerSetup(ServiceContainerSetupTest.Settings, new ServiceContainerSetupTest.TestLogger()))
+            using (ServiceContainerSetup setup = new ServiceContainerSetup(
+                ServiceContainerSetupTest.Settings, 
+                new ServiceContainerSetupTest.TestLogger()))
             {
                 setup.Initialise();
                 IServiceLocator serviceLocator = setup
@@ -49,7 +60,9 @@ namespace M2MCommunicationUnitTest
         [Fact]
         public void InitialiseTest()
         {
-            using (ServiceContainerSetup setup = new ServiceContainerSetup(ServiceContainerSetupTest.Settings, new ServiceContainerSetupTest.TestLogger()))
+            using (ServiceContainerSetup setup = new ServiceContainerSetup(
+                ServiceContainerSetupTest.Settings, 
+                new ServiceContainerSetupTest.TestLogger()))
             {
                 setup.Initialise();
                 IServiceLocator serviceLocator = setup
@@ -64,7 +77,7 @@ namespace M2MCommunicationUnitTest
                     serviceLocator.GetInstance<ILogger>()
                 ))
                 {
-                    bus.Initialise((_, __) => { });
+                    bus.Initialise(ConsumerViewModel);
                     Assert.NotNull(bus.ConfigurationFactory);
                     Assert.NotNull(bus.EncodingFactory);
                     Assert.NotNull(bus.BindingFactory);
