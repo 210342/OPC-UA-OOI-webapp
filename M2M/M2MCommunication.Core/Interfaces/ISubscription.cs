@@ -1,6 +1,7 @@
-﻿using System.ComponentModel;
+﻿using M2MCommunication.Core.CommonTypes;
+using System.ComponentModel;
 
-namespace M2MCommunication.Core
+namespace M2MCommunication.Core.Interfaces
 {
     public interface ISubscription
     {

@@ -4,7 +4,7 @@ using System.IO;
 
 namespace ReferenceWebApplication.Services
 {
-    public class Logger : M2MCommunication.Core.ILogger
+    public class Logger : M2MCommunication.Core.Interfaces.ILogger
     {
         private readonly ILogger<Logger> _logger;
 

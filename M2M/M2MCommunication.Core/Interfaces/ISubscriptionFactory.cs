@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace M2MCommunication.Core
+﻿namespace M2MCommunication.Core.Interfaces
 {
     public interface ISubscriptionFactory
     {

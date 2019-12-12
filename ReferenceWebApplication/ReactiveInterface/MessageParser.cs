@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MessageParsing
+namespace ReferenceWebApplication.ReactiveInterface
 {
     public abstract class MessageParser : IMessageParser, IConsumerViewModel
     {
@@ -17,7 +17,7 @@ namespace MessageParsing
 
         public MessageParser(MessageBusService messageBus)
         {
-            MessageBus = messageBus.MessageBus;
+            MessageBus = messageBus?.MessageBus;
         }
 
         public virtual Task InitialiseAsync(Func<Task> handler)
@@ -60,6 +60,7 @@ namespace MessageParsing
         {
             // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
             Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
         #endregion

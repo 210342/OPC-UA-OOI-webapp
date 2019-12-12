@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace MessageParsingUnitTest.Mocks
+namespace ReactiveInterfaceUnitTest.Mocks
 {
     internal class TestServiceLocator : ServiceLocatorImplBase
     {

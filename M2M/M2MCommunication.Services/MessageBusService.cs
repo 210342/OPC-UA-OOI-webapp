@@ -1,6 +1,5 @@
 ﻿using CommonServiceLocator;
-using M2MCommunication.Core;
-using System;
+using M2MCommunication.Core.Interfaces;
 
 namespace M2MCommunication.Services
 {

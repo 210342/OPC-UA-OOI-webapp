@@ -1,8 +1,7 @@
-﻿using M2MCommunication.Core;
-using System;
+﻿using M2MCommunication.Core.Interfaces;
 using System.Threading.Tasks;
 
-namespace MessageParsingUnitTest.Mocks
+namespace ReactiveInterfaceUnitTest.Mocks
 {
     class TestMessageBusService : IMessageBus
     {

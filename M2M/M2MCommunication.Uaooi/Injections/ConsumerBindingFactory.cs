@@ -1,5 +1,6 @@
-﻿using M2MCommunication.Core;
+﻿using M2MCommunication.Core.CommonTypes;
 using M2MCommunication.Core.Exceptions;
+using M2MCommunication.Core.Interfaces;
 using M2MCommunication.Uaooi.Extensions;
 using System;
 using System.Collections.Generic;
@@ -22,7 +23,7 @@ namespace M2MCommunication.Uaooi.Injections
         [ImportingConstructor]
         public ConsumerBindingFactory(ILogger logger, IConfiguration configuration)
         {
-            _configuration = configuration 
+            _configuration = configuration
                 ?? throw new ComponentNotInitialisedException($"{nameof(configuration)} injected into {nameof(ConsumerBindingFactory)} is null");
             _logger = logger;
         }

@@ -1,7 +1,5 @@
 @page "/hmi"
-@using M2MCommunication.Core.Exceptions
-@using MessageParsing
-@using Microsoft.Extensions.Localization
+@using ReferenceWebApplication.ReactiveInterface
 @using Microsoft.Extensions.Logging
 
 <div class="container-fluid">
@@ -51,7 +49,7 @@
         }
         catch (Exception ex)
         {
-            Logger.LogError(ex, ex.Message);
+            Logger?.LogError(ex, ex.Message);
             ExceptionMessage = ex.Message;
         }
     }
@@ -69,7 +67,7 @@
     {
         try
         {
-            Parser.RefreshConfiguration();
+            Parser?.RefreshConfiguration();
         }
         catch (Exception ex)
         {

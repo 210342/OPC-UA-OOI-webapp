@@ -1,5 +1,5 @@
 ﻿using CommonServiceLocator;
-using M2MCommunication.Core;
+using M2MCommunication.Core.Interfaces;
 using M2MCommunication.Services;
 using M2MCommunication.Uaooi.Injections;
 using System.Reflection;
@@ -25,7 +25,7 @@ namespace M2MCommunicationUnitTest
         public void ConstructorTest()
         {
             using (ServiceContainerSetup setup = new ServiceContainerSetup(
-                ServiceContainerSetupTest.Settings, 
+                ServiceContainerSetupTest.Settings,
                 new ServiceContainerSetupTest.TestLogger()))
             {
                 setup.Initialise();
@@ -61,7 +61,7 @@ namespace M2MCommunicationUnitTest
         public void InitialiseTest()
         {
             using (ServiceContainerSetup setup = new ServiceContainerSetup(
-                ServiceContainerSetupTest.Settings, 
+                ServiceContainerSetupTest.Settings,
                 new ServiceContainerSetupTest.TestLogger()))
             {
                 setup.Initialise();

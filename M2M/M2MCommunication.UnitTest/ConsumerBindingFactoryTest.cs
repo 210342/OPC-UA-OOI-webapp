@@ -1,5 +1,6 @@
-﻿using M2MCommunication.Core;
+﻿using M2MCommunication.Core.CommonTypes;
 using M2MCommunication.Core.Exceptions;
+using M2MCommunication.Core.Interfaces;
 using M2MCommunication.Uaooi.Injections;
 using System;
 using UAOOI.Configuration.Networking.Serialization;
@@ -12,6 +13,14 @@ namespace M2MCommunicationUnitTest
     {
         private static readonly UaTypeMetadata _typeMetadata = new UaTypeMetadata("repository group", "type name");
         private static readonly IConfiguration _configuration = new Configuration(null, string.Empty);
+        private static readonly IConsumerViewModel _consumerViewModel = new TestConsumerViewModel();
+
+        private class TestConsumerViewModel : IConsumerViewModel
+        {
+            public void AddSubscription(ISubscription subscription)
+            {
+            }
+        }
 
         [Fact]
         public void ConstructorTest()
@@ -42,6 +51,7 @@ namespace M2MCommunicationUnitTest
         public void GetConsumerBindingTest()
         {
             ConsumerBindingFactory factory = new ConsumerBindingFactory(null, _configuration);
+            factory.Initialise(_consumerViewModel);
             UATypeInfo typeInfo = new UATypeInfo(BuiltInType.Byte, -1, new int[] { });
             IConsumerBinding binding = factory.GetConsumerBinding(_typeMetadata.RepositoryGroupName, _typeMetadata.TypeName, typeInfo);
             Assert.NotNull(binding);

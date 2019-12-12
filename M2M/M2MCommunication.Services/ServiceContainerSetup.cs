@@ -1,5 +1,6 @@
 ﻿using CommonServiceLocator;
-using M2MCommunication.Core;
+using M2MCommunication.Core.CommonTypes;
+using M2MCommunication.Core.Interfaces;
 using System;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
@@ -33,9 +34,9 @@ namespace M2MCommunication.Services
 
             _logger?.LogInfo("Composing configuration file name and logger instance");
             Container.ComposeExportedValue(UaContractNames.ConfigurationFileNameContract, Path.Combine(
-                Directory.GetCurrentDirectory(), 
-                _uaLibrarySettings.ResourcesDirectory, 
-                _uaLibrarySettings.LibraryDirectory, 
+                Directory.GetCurrentDirectory(),
+                _uaLibrarySettings.ResourcesDirectory,
+                _uaLibrarySettings.LibraryDirectory,
                 _uaLibrarySettings.ConsumerConfigurationFile)
             );
             Container.ComposeExportedValue(_logger);

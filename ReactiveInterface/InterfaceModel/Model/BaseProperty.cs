@@ -1,4 +1,4 @@
-﻿using M2MCommunication.Core;
+﻿using M2MCommunication.Core.Interfaces;
 
 namespace InterfaceModel.Model
 {

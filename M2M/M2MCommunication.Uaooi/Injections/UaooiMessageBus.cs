@@ -1,5 +1,5 @@
-﻿using M2MCommunication.Core;
-using M2MCommunication.Core.Exceptions;
+﻿using M2MCommunication.Core.Exceptions;
+using M2MCommunication.Core.Interfaces;
 using System.ComponentModel.Composition;
 using System.Threading.Tasks;
 using UAOOI.Configuration.Networking;

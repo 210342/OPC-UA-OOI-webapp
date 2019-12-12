@@ -1,4 +1,4 @@
-﻿@using MessageParsing
+﻿@using ReferenceWebApplication.ReactiveInterface
 @using InterfaceModel.Model
 
 @if (ImageParser.ImageTemplates != null)
@@ -27,7 +27,7 @@
 
 @code
 {
-    private MessageParsing.ImageMessageParser ImageParser => Parser as MessageParsing.ImageMessageParser;
+    private ReactiveInterface.ImageMessageParser ImageParser => Parser as ReactiveInterface.ImageMessageParser;
 
     [Parameter]
     public IMessageParser Parser { get; set; }

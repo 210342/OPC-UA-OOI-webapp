@@ -1,4 +1,4 @@
-﻿using M2MCommunication.Core;
+﻿using M2MCommunication.Core.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 

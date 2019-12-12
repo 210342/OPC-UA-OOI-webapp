@@ -1,4 +1,5 @@
-﻿using M2MCommunication.Core;
+﻿using M2MCommunication.Core.CommonTypes;
+using M2MCommunication.Core.Interfaces;
 using System;
 using System.ComponentModel;
 using UAOOI.Configuration.Networking.Serialization;

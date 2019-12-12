@@ -1,7 +1,8 @@
-﻿using M2MCommunication.Core;
+﻿using M2MCommunication.Core.CommonTypes;
+using M2MCommunication.Core.Interfaces;
 using System.ComponentModel;
 
-namespace MessageParsingUnitTest.Mocks
+namespace ReactiveInterfaceUnitTest.Mocks
 {
     internal class TestSubscription : ISubscription
     {

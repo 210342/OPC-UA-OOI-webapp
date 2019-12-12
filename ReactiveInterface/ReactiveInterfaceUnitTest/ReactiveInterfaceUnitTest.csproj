@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ReactiveInterface\ReactiveInterface.csproj" />
+    <ProjectReference Include="..\..\ReferenceWebApplication\ReferenceWebApplication.csproj" />
   </ItemGroup>
 
 </Project>

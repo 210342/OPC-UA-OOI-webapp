@@ -1,6 +1,6 @@
 # M2M Communication - Core
 
-The goal of this project is to provide interfaces used in the whole application as weel as some common types.
+The goal of this project is to provide interfaces used in the whole application as well as some common types.
 
 ## Interfaces
 

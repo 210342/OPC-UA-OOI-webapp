@@ -1,10 +1,10 @@
-﻿using MessageParsing;
-using MessageParsingUnitTest.Mocks;
+﻿using ReactiveInterfaceUnitTest.Mocks;
+using ReferenceWebApplication.ReactiveInterface;
 using System.Reflection;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace MessageParsingUnitTest
+namespace ReactiveInterfaceUnitTest
 {
     public class ImageMessageParserTest : MessageParserTest
     {
