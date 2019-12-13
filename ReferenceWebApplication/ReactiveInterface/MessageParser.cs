@@ -13,7 +13,7 @@ namespace ReferenceWebApplication.ReactiveInterface
         protected internal IMessageBus MessageBus { get; private set; }
         protected internal Func<Task> OnSubscriptionUpdated { get; private set; }
 
-        public virtual IEnumerable<PrintableProperty> PrintableProperties => new List<PrintableProperty>();
+        public virtual IEnumerable<PrintableProperty> PrintableProperties { get; } = new List<PrintableProperty>();
 
         public MessageParser(MessageBusService messageBus)
         {
