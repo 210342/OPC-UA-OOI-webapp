@@ -1,9 +1,8 @@
 ﻿using InterfaceModel.Model;
 using InterfaceModel.Repositories;
-using System;
 using System.Threading.Tasks;
 
-namespace MessageParsingUnitTest.Mocks
+namespace ReactiveInterfaceUnitTest.Mocks
 {
     class TestImageTemplateRepository : IImageTemplateRepository
     {

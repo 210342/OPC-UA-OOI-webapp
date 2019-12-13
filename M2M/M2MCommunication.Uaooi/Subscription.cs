@@ -1,4 +1,5 @@
-﻿using M2MCommunication.Core;
+﻿using M2MCommunication.Core.CommonTypes;
+using M2MCommunication.Core.Interfaces;
 using System;
 using System.ComponentModel;
 using UAOOI.Configuration.Networking.Serialization;
@@ -41,6 +42,11 @@ namespace M2MCommunication.Uaooi
         public void Disable()
         {
             ValueUpdated = null;
+        }
+
+        public void InvokeValueUpdated()
+        {
+            ValueUpdated?.Invoke(this, new PropertyChangedEventArgs(nameof(Value)));
         }
 
         public override string ToString()

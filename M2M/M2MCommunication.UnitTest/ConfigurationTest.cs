@@ -29,7 +29,7 @@ namespace M2MCommunicationUnitTest
         public void ConstructorWrongFileNameTest()
         {
             Configuration configuration = new Configuration(null, _configurationFileName.Replace("xml", "pdf"));
-            Assert.Throws<ConfigurationFileNotFoundException>(() => 
+            Assert.Throws<ConfigurationFileNotFoundException>(() =>
             configuration.GetConfiguration());
         }
 

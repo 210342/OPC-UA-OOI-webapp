@@ -1,5 +1,5 @@
 ﻿using CommonServiceLocator;
-using M2MCommunication.Core;
+using M2MCommunication.Core.Interfaces;
 using Microsoft.Practices.EnterpriseLibrary.SemanticLogging;
 using System;
 using System.Collections.Generic;

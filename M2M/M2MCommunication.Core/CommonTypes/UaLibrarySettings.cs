@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace M2MCommunication.Core
+namespace M2MCommunication.Core.CommonTypes
 {
     public class UaLibrarySettings
     {

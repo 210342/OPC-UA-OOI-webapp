@@ -1,8 +1,6 @@
-﻿using M2MCommunication.Core;
-using M2MCommunication.Core.Exceptions;
-using System;
+﻿using M2MCommunication.Core.Exceptions;
+using M2MCommunication.Core.Interfaces;
 using System.ComponentModel.Composition;
-using System.IO;
 using System.Threading.Tasks;
 using UAOOI.Configuration.Networking;
 using UAOOI.Networking.Core;
@@ -37,37 +35,28 @@ namespace M2MCommunication.Uaooi.Injections
         /// <summary>
         /// Starts this instance - Initializes the data set infrastructure, enables all associations and starts pumping the data;
         /// </summary>
-        /// <param name="onSubsctiptionAdded">Callback invoked each time a subscription is created</param>
-        /// <exception cref="ComponentNotInitialisedException"></exception>
-        /// <exception cref="ConfigurationFileNotFoundException"></exception>
-        /// <exception cref="UnsupportedTypeException"></exception>
-        /// <exception cref="ValueRankOutOfRangeException"></exception>
-        public void Initialise(Action<object, ISubscription> onSubsctiptionAdded)
+        /// <param name="consumerViewModel">View model which should receive subscriptions and then handle them</param>
+        public void Initialise(IConsumerViewModel consumerViewModel)
         {
-            _logger?.LogInfo("Initialising subscription logic");
-            (BindingFactory as ISubscriptionFactory).SubscriptionAdded += new EventHandler<ISubscription>((sender, subscription) =>
-            {
-                _logger?.LogInfo($"Adding a subscription for: {subscription.UaTypeMetadata.ToString()}");
-                onSubsctiptionAdded(sender, subscription);
-            });
+            _logger?.LogInfo("Injecting consumer's view model for ISubscriptionFactory");
+            (BindingFactory as ISubscriptionFactory)?.Initialise(consumerViewModel);
 
             _logger?.LogInfo("Starting communication");
             Start();
         }
 
         /// <summary>
-        /// Starts this instance - Initializes the data set infrastructure, enables all associations and starts pumping the data;
+        /// Starts this instance in asynchronous mode - Initializes the data set infrastructure, enables all associations and starts pumping the data;
         /// </summary>
-        /// <param name="onSubsctiptionAdded">Callback invoked each time a subscription is created</param>
-        /// <exception cref="ComponentNotInitialisedException"></exception>
-        /// <exception cref="ConfigurationFileNotFoundException"></exception>
-        /// <exception cref="UnsupportedTypeException"></exception>
-        /// <exception cref="ValueRankOutOfRangeException"></exception>
-        public async Task InitialiseAsync(Action<object, ISubscription> onSubsctiptionAdded)
+        /// <param name="consumerViewModel">View model which should receive subscriptions and then handle them</param>
+        public async Task InitialiseAsync(IConsumerViewModel consumerViewModel)
         {
-            await Task.Run(() => Initialise(onSubsctiptionAdded));
+            await Task.Run(() => Initialise(consumerViewModel));
         }
 
+        /// <summary>
+        /// Restarts the instance (rereads configuration) 
+        /// </summary>
         public void RefreshConfiguration()
         {
             _logger?.LogInfo("Reloading consumer configuration and restarting communication");

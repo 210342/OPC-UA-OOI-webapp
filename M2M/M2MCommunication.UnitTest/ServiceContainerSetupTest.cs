@@ -1,12 +1,11 @@
 ﻿using CommonServiceLocator;
-using M2MCommunication.Core;
+using M2MCommunication.Core.CommonTypes;
+using M2MCommunication.Core.Interfaces;
 using M2MCommunication.Services;
 using System;
-using System.ComponentModel.Composition.Hosting;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using Xunit;
 
 namespace M2MCommunicationUnitTest

@@ -1,8 +1,8 @@
 ﻿using InterfaceModel.Model;
-using MessageParsingUnitTest.Mocks;
+using ReactiveInterfaceUnitTest.Mocks;
 using Xunit;
 
-namespace MessageParsingUnitTest
+namespace ReactiveInterfaceUnitTest
 {
     public class PropertyTest
     {

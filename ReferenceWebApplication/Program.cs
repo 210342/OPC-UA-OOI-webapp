@@ -26,7 +26,7 @@ namespace ReferenceWebApplication
                     .ReadFrom.Configuration(hostingContext.Configuration)
                     .Enrich.FromLogContext()
                     .WriteTo.File(
-                        @$"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}/Log/Serilog/OOI {DateTime.Now.ToShortDateString()}.log", 
+                        @$"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}/Log/Serilog/OOI {DateTime.Now.ToShortDateString()}.log",
                         encoding: Encoding.UTF8)
                 );
     }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 
-namespace M2MCommunication.Core
+namespace M2MCommunication.Core.Interfaces
 {
     public interface ILogger
     {

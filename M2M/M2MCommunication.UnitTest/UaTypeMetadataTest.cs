@@ -1,4 +1,4 @@
-﻿using M2MCommunication.Core;
+﻿using M2MCommunication.Core.CommonTypes;
 using System;
 using System.Collections.Generic;
 using Xunit;

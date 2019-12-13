@@ -4,7 +4,7 @@ using System.IO;
 
 namespace ReferenceWebApplication.Services
 {
-    public class Logger : M2MCommunication.Core.ILogger
+    public class Logger : M2MCommunication.Core.Interfaces.ILogger
     {
         private readonly ILogger<Logger> _logger;
 
@@ -32,7 +32,6 @@ namespace ReferenceWebApplication.Services
         {
             _logger.LogError(CombineMessage(callerPath, callerName, message));
         }
-
 
         public void LogError(Exception exception, string message, string callerName = "", string callerPath = "")
         {

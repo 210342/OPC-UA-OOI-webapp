@@ -7,23 +7,6 @@ The goal of this project is to provide an additional layer of abstraction, so th
 | Name | Description |
 |:----:|:-----|
 | `MessageBusService` | A wrapper for an injected `IMessageBus` implementation |
-| `SubscriptionFactoryService` | A wrapper for an injected `ISubscriptionFactory` implementation |
-
-### *SubscriptionFactoryService*
-
-A wrapper for an injected `ISubscriptionFactory` implementation
-
-#### Constructors
-
-| Name | Description |
-|:----:|:------------|
-|SubscriptionFactoryService()| Default constructor, tries to inject an instance of `ISubscriptionFactory` implementation into its property |
-
-#### Properties
-
-| Type | Name | Accessors | Description |
-|:----:|:----:|:---------:|:------------|
-| `ISubscriptionFactory` |**SubscriptionFactory**| get; | Injected `ISubscriptionFactory` service |
 
 ### *MessageBusService*
 
@@ -49,7 +32,7 @@ A wrapper for an injected `IMessageBus` implementation
 |:----:|:----:|:------------|
 | `void` | Dispose() | Disposes the `MessageBus` property |
 
-## Helper classes
+## MEF helper classes
 
 | Name | Description |
 |:----:|:-----|

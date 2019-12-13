@@ -1,15 +1,64 @@
 # M2M Communication - Core
 
-The goal of this project is to provide interfaces used in the whole application as weel as some common types.
+The goal of this project is to provide interfaces used in the whole application as well as some common types.
 
 ## Interfaces
 
 | Name | Goal |
 |:----:|:-----|
-| `ISubscription` | Interface for a subscription to implement. Contains neccessary properties and methods |
 | `IConfiguration` | Interface for an implementation of configuration for either a consumer or producer |
-| `ISubscriptionFactory` | Interface for an object which is to be used for subscribing to the data types |
+| `IConsumerViewModel` | Interface for an implementation of a view model which should handle any new subscriptions |
+| `ILogger` | Interface for a logger to implement |
+| `ILoggerContainer` | An interface for a type that aggregates all external loggers and merges them into a single sink |
 | `IMessageBus` | Interface for an object representing a bus that will notify subscribers about changes in the data they subscribed to |
+| `ISubscription` | Interface for a subscription to implement. Contains neccessary properties and methods |
+| `ISubscriptionFactory` | Interface for an object which is to be used for subscribing to the data types |
+
+### *IConfiguration*
+
+An interface for an implementation of configuration for either a consumer or producer
+
+#### Methods
+
+| Return type | Name |  Description |
+|:-----------:|:----:|:-------------|
+| `string` | GetAliasForRepositoryGroup(`string` repositoryGroupName) | Provides an alias for a |
+
+### *IConsumerViewModel*
+
+Interface for an implementation of a view model which should handle any new subscriptions
+
+#### Methods
+
+| Return type | Name |  Description |
+|:-----------:|:----:|:-------------|
+| `void` | AddSubscription(`ISubscription` subscription) | Handles a new subscription |
+
+### *IMessageBus*
+
+An interface for an object representing a bus that will notify subscribers about changes in the data they subscribed to
+
+#### Methods
+
+| Return type | Name |  Description |
+|:-----------:|:----:|:-------------|
+| `void` | Initialise(`IConsumerViewModel` consumerViewModel)| Injects specified view model and start communication |
+| `Task` | InitialiseAsync(`IConsumerViewModel` consumerViewModel)| Injects specified view model and start communication asynchronously |
+| `void` | RefreshConfiguration() | Reads the configuration again and restarts the process of reading data |
+
+### *ILogger*
+
+Interface for a logger to implement
+
+#### Methods
+
+| Return type | Name |  Description |
+|:-----------:|:----:|:-------------|
+| `void` | LogInfo(`string` message, `string` callerName, `string` callerPath)| Logs specified message with `information` level |
+| `void` | LogWarning(`string` message, `string` callerName, `string` callerPath) | Logs specified message with `warning` level |
+| `void` | LogWarning(`Exception` exception, `string` message, `string` callerName, `string` callerPath) | Logs specified message and exception message with `warning` level |
+| `void` | LogError(`string` message, `string` callerName, `string` callerPath) | Logs specified message with `error` level |
+| `void` | LogError(`Exception` exception, `string` message, `string` callerName, `string` callerPath) | Logs specified message and exception message with `error` level |
 
 ### *ISubscription*
 
@@ -29,44 +78,17 @@ An interface for a subscription to implement.
 |:-----------:|:----:|:-------------|
 | `void` | Enable(`PropertyChangedEventHandler` handler) | Used to associate an event handler with this subscription |
 | `void` | Disable() | Used to remove all event handlers from the subscription |
+| `void` | InvokeValueUpdated() | Used to invoke an internal ValueUpdated event manually |
 
 ### *ISubscriptionFactory*
 
 An interface for an implementation of configuration for either a consumer or producer
 
-#### Events
-
-| Delegate type | Name |  Description |
-|:-----------:|:----:|:-------------|
-| `EventHandler<ISubscription>` | SubscriptionAdded | Invoked after generating a binding and creating a subscription that wraps it |
-
 #### Methods
 
 | Return type | Name |  Description |
 |:-----------:|:----:|:-------------|
-| `void` | Initialise(`IConfiguration` configuration) | Initialises the instance by providing the configuration. It is used to map types onto their aliases for the reactive interface to use |
-
-### *IConfiguration*
-
-An interface for an implementation of configuration for either a consumer or producer
-
-#### Methods
-
-| Return type | Name |  Description |
-|:-----------:|:----:|:-------------|
-| `IDictionary<string, string>` | GetRepositoryGroupAliases() | Provides mappings of the repository group to its alias |
-
-### *IMessageBus*
-
-An interface for an object representing a bus that will notify subscribers about changes in the data they subscribed to
-
-#### Methods
-
-| Return type | Name |  Description |
-|:-----------:|:----:|:-------------|
-| `void` | Initialise(`UaLibrarySettings` settings)| Initialises the message bus with the specified settings |
-| `Task` | InitialiseAsync(`UaLibrarySettings` settings)| Initialises the message bus with the specified settings asynchronously |
-| `void` | RefreshConfiguration() | Reads the configuration again and restarts the process of reading data |
+| `void` | Initialise(`IConsumerViewModel` consumerViewModel) | Initialises the instance by providing the view model of the consumner's interface |
 
 ## Common types
 
@@ -101,8 +123,18 @@ A POCO object representing the type of a UA object
 
 | Type | Name | Accessors | Description |
 |:----:|:----:|:---------:|:------------|
-|`string`|TypeName| get; | Name of the type; required |
-|`string`|RepositoryGroupName| get; | Name of the repository the type belongs to |
+|`string`| TypeName | get; | Name of the type; required |
+|`string`| RepositoryGroupName | get; | Name of the repository the type belongs to |
+
+### *UaContractNames*
+
+A class containing const string values for MEF container to use as contract names
+
+#### Fields
+
+| Type | Name | Description |
+|:----:|:----:|:------------|
+|`string`| ConfigurationFileNameContract | Contract name for a configuration filename |
 
 ## Exceptions
 

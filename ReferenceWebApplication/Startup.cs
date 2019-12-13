@@ -1,13 +1,14 @@
 using InterfaceModel.Configuration;
 using InterfaceModel.Repositories;
-using M2MCommunication.Core;
+using M2MCommunication.Core.CommonTypes;
+using M2MCommunication.Core.Interfaces;
 using M2MCommunication.Services;
-using MessageParsing;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
+using ReferenceWebApplication.ReactiveInterface;
 using ReferenceWebApplication.Services;
 
 namespace ReferenceWebApplication
@@ -37,6 +38,7 @@ namespace ReferenceWebApplication
             services.AddSingleton<ServiceContainerSetup>();
             services.AddTransient<MessageBusService>();
             services.AddTransient<IMessageParser, ImageMessageParser>();
+            services.AddTransient<IConsumerViewModel, ImageMessageParser>();
             services.AddTransient<IImageTemplateRepository, JsonFileImageTemplateRepository>();
         }
 

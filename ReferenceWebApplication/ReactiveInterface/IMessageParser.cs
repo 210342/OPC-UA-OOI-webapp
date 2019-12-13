@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace MessageParsing
+namespace ReferenceWebApplication.ReactiveInterface
 {
     public interface IMessageParser : IDisposable
     {

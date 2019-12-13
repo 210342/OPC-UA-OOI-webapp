@@ -13,10 +13,11 @@
     <RepositoryUrl>https://github.com/210342/OPC-UA-OOI-webapp</RepositoryUrl>
     <RepositoryType>Git</RepositoryType>
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+    <AssemblyName>Object Oriented Internet</AssemblyName>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <PlatformTarget>x64</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <Optimize>true</Optimize>
     <DocumentationFile></DocumentationFile>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
@@ -48,7 +49,6 @@
     <ProjectReference Include="..\M2M\M2MCommunication.Core\M2MCommunication.Core.csproj" />
     <ProjectReference Include="..\M2M\M2MCommunication.Services\M2MCommunication.Services.csproj" />
     <ProjectReference Include="..\ReactiveInterface\InterfaceModel\InterfaceModel.csproj" />
-    <ProjectReference Include="..\ReactiveInterface\ReactiveInterface\ReactiveInterface.csproj" />
   </ItemGroup>
 
 </Project>

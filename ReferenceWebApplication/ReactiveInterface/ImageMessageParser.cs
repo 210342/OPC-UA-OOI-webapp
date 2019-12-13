@@ -1,12 +1,12 @@
 ﻿using InterfaceModel.Model;
 using InterfaceModel.Repositories;
-using M2MCommunication.Core;
+using M2MCommunication.Core.Interfaces;
 using M2MCommunication.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace MessageParsing
+namespace ReferenceWebApplication.ReactiveInterface
 {
     public class ImageMessageParser : MessageParser
     {
@@ -26,8 +26,13 @@ namespace MessageParsing
             base.RefreshConfiguration();
         }
 
-        protected internal override void OnSubscriptionReceived(ISubscription subscription)
+        public override void AddSubscription(ISubscription subscription)
         {
+            if (subscription is null)
+            {
+                throw new ArgumentNullException(nameof(subscription));
+            }
+
             lock (this)
             {
                 if (ImageTemplates.TryGetValue(subscription.UaTypeMetadata.RepositoryGroupName, out ImageTemplate template))
@@ -41,6 +46,7 @@ namespace MessageParsing
                         ImageTemplateRepository.GetImageTemplateByAlias(subscription?.TypeAlias).Subscribe(subscription)
                     );
                 }
+                subscription.Enable(async (sender, args) => await OnSubscriptionUpdated().ConfigureAwait(false));
             }
         }
     }

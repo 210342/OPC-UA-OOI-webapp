@@ -1,4 +1,4 @@
-﻿using M2MCommunication.Core;
+﻿using M2MCommunication.Core.CommonTypes;
 using M2MCommunication.Uaooi;
 using System;
 using System.Reflection;

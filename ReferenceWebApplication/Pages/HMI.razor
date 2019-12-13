@@ -1,7 +1,5 @@
 @page "/hmi"
-@using M2MCommunication.Core.Exceptions
-@using MessageParsing
-@using Microsoft.Extensions.Localization
+@using ReferenceWebApplication.ReactiveInterface
 @using Microsoft.Extensions.Logging
 
 <div class="container-fluid">
@@ -35,7 +33,6 @@
 @implements IDisposable
 @inject IMessageParser Parser
 @inject ILogger<HMI> Logger
-@inject IStringLocalizer<HMI> Localizer
 @code
 {
     private string PackagesReceivedStyle => PackagesReceived > 2048 ? "badge-danger" : "badge-primary";
@@ -47,31 +44,12 @@
     {
         try
         {
+            base.OnInitialized();
             await Parser?.InitialiseAsync(OnPropertyChangedAsync);
-        }
-        catch (ConfigurationFileNotFoundException ex)
-        {
-            Logger.LogError(ex, ex.Message);
-            ExceptionMessage = Localizer.GetString("ConfigurationFileNotFound");
-        }
-        catch (UnsupportedTypeException ex)
-        {
-            Logger.LogError(ex, ex.Message);
-            ExceptionMessage = Localizer.GetString("UnsupportedDataType");
-        }
-        catch (ValueRankOutOfRangeException ex)
-        {
-            Logger.LogError(ex, ex.Message);
-            ExceptionMessage = Localizer.GetString("UnsupportedValueRank");
-        }
-        catch (ComponentNotInitialisedException ex)
-        {
-            Logger.LogError(ex, ex.Message);
-            ExceptionMessage = $"{Localizer.GetString("ComponentNotInitialisedException")} {ex.Message}";
         }
         catch (Exception ex)
         {
-            Logger.LogError(ex, ex.Message);
+            Logger?.LogError(ex, ex.Message);
             ExceptionMessage = ex.Message;
         }
     }
@@ -87,7 +65,15 @@
 
     private void RefreshConfiguration()
     {
-        Parser.RefreshConfiguration();
+        try
+        {
+            Parser?.RefreshConfiguration();
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, ex.Message);
+            ExceptionMessage = ex.Message;
+        }
     }
 
     public void Dispose()

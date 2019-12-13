@@ -1,5 +1,6 @@
-﻿using M2MCommunication.Core;
+﻿using M2MCommunication.Core.CommonTypes;
 using M2MCommunication.Core.Exceptions;
+using M2MCommunication.Core.Interfaces;
 using M2MCommunication.Uaooi.Extensions;
 using System;
 using System.Collections.Generic;
@@ -11,22 +12,26 @@ using UAOOI.Networking.SemanticData.DataRepository;
 namespace M2MCommunication.Uaooi.Injections
 {
     [Export(typeof(IBindingFactory))]
-    [Export(typeof(ISubscriptionFactory))]
     public class ConsumerBindingFactory : IBindingFactory, ISubscriptionFactory
     {
         private readonly ILogger _logger;
         private readonly IConfiguration _configuration;
+        private IConsumerViewModel _consumerViewModel;
 
         private readonly IDictionary<UaTypeMetadata, ISubscription> _subscriptions = new Dictionary<UaTypeMetadata, ISubscription>();
-
-        public event EventHandler<ISubscription> SubscriptionAdded;
 
         [ImportingConstructor]
         public ConsumerBindingFactory(ILogger logger, IConfiguration configuration)
         {
-            _configuration = configuration 
+            _configuration = configuration
                 ?? throw new ComponentNotInitialisedException($"{nameof(configuration)} injected into {nameof(ConsumerBindingFactory)} is null");
             _logger = logger;
+        }
+
+        public void Initialise(IConsumerViewModel consumerViewModel)
+        {
+            _consumerViewModel = consumerViewModel
+                ?? throw new ComponentNotInitialisedException($"{nameof(consumerViewModel)} injected into {nameof(ConsumerBindingFactory)} is null");
         }
 
         public IConsumerBinding GetConsumerBinding(string repositoryGroup, string processValueName, UATypeInfo fieldTypeInfo)
@@ -127,16 +132,17 @@ namespace M2MCommunication.Uaooi.Injections
                 if (_subscriptions.TryGetValue(typeMetadata, out ISubscription subscription))
                 {
                     _logger?.LogInfo($"Value updated to {sender.ToString()} for subscription {subscription.UaTypeMetadata.ToString()}");
-                    subscription.Value = sender;
+                    subscription.InvokeValueUpdated();
                 }
             };
-            _subscriptions[typeMetadata] = new Subscription(
-                typeInfo, 
-                typeMetadata, 
-                _configuration.GetAliasForRepositoryGroup(typeMetadata.RepositoryGroupName), 
+            ISubscription subscription = new Subscription(
+                typeInfo,
+                typeMetadata,
+                _configuration.GetAliasForRepositoryGroup(typeMetadata.RepositoryGroupName),
                 binding
             );
-            SubscriptionAdded?.Invoke(this, _subscriptions[typeMetadata]);
+            _subscriptions[typeMetadata] = subscription;
+            _consumerViewModel.AddSubscription(subscription);
             return binding;
         }
     }

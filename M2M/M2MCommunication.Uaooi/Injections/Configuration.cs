@@ -1,5 +1,6 @@
-﻿using M2MCommunication.Core;
+﻿using M2MCommunication.Core.CommonTypes;
 using M2MCommunication.Core.Exceptions;
+using M2MCommunication.Core.Interfaces;
 using M2MCommunication.Uaooi.Extensions;
 using System;
 using System.ComponentModel.Composition;
@@ -22,7 +23,7 @@ namespace M2MCommunication.Uaooi.Injections
 
         [ImportingConstructor]
         public Configuration(
-            ILogger logger, 
+            ILogger logger,
             [Import(UaContractNames.ConfigurationFileNameContract)] string configurationFileName)
         {
             _configurationFileName = configurationFileName;
@@ -34,7 +35,7 @@ namespace M2MCommunication.Uaooi.Injections
         {
             if (string.IsNullOrWhiteSpace(_configurationFileName))
             {
-                var exception = new ComponentNotInitialisedException($"{nameof(_configurationFileName)} was not initialised");
+                ComponentNotInitialisedException exception = new ComponentNotInitialisedException($"{nameof(_configurationFileName)} was not initialised");
                 _logger?.LogError(exception, exception.Message);
                 throw exception;
             }
@@ -51,7 +52,7 @@ namespace M2MCommunication.Uaooi.Injections
             }
             else
             {
-                var exception = new ConfigurationFileNotFoundException($"{nameof(Configuration)} could not find the file {_configurationFileName}", _configurationFileName);
+                ConfigurationFileNotFoundException exception = new ConfigurationFileNotFoundException($"{nameof(Configuration)} could not find the file {_configurationFileName}", _configurationFileName);
                 _logger?.LogError(exception, exception.Message);
                 throw exception;
             }
@@ -71,10 +72,10 @@ namespace M2MCommunication.Uaooi.Injections
             {
                 return string.Empty;
             }
-            UAOOI.Configuration.Networking.Serialization.DataSetConfiguration dataset = 
-                Configuration.DataSets?.FirstOrDefault(d => 
+            UAOOI.Configuration.Networking.Serialization.DataSetConfiguration dataset =
+                Configuration.DataSets?.FirstOrDefault(d =>
                     d.RepositoryGroup.ToLower().Equals(repositoryGroupName.ToLower()));
-            return Configuration.Aliases?.FirstOrDefault(repoAlias => 
+            return Configuration.Aliases?.FirstOrDefault(repoAlias =>
                 repoAlias.InformationModelUri.ToString().Equals(dataset?.InformationModelURI))?.Alias
                     ?? string.Empty;
         }
