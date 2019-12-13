@@ -78,6 +78,7 @@ An interface for a subscription to implement.
 |:-----------:|:----:|:-------------|
 | `void` | Enable(`PropertyChangedEventHandler` handler) | Used to associate an event handler with this subscription |
 | `void` | Disable() | Used to remove all event handlers from the subscription |
+| `void` | InvokeValueUpdated() | Used to invoke an internal ValueUpdated event manually |
 
 ### *ISubscriptionFactory*
 

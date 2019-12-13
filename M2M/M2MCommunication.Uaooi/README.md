@@ -35,6 +35,7 @@ An implementation of the `ISubscription` interface used in `ISubscriptionFactory
 |:-----------:|:----:|:------------|
 | `void` | Enable(`PropertyChangedEventHandler` handler) | Removes all existing event handlers and then adds the provided handler |
 | `void` | Disable() | Removes all existing event handlers |
+| `void` | InvokeValueUpdated() | Used to invoke an internal ValueUpdated event manually |
 
 ## Injections
 

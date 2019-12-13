@@ -10,5 +10,6 @@ namespace M2MCommunication.Core.Interfaces
         object Value { get; set; }
         void Enable(PropertyChangedEventHandler handler);
         void Disable();
+        void InvokeValueUpdated();
     }
 }

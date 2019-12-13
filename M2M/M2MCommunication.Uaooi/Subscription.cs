@@ -44,6 +44,11 @@ namespace M2MCommunication.Uaooi
             ValueUpdated = null;
         }
 
+        public void InvokeValueUpdated()
+        {
+            ValueUpdated?.Invoke(this, new PropertyChangedEventArgs(nameof(Value)));
+        }
+
         public override string ToString()
         {
             try

@@ -132,7 +132,7 @@ namespace M2MCommunication.Uaooi.Injections
                 if (_subscriptions.TryGetValue(typeMetadata, out ISubscription subscription))
                 {
                     _logger?.LogInfo($"Value updated to {sender.ToString()} for subscription {subscription.UaTypeMetadata.ToString()}");
-                    subscription.Value = sender;
+                    subscription.InvokeValueUpdated();
                 }
             };
             ISubscription subscription = new Subscription(

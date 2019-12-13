@@ -25,5 +25,9 @@ namespace ReactiveInterfaceUnitTest.Mocks
         {
             ValueUpdated += handler;
         }
+
+        public void InvokeValueUpdated()
+        {
+        }
     }
 }
