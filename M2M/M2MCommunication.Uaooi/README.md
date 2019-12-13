@@ -36,7 +36,6 @@ An implementation of the `ISubscription` interface used in `ISubscriptionFactory
 | `void` | Enable(`PropertyChangedEventHandler` handler) | Removes all existing event handlers and then adds the provided handler |
 | `void` | Disable() | Removes all existing event handlers |
 
-
 ## Injections
 
 | Name | Description |
@@ -57,7 +56,7 @@ A representation of the consumer's configuration.
 
 | Name | Description |
 |:----:|:------------|
-| Configuration() | Default constructor; Initialises the object |
+| Configuration(`ILogger` logger, `string` configurationFileName) | Initialises the object with provided logger and a name of the configuration file |
 
 #### Events
 
@@ -70,8 +69,7 @@ A representation of the consumer's configuration.
 
 | Return type | Name | Description |
 |:-----------:|:----:|:------------|
-| `void` | Initialise(`string` configurationFileName) | Initialises neccessary values that are not provided through dependency injection |
-| `IDictionary<string, string>` | GetRepositoryGroupAliases() | Used to read all mappings of the configured types to the aliases known to the reactive interface |
+| `string` | GetAliasForRepositoryGroup(`string` repositoryGroupName) | Used to read an alias connected to the repository's type |
 
 ### *ConsumerBindingFactory*
 
@@ -83,13 +81,7 @@ An implementation of `IBindingFactory` and `ISubscriptionFactory` which provides
 
 | Name | Description |
 |:----:|:------------|
-| ConsumerBindingFactory() | Default constructor; Initialises the object |
-
-#### Events
-
-| Type | Name | Description |
-|:----:|:----:|:------------|
-| `EventHandler<ISubscription>` | SubscriptionAdded | Invoked after generating a binding and creating a subscription that wraps it |
+| ConsumerBindingFactory(`ILogger` logger, `IConfiguration` configuration) | Initialises the object with provided logger and configuration instances |
 
 #### Methods
 
@@ -97,6 +89,7 @@ An implementation of `IBindingFactory` and `ISubscriptionFactory` which provides
 |:-----------:|:----:|:------------|
 | `IConsumerBinding` | GetConsumerBinding(`string` repositoryGroup, `string` processValueName, `UATypeInfo` fieldTypeInfo) | Gets a consumer binding for a type specified by the parameters |
 | `IProducerBinding` | GetProducerBinding(`string` repositoryGroup, `string` processValueName, `UATypeInfo` fieldTypeInfo) | Throws `NotSupportedException` since the application works only in the consumer mode |
+| `void` | Initialise(`IConsumerViewModel` consumerViewModel) | Derived from `IConfiguration`; injects `IConsumerViewModel` into the instance |
 
 ### *UaooiMessageBus*
 
@@ -110,7 +103,7 @@ Represents a message bus which notifies subscribers about updates in the data th
 
 | Name | Description |
 |:----:|:------------|
-| UaooiMessageBus(`IConfiguration` configuration, `IEncodingFactory` encodingFactory, `ISubscriptionFactory` subscriptionFactory, `IMessageHandlerFactory` messageHandlerFactory) | Initialises the object with provided parameters, which should be injected |
+| UaooiMessageBus(`IConfiguration` configuration, `IEncodingFactory` encodingFactory, `ISubscriptionFactory` subscriptionFactory, `IMessageHandlerFactory` messageHandlerFactory, `ILogger` logger) | Initialises the object with provided parameters |
 
 #### Properties
 
@@ -125,16 +118,16 @@ Represents a message bus which notifies subscribers about updates in the data th
 
 | Return type | Name | Description |
 |:-----------:|:----:|:------------|
-| `void` | Initialise(`UaLibrarySettings` settings) | Starts this instance - Initializes the data set infrastructure, enables all associations and starts pumping the data |
+| `void` | Initialise(`IConsumerViewModel` consumerViewModel) | Starts this instance - Initializes the data set infrastructure, enables all associations and starts pumping the data |
+| `Task` | InitialiseAsync(`IConsumerViewModel` consumerViewModel) | Starts this instance asynchronously - Initializes the data set infrastructure, enables all associations and starts pumping the data |
 | `void` | RefreshConfiguration() | Reads the configuration again and restarts the process of reading data |
-
 
 ## Extensions
 
 | Name | Description |
 |:----:|:------------|
-| `ConfigurationExtension` | A type that extends `ConfigurationData` and provides mappings of types used in the configuration to aliases used to create interfaces for the types | 
-| `InformationModelAlias` | A serializable POCO object representing mappings of the UA types to aliases recognised by the reactive interface | 
+| `ConfigurationExtension` | A type that extends `ConfigurationData` and provides mappings of types used in the configuration to aliases used to create interfaces for the types |
+| `InformationModelAlias` | A serializable POCO object representing mappings of the UA types to aliases recognised by the reactive interface |
 | `UATypeInfoExtensions` | A set of extension methods for `UATypeInfo` type |
 
 ### UATypeInfoExtensions

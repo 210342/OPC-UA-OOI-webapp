@@ -6,10 +6,59 @@ The goal of this project is to provide interfaces used in the whole application 
 
 | Name | Goal |
 |:----:|:-----|
-| `ISubscription` | Interface for a subscription to implement. Contains neccessary properties and methods |
 | `IConfiguration` | Interface for an implementation of configuration for either a consumer or producer |
-| `ISubscriptionFactory` | Interface for an object which is to be used for subscribing to the data types |
+| `IConsumerViewModel` | Interface for an implementation of a view model which should handle any new subscriptions |
+| `ILogger` | Interface for a logger to implement |
+| `ILoggerContainer` | An interface for a type that aggregates all external loggers and merges them into a single sink |
 | `IMessageBus` | Interface for an object representing a bus that will notify subscribers about changes in the data they subscribed to |
+| `ISubscription` | Interface for a subscription to implement. Contains neccessary properties and methods |
+| `ISubscriptionFactory` | Interface for an object which is to be used for subscribing to the data types |
+
+### *IConfiguration*
+
+An interface for an implementation of configuration for either a consumer or producer
+
+#### Methods
+
+| Return type | Name |  Description |
+|:-----------:|:----:|:-------------|
+| `string` | GetAliasForRepositoryGroup(`string` repositoryGroupName) | Provides an alias for a |
+
+### *IConsumerViewModel*
+
+Interface for an implementation of a view model which should handle any new subscriptions
+
+#### Methods
+
+| Return type | Name |  Description |
+|:-----------:|:----:|:-------------|
+| `void` | AddSubscription(`ISubscription` subscription) | Handles a new subscription |
+
+### *IMessageBus*
+
+An interface for an object representing a bus that will notify subscribers about changes in the data they subscribed to
+
+#### Methods
+
+| Return type | Name |  Description |
+|:-----------:|:----:|:-------------|
+| `void` | Initialise(`IConsumerViewModel` consumerViewModel)| Injects specified view model and start communication |
+| `Task` | InitialiseAsync(`IConsumerViewModel` consumerViewModel)| Injects specified view model and start communication asynchronously |
+| `void` | RefreshConfiguration() | Reads the configuration again and restarts the process of reading data |
+
+### *ILogger*
+
+Interface for a logger to implement
+
+#### Methods
+
+| Return type | Name |  Description |
+|:-----------:|:----:|:-------------|
+| `void` | LogInfo(`string` message, `string` callerName, `string` callerPath)| Logs specified message with `information` level |
+| `void` | LogWarning(`string` message, `string` callerName, `string` callerPath) | Logs specified message with `warning` level |
+| `void` | LogWarning(`Exception` exception, `string` message, `string` callerName, `string` callerPath) | Logs specified message and exception message with `warning` level |
+| `void` | LogError(`string` message, `string` callerName, `string` callerPath) | Logs specified message with `error` level |
+| `void` | LogError(`Exception` exception, `string` message, `string` callerName, `string` callerPath) | Logs specified message and exception message with `error` level |
 
 ### *ISubscription*
 
@@ -39,28 +88,6 @@ An interface for an implementation of configuration for either a consumer or pro
 | Return type | Name |  Description |
 |:-----------:|:----:|:-------------|
 | `void` | Initialise(`IConsumerViewModel` consumerViewModel) | Initialises the instance by providing the view model of the consumner's interface |
-
-### *IConfiguration*
-
-An interface for an implementation of configuration for either a consumer or producer
-
-#### Methods
-
-| Return type | Name |  Description |
-|:-----------:|:----:|:-------------|
-| `IDictionary<string, string>` | GetRepositoryGroupAliases() | Provides mappings of the repository group to its alias |
-
-### *IMessageBus*
-
-An interface for an object representing a bus that will notify subscribers about changes in the data they subscribed to
-
-#### Methods
-
-| Return type | Name |  Description |
-|:-----------:|:----:|:-------------|
-| `void` | Initialise(`UaLibrarySettings` settings)| Initialises the message bus with the specified settings |
-| `Task` | InitialiseAsync(`UaLibrarySettings` settings)| Initialises the message bus with the specified settings asynchronously |
-| `void` | RefreshConfiguration() | Reads the configuration again and restarts the process of reading data |
 
 ## Common types
 
@@ -95,8 +122,18 @@ A POCO object representing the type of a UA object
 
 | Type | Name | Accessors | Description |
 |:----:|:----:|:---------:|:------------|
-|`string`|TypeName| get; | Name of the type; required |
-|`string`|RepositoryGroupName| get; | Name of the repository the type belongs to |
+|`string`| TypeName | get; | Name of the type; required |
+|`string`| RepositoryGroupName | get; | Name of the repository the type belongs to |
+
+### *UaContractNames*
+
+A class containing const string values for MEF container to use as contract names
+
+#### Fields
+
+| Type | Name | Description |
+|:----:|:----:|:------------|
+|`string`| ConfigurationFileNameContract | Contract name for a configuration filename |
 
 ## Exceptions
 

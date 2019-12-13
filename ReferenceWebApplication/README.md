@@ -7,6 +7,7 @@ This module focuses on pure **ASP**.**NET** elements, which are:
 - Dependency injection container and services
   - [Startup](Startup.cs)
 - Graphical interface (using [Server Side Blazor](https://blazor.net))
+  - [ReactiveInterface](ReactiveInterface) - Core logic behind reactive interface based on types
   - [Namespaces](_Imports.razor)
   - [Imports](Pages/_Host.cshtml)
   - [Components](Components)
