@@ -10,6 +10,7 @@ namespace ReferenceWebApplication.ReactiveInterface
 {
     public class ImageMessageParser : MessageParser
     {
+        private readonly object _imageTemplateDictionaryLock = new object();
         protected internal IImageTemplateRepository ImageTemplateRepository { get; }
         public override IEnumerable<PrintableProperty> PrintableProperties => ImageTemplates.Values.SelectMany(template => template.PrintableProperties);
         public IDictionary<string, ImageTemplate> ImageTemplates { get; } = new Dictionary<string, ImageTemplate>();
@@ -33,7 +34,7 @@ namespace ReferenceWebApplication.ReactiveInterface
                 throw new ArgumentNullException(nameof(subscription));
             }
 
-            lock (this)
+            lock (_imageTemplateDictionaryLock)
             {
                 if (ImageTemplates.TryGetValue(subscription.UaTypeMetadata.RepositoryGroupName, out ImageTemplate template))
                 {
