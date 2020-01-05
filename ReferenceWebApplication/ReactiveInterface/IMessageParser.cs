@@ -5,11 +5,12 @@ using System.Threading.Tasks;
 
 namespace ReferenceWebApplication.ReactiveInterface
 {
-    public interface IMessageParser : IDisposable
+    public interface IMessageParser
     {
         IEnumerable<PrintableProperty> PrintableProperties { get; }
+        event Func<Task> OnSubscriptionUpdated;
 
-        Task InitialiseAsync(Func<Task> handler);
+        Task InitialiseAsync();
         void RefreshConfiguration();
     }
 }

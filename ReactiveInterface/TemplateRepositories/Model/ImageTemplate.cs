@@ -35,7 +35,13 @@ namespace TemplateRepositories.Model
 
         public ImageTemplate Subscribe(ISubscription subscription)
         {
-            if (PropertyTemplates
+            IProperty existingProperty = Properties.FirstOrDefault(p => p.Subscription.UaTypeMetadata.Equals(subscription.UaTypeMetadata));
+            if (existingProperty != null)
+            {
+                existingProperty.Subscription = subscription;
+                return this;
+            }
+            else if (PropertyTemplates
                         .Where(template => template.Name.Equals(subscription.UaTypeMetadata.TypeName))
                         .FirstOrDefault() is PropertyTemplate propertyTemplate)
             {
