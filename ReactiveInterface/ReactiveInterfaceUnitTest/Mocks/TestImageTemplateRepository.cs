@@ -1,5 +1,5 @@
-﻿using InterfaceModel.Model;
-using InterfaceModel.Repositories;
+﻿using TemplateRepositories.Model;
+using TemplateRepositories.Repositories;
 using System.Threading.Tasks;
 
 namespace ReactiveInterfaceUnitTest.Mocks

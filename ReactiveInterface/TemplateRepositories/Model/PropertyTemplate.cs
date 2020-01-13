@@ -1,4 +1,4 @@
-﻿namespace InterfaceModel.Model
+﻿namespace TemplateRepositories.Model
 {
     public class PropertyTemplate : IPropertyTemplate
     {

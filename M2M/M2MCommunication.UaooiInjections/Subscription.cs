@@ -4,7 +4,7 @@ using System;
 using System.ComponentModel;
 using UAOOI.Configuration.Networking.Serialization;
 
-namespace M2MCommunication.Uaooi
+namespace M2MCommunication.UaooiInjections
 {
     public class Subscription : ISubscription
     {

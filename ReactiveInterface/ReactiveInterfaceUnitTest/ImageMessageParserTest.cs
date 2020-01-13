@@ -28,7 +28,7 @@ namespace ReactiveInterfaceUnitTest
                 await sut.InitialiseAsync(async () => await Task.Run(() => { }));
                 Assert.NotNull(sut.ImageTemplates);
                 Assert.Empty(sut.ImageTemplates);
-                foreach (InterfaceModel.Model.ImageTemplate template in sut.ImageTemplates.Values)
+                foreach (TemplateRepositories.Model.ImageTemplate template in sut.ImageTemplates.Values)
                 {
                     Assert.NotNull(template.PropertyTemplates);
                     Assert.NotEmpty(template.PropertyTemplates);

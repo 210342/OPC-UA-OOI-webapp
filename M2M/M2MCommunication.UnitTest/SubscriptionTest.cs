@@ -1,5 +1,5 @@
 ﻿using M2MCommunication.Core.CommonTypes;
-using M2MCommunication.Uaooi;
+using M2MCommunication.UaooiInjections;
 using System;
 using System.Reflection;
 using UAOOI.Configuration.Networking.Serialization;

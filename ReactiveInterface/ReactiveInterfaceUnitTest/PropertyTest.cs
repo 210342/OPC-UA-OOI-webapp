@@ -1,4 +1,4 @@
-﻿using InterfaceModel.Model;
+﻿using TemplateRepositories.Model;
 using ReactiveInterfaceUnitTest.Mocks;
 using Xunit;
 

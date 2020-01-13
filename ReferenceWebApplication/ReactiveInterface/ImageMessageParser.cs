@@ -1,5 +1,5 @@
-﻿using InterfaceModel.Model;
-using InterfaceModel.Repositories;
+﻿using TemplateRepositories.Model;
+using TemplateRepositories.Repositories;
 using M2MCommunication.Core.Interfaces;
 using M2MCommunication.Services;
 using System;

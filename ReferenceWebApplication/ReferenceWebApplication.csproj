@@ -48,7 +48,7 @@
   <ItemGroup>
     <ProjectReference Include="..\M2M\M2MCommunication.Core\M2MCommunication.Core.csproj" />
     <ProjectReference Include="..\M2M\M2MCommunication.Services\M2MCommunication.Services.csproj" />
-    <ProjectReference Include="..\ReactiveInterface\InterfaceModel\InterfaceModel.csproj" />
+    <ProjectReference Include="..\ReactiveInterface\TemplateRepositories\TemplateRepositories.csproj" />
   </ItemGroup>
 
 </Project>

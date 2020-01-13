@@ -1,6 +1,6 @@
 ﻿using M2MCommunication.Core.Interfaces;
 
-namespace InterfaceModel.Model
+namespace TemplateRepositories.Model
 {
     public abstract class BaseProperty : IProperty
     {

@@ -1,4 +1,4 @@
-﻿namespace InterfaceModel.Configuration
+﻿namespace TemplateRepositories.Configuration
 {
     public class RepositoryConfiguration
     {

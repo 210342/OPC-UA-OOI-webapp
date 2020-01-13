@@ -1,7 +1,7 @@
 ﻿using CommonServiceLocator;
 using M2MCommunication.Core.Interfaces;
 using M2MCommunication.Services;
-using M2MCommunication.Uaooi.Injections;
+using M2MCommunication.UaooiInjections.Components;
 using System.Reflection;
 using UAOOI.Configuration.Networking;
 using UAOOI.Networking.Core;
