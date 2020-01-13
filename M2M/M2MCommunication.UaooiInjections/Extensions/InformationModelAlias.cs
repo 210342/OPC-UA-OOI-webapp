@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace M2MCommunication.Uaooi.Extensions
+namespace M2MCommunication.UaooiInjections.Extensions
 {
     [DataContract(Namespace = "http://commsvr.com/UAOOI/SemanticData/UANetworking/Configuration/Serialization.xsd")]
     public class InformationModelAlias

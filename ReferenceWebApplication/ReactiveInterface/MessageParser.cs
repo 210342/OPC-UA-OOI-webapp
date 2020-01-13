@@ -1,4 +1,4 @@
-﻿using InterfaceModel.Model;
+﻿using TemplateRepositories.Model;
 using M2MCommunication.Core.Interfaces;
 using M2MCommunication.Services;
 using System;
@@ -11,7 +11,7 @@ namespace ReferenceWebApplication.ReactiveInterface
     public abstract class MessageParser : IMessageParser, IConsumerViewModel
     {
         protected internal IMessageBus MessageBus { get; private set; }
-        protected internal Func<Task> OnSubscriptionUpdated { get; private set; }
+        protected internal Func<Task> OnSubscriptionUpdated { get; set; }
 
         public virtual IEnumerable<PrintableProperty> PrintableProperties { get; } = new List<PrintableProperty>();
 
@@ -25,6 +25,7 @@ namespace ReferenceWebApplication.ReactiveInterface
             OnSubscriptionUpdated = handler;
             return MessageBus.InitialiseAsync(this);
         }
+
         public virtual void RefreshConfiguration()
         {
             MessageBus.RefreshConfiguration();

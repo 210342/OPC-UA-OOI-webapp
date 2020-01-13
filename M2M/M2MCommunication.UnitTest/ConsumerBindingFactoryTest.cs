@@ -1,7 +1,7 @@
 ﻿using M2MCommunication.Core.CommonTypes;
 using M2MCommunication.Core.Exceptions;
 using M2MCommunication.Core.Interfaces;
-using M2MCommunication.Uaooi.Injections;
+using M2MCommunication.UaooiInjections.Components;
 using System;
 using UAOOI.Configuration.Networking.Serialization;
 using UAOOI.Networking.SemanticData.DataRepository;

@@ -1,7 +1,7 @@
-﻿using InterfaceModel.Model;
+﻿using TemplateRepositories.Model;
 using System.Threading.Tasks;
 
-namespace InterfaceModel.Repositories
+namespace TemplateRepositories.Repositories
 {
     public interface IImageTemplateRepository
     {

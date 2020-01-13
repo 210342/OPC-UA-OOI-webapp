@@ -1,5 +1,5 @@
 ﻿using M2MCommunication.Core.Exceptions;
-using M2MCommunication.Uaooi.Injections;
+using M2MCommunication.UaooiInjections.Components;
 using System.Reflection;
 using UAOOI.Configuration.Networking.Serialization;
 using Xunit;

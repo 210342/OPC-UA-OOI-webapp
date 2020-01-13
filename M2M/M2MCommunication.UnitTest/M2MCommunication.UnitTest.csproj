@@ -20,7 +20,7 @@
   <ItemGroup>
     <ProjectReference Include="..\M2MCommunication.Core\M2MCommunication.Core.csproj" />
     <ProjectReference Include="..\M2MCommunication.Services\M2MCommunication.Services.csproj" />
-    <ProjectReference Include="..\M2MCommunication.Uaooi\M2MCommunication.Uaooi.csproj" />
+    <ProjectReference Include="..\M2MCommunication.UaooiInjections\M2MCommunication.UaooiInjections.csproj" />
   </ItemGroup>
 
 </Project>

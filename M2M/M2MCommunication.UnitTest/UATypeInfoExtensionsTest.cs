@@ -1,4 +1,4 @@
-﻿using M2MCommunication.Uaooi.Extensions;
+﻿using M2MCommunication.UaooiInjections.Extensions;
 using System.Collections.Generic;
 using UAOOI.Configuration.Networking.Serialization;
 using Xunit;

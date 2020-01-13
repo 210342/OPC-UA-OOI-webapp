@@ -12,7 +12,7 @@ using System.Reactive.Linq;
 using UAOOI.Common.Infrastructure.Diagnostic;
 using UAOOI.Networking.Core;
 
-namespace M2MCommunication.Uaooi
+namespace M2MCommunication.UaooiInjections
 {
     [Export(typeof(ILoggerContainer))]
     [Export(typeof(ITraceSource))]

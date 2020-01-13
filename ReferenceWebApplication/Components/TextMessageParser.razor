@@ -1,5 +1,5 @@
 ﻿@using ReferenceWebApplication.ReactiveInterface
-@using InterfaceModel.Model
+@using TemplateRepositories.Model
 
 <div class="table-responsive">
     <table class="table table-sm table-dark">
@@ -22,7 +22,7 @@
         </tbody>
     </table>
 </div>
-@code 
+@code
 {
     [Parameter]
     public IMessageParser Parser { get; set; }

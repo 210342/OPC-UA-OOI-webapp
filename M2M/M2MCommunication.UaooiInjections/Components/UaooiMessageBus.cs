@@ -6,7 +6,7 @@ using UAOOI.Configuration.Networking;
 using UAOOI.Networking.Core;
 using UAOOI.Networking.SemanticData;
 
-namespace M2MCommunication.Uaooi.Injections
+namespace M2MCommunication.UaooiInjections.Components
 {
     [Export(typeof(IMessageBus))]
     public class UaooiMessageBus : DataManagementSetup, IMessageBus

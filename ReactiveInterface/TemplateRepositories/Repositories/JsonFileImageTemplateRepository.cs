@@ -1,10 +1,10 @@
-﻿using InterfaceModel.Configuration;
-using InterfaceModel.Model;
+﻿using TemplateRepositories.Configuration;
+using TemplateRepositories.Model;
 using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace InterfaceModel.Repositories
+namespace TemplateRepositories.Repositories
 {
     /// <summary>
     /// A repository that uses json serialisation to persist and retrieve templates

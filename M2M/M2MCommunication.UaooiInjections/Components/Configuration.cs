@@ -1,7 +1,7 @@
 ﻿using M2MCommunication.Core.CommonTypes;
 using M2MCommunication.Core.Exceptions;
 using M2MCommunication.Core.Interfaces;
-using M2MCommunication.Uaooi.Extensions;
+using M2MCommunication.UaooiInjections.Extensions;
 using System;
 using System.ComponentModel.Composition;
 using System.IO;
@@ -9,7 +9,7 @@ using System.Linq;
 using UAOOI.Configuration.Networking;
 using UAOOI.Configuration.Networking.Serializers;
 
-namespace M2MCommunication.Uaooi.Injections
+namespace M2MCommunication.UaooiInjections.Components
 {
     [Export(typeof(IConfigurationFactory))]
     [Export(typeof(IConfiguration))]

@@ -2,7 +2,7 @@
 using System.Runtime.Serialization;
 using UAOOI.Configuration.Networking.Serialization;
 
-namespace M2MCommunication.Uaooi.Extensions
+namespace M2MCommunication.UaooiInjections.Extensions
 {
     [DataContract(Name = "ConfigurationData", Namespace = "http://commsvr.com/UAOOI/SemanticData/UANetworking/Configuration/Serialization.xsd")]
     public class ConfigurationExtension : ConfigurationData, IExtensibleDataObject

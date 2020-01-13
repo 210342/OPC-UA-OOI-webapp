@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace InterfaceModel.Model
+namespace TemplateRepositories.Model
 {
     public class ImageTemplate
     {
