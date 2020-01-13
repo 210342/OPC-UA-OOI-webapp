@@ -30,7 +30,6 @@
     }
 </div>
 
-@implements IDisposable
 @inject IMessageParser Parser
 @inject ILogger<HMI> Logger
 @code
@@ -74,10 +73,5 @@
             Logger.LogError(ex, ex.Message);
             ExceptionMessage = ex.Message;
         }
-    }
-
-    public void Dispose()
-    {
-        Parser.Dispose();
     }
 }
