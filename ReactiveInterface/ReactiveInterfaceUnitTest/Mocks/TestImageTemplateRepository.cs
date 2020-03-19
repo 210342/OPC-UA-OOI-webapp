@@ -1,8 +1,8 @@
-﻿using TemplateRepositories.Model;
-using TemplateRepositories.Repositories;
+﻿using ReactiveHMI.TemplateRepositories.Model;
+using ReactiveHMI.TemplateRepositories.Repositories;
 using System.Threading.Tasks;
 
-namespace ReactiveInterfaceUnitTest.Mocks
+namespace ReactiveHMI.ReactiveInterfaceUnitTest.Mocks
 {
     class TestImageTemplateRepository : IImageTemplateRepository
     {

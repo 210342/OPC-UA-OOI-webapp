@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace M2MCommunication.Core.Exceptions
+namespace ReactiveHMI.M2MCommunication.Core.Exceptions
 {
     public class ValueRankOutOfRangeException : ArgumentOutOfRangeException
     {

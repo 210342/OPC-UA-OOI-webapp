@@ -1,10 +1,10 @@
-﻿using M2MCommunication.Core.Exceptions;
-using M2MCommunication.UaooiInjections.Components;
+﻿using ReactiveHMI.M2MCommunication.Core.Exceptions;
+using ReactiveHMI.M2MCommunication.UaooiInjections.Components;
 using System.Reflection;
 using UAOOI.Configuration.Networking.Serialization;
 using Xunit;
 
-namespace M2MCommunicationUnitTest
+namespace ReactiveHMI.M2MCommunicationUnitTest
 {
     public class ConfigurationTest
     {

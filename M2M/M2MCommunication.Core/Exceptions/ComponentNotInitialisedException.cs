@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace M2MCommunication.Core.Exceptions
+namespace ReactiveHMI.M2MCommunication.Core.Exceptions
 {
     public class ComponentNotInitialisedException : Exception
     {

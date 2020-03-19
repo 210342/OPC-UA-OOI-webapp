@@ -1,8 +1,8 @@
-﻿using M2MCommunication.Core.Interfaces;
+﻿using ReactiveHMI.M2MCommunication.Core.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace TemplateRepositories.Model
+namespace ReactiveHMI.TemplateRepositories.Model
 {
     public class ImageTemplate
     {

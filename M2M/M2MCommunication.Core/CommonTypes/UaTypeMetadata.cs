@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace M2MCommunication.Core.CommonTypes
+namespace ReactiveHMI.M2MCommunication.Core.CommonTypes
 {
     public class UaTypeMetadata
     {

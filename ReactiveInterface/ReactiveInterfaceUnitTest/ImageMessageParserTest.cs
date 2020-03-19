@@ -1,10 +1,10 @@
-﻿using ReactiveInterfaceUnitTest.Mocks;
-using ReferenceWebApplication.ReactiveInterface;
+﻿using ReactiveHMI.ReactiveInterfaceUnitTest.Mocks;
+using ReactiveHMI.ReferenceWebApplication.ReactiveInterface;
 using System.Reflection;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace ReactiveInterfaceUnitTest
+namespace ReactiveHMI.ReactiveInterfaceUnitTest
 {
     public class ImageMessageParserTest : MessageParserTest
     {

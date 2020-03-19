@@ -1,9 +1,9 @@
-﻿using M2MCommunication.Core.CommonTypes;
+﻿using ReactiveHMI.M2MCommunication.Core.CommonTypes;
 using System;
 using System.Collections.Generic;
 using Xunit;
 
-namespace M2MCommunicationUnitTest
+namespace ReactiveHMI.M2MCommunicationUnitTest
 {
     public class UaTypeMetadataTest
     {

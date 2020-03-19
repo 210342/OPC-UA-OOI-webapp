@@ -1,6 +1,6 @@
 ﻿using UAOOI.Configuration.Networking.Serialization;
 
-namespace M2MCommunication.UaooiInjections.Extensions
+namespace ReactiveHMI.M2MCommunication.UaooiInjections.Extensions
 {
     public static class UATypeInfoExtensions
     {

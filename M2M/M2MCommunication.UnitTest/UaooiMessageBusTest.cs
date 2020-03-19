@@ -1,14 +1,14 @@
 ﻿using CommonServiceLocator;
-using M2MCommunication.Core.Interfaces;
-using M2MCommunication.Services;
-using M2MCommunication.UaooiInjections.Components;
+using ReactiveHMI.M2MCommunication.Core.Interfaces;
+using ReactiveHMI.M2MCommunication.Services;
+using ReactiveHMI.M2MCommunication.UaooiInjections.Components;
 using System.Reflection;
 using UAOOI.Configuration.Networking;
 using UAOOI.Networking.Core;
 using UAOOI.Networking.SemanticData;
 using Xunit;
 
-namespace M2MCommunicationUnitTest
+namespace ReactiveHMI.M2MCommunicationUnitTest
 {
     public class UaooiMessageBusTest
     {

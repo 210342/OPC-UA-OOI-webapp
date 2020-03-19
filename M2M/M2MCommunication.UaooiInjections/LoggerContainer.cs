@@ -1,5 +1,5 @@
 ﻿using CommonServiceLocator;
-using M2MCommunication.Core.Interfaces;
+using ReactiveHMI.M2MCommunication.Core.Interfaces;
 using Microsoft.Practices.EnterpriseLibrary.SemanticLogging;
 using System;
 using System.Collections.Generic;
@@ -12,7 +12,7 @@ using System.Reactive.Linq;
 using UAOOI.Common.Infrastructure.Diagnostic;
 using UAOOI.Networking.Core;
 
-namespace M2MCommunication.UaooiInjections
+namespace ReactiveHMI.M2MCommunication.UaooiInjections
 {
     [Export(typeof(ILoggerContainer))]
     [Export(typeof(ITraceSource))]

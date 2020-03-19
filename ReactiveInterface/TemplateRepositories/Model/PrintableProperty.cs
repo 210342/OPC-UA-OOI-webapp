@@ -1,6 +1,6 @@
-﻿using M2MCommunication.Core.Interfaces;
+﻿using ReactiveHMI.M2MCommunication.Core.Interfaces;
 
-namespace TemplateRepositories.Model
+namespace ReactiveHMI.TemplateRepositories.Model
 {
     public class PrintableProperty : BaseProperty
     {

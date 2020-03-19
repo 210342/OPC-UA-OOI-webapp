@@ -1,9 +1,9 @@
-﻿using TemplateRepositories.Model;
+﻿using ReactiveHMI.TemplateRepositories.Model;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace ReferenceWebApplication.ReactiveInterface
+namespace ReactiveHMI.ReferenceWebApplication.ReactiveInterface
 {
     public interface IMessageParser
     {

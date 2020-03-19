@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
-    <RootNamespace>M2MCommunication.Uaooi</RootNamespace>
+    <RootNamespace>ReactiveHMI.M2MCommunication.Uaooi</RootNamespace>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
   

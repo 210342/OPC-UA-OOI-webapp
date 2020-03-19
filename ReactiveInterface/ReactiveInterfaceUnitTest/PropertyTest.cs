@@ -1,8 +1,8 @@
-﻿using TemplateRepositories.Model;
-using ReactiveInterfaceUnitTest.Mocks;
+﻿using ReactiveHMI.TemplateRepositories.Model;
+using ReactiveHMI.ReactiveInterfaceUnitTest.Mocks;
 using Xunit;
 
-namespace ReactiveInterfaceUnitTest
+namespace ReactiveHMI.ReactiveInterfaceUnitTest
 {
     public class PropertyTest
     {

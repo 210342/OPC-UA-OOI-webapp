@@ -1,14 +1,14 @@
 ﻿using CommonServiceLocator;
-using M2MCommunication.Core.CommonTypes;
-using M2MCommunication.Core.Interfaces;
-using M2MCommunication.Services;
+using ReactiveHMI.M2MCommunication.Core.CommonTypes;
+using ReactiveHMI.M2MCommunication.Core.Interfaces;
+using ReactiveHMI.M2MCommunication.Services;
 using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using Xunit;
 
-namespace M2MCommunicationUnitTest
+namespace ReactiveHMI.M2MCommunicationUnitTest
 {
     public class ServiceContainerSetupTest
     {

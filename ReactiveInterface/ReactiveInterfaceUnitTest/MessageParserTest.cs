@@ -1,13 +1,13 @@
 ﻿using CommonServiceLocator;
-using M2MCommunication.Core.Interfaces;
-using M2MCommunication.Services;
-using ReactiveInterfaceUnitTest.Mocks;
-using ReferenceWebApplication.ReactiveInterface;
+using ReactiveHMI.M2MCommunication.Core.Interfaces;
+using ReactiveHMI.M2MCommunication.Services;
+using ReactiveHMI.ReactiveInterfaceUnitTest.Mocks;
+using ReactiveHMI.ReferenceWebApplication.ReactiveInterface;
 using System.Collections.Generic;
 using System.Reflection;
 using Xunit;
 
-namespace ReactiveInterfaceUnitTest
+namespace ReactiveHMI.ReactiveInterfaceUnitTest
 {
     public class MessageParserTest
     {

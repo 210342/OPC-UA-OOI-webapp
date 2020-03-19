@@ -1,4 +1,4 @@
-﻿namespace M2MCommunication.Core.CommonTypes
+﻿namespace ReactiveHMI.M2MCommunication.Core.CommonTypes
 {
     public static class UaContractNames
     {

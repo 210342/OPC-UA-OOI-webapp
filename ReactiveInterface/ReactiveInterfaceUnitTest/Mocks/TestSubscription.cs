@@ -1,8 +1,8 @@
-﻿using M2MCommunication.Core.CommonTypes;
-using M2MCommunication.Core.Interfaces;
+﻿using ReactiveHMI.M2MCommunication.Core.CommonTypes;
+using ReactiveHMI.M2MCommunication.Core.Interfaces;
 using System.ComponentModel;
 
-namespace ReactiveInterfaceUnitTest.Mocks
+namespace ReactiveHMI.ReactiveInterfaceUnitTest.Mocks
 {
     internal class TestSubscription : ISubscription
     {
