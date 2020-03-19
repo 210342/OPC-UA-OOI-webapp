@@ -2,7 +2,7 @@
 using System.IO;
 using System.Runtime.Serialization;
 
-namespace M2MCommunication.Core.Exceptions
+namespace ReactiveHMI.M2MCommunication.Core.Exceptions
 {
     public class ConfigurationFileNotFoundException : FileNotFoundException
     {

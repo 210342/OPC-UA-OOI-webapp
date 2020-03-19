@@ -1,13 +1,13 @@
 ﻿using CommonServiceLocator;
-using M2MCommunication.Core.CommonTypes;
-using M2MCommunication.Core.Interfaces;
+using ReactiveHMI.M2MCommunication.Core.CommonTypes;
+using ReactiveHMI.M2MCommunication.Core.Interfaces;
 using System;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.IO;
 using System.Reflection;
 
-namespace M2MCommunication.Services
+namespace ReactiveHMI.M2MCommunication.Services
 {
     public class ServiceContainerSetup : IDisposable
     {

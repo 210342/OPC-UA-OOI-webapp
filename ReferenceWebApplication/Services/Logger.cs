@@ -2,7 +2,7 @@
 using System;
 using System.IO;
 
-namespace ReferenceWebApplication.Services
+namespace ReactiveHMI.ReferenceWebApplication.Services
 {
     public class Logger : M2MCommunication.Core.Interfaces.ILogger
     {

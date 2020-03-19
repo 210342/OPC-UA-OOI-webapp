@@ -1,5 +1,5 @@
 ﻿using CommonServiceLocator;
-using M2MCommunication.Services;
+using ReactiveHMI.M2MCommunication.Services;
 using System;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Reflection;
 using Xunit;
 
-namespace M2MCommunicationUnitTest
+namespace ReactiveHMI.M2MCommunicationUnitTest
 {
     [Collection("DI")]
     public class UaooiServiceLocatorTest

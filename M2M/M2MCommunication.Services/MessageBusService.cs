@@ -1,7 +1,7 @@
 ﻿using CommonServiceLocator;
-using M2MCommunication.Core.Interfaces;
+using ReactiveHMI.M2MCommunication.Core.Interfaces;
 
-namespace M2MCommunication.Services
+namespace ReactiveHMI.M2MCommunication.Services
 {
     public class MessageBusService
     {

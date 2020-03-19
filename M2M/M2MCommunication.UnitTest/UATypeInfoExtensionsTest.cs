@@ -1,9 +1,9 @@
-﻿using M2MCommunication.UaooiInjections.Extensions;
+﻿using ReactiveHMI.M2MCommunication.UaooiInjections.Extensions;
 using System.Collections.Generic;
 using UAOOI.Configuration.Networking.Serialization;
 using Xunit;
 
-namespace M2MCommunicationUnitTest
+namespace ReactiveHMI.M2MCommunicationUnitTest
 {
     public class UATypeInfoExtensionsTest
     {

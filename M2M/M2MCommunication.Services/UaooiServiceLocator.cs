@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition.Hosting;
 using System.Linq;
 
-namespace M2MCommunication.Services
+namespace ReactiveHMI.M2MCommunication.Services
 {
     internal class UaooiServiceLocator : ServiceLocatorImplBase, IDisposable
     {

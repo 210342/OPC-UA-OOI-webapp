@@ -14,6 +14,7 @@
     <RepositoryType>Git</RepositoryType>
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
     <AssemblyName>Object Oriented Internet</AssemblyName>
+    <RootNamespace>ReactiveHMI.ReferenceWebApplication</RootNamespace>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

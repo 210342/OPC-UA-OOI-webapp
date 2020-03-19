@@ -6,7 +6,7 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 
-namespace ReferenceWebApplication
+namespace ReactiveHMI.ReferenceWebApplication
 {
 #pragma warning disable CA1052
     public class Program

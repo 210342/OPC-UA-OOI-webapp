@@ -1,7 +1,7 @@
-﻿using M2MCommunication.Core.CommonTypes;
+﻿using ReactiveHMI.M2MCommunication.Core.CommonTypes;
 using System.ComponentModel;
 
-namespace M2MCommunication.Core.Interfaces
+namespace ReactiveHMI.M2MCommunication.Core.Interfaces
 {
     public interface ISubscription
     {

@@ -1,17 +1,17 @@
-using TemplateRepositories.Configuration;
-using TemplateRepositories.Repositories;
-using M2MCommunication.Core.CommonTypes;
-using M2MCommunication.Core.Interfaces;
-using M2MCommunication.Services;
+using ReactiveHMI.TemplateRepositories.Configuration;
+using ReactiveHMI.TemplateRepositories.Repositories;
+using ReactiveHMI.M2MCommunication.Core.CommonTypes;
+using ReactiveHMI.M2MCommunication.Core.Interfaces;
+using ReactiveHMI.M2MCommunication.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
-using ReferenceWebApplication.ReactiveInterface;
-using ReferenceWebApplication.Services;
+using ReactiveHMI.ReferenceWebApplication.ReactiveInterface;
+using ReactiveHMI.ReferenceWebApplication.Services;
 
-namespace ReferenceWebApplication
+namespace ReactiveHMI.ReferenceWebApplication
 {
     public class Startup
     {

@@ -1,10 +1,10 @@
-﻿using M2MCommunication.Core.CommonTypes;
-using M2MCommunication.Core.Interfaces;
+﻿using ReactiveHMI.M2MCommunication.Core.CommonTypes;
+using ReactiveHMI.M2MCommunication.Core.Interfaces;
 using System;
 using System.ComponentModel;
 using UAOOI.Configuration.Networking.Serialization;
 
-namespace M2MCommunication.UaooiInjections
+namespace ReactiveHMI.M2MCommunication.UaooiInjections
 {
     public class Subscription : ISubscription
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace M2MCommunication.Core.Interfaces
+namespace ReactiveHMI.M2MCommunication.Core.Interfaces
 {
     public interface IMessageBus : IDisposable
     {

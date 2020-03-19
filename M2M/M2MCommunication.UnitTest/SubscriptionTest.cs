@@ -1,11 +1,11 @@
-﻿using M2MCommunication.Core.CommonTypes;
-using M2MCommunication.UaooiInjections;
+﻿using ReactiveHMI.M2MCommunication.Core.CommonTypes;
+using ReactiveHMI.M2MCommunication.UaooiInjections;
 using System;
 using System.Reflection;
 using UAOOI.Configuration.Networking.Serialization;
 using Xunit;
 
-namespace M2MCommunicationUnitTest
+namespace ReactiveHMI.M2MCommunicationUnitTest
 {
     public class SubscriptionTest
     {

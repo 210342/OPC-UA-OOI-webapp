@@ -1,4 +1,4 @@
-﻿namespace TemplateRepositories.Model
+﻿namespace ReactiveHMI.TemplateRepositories.Model
 {
     public class Point
     {

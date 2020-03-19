@@ -1,10 +1,10 @@
-﻿using TemplateRepositories.Configuration;
-using TemplateRepositories.Model;
+﻿using ReactiveHMI.TemplateRepositories.Configuration;
+using ReactiveHMI.TemplateRepositories.Model;
 using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace TemplateRepositories.Repositories
+namespace ReactiveHMI.TemplateRepositories.Repositories
 {
     /// <summary>
     /// A repository that uses json serialisation to persist and retrieve templates

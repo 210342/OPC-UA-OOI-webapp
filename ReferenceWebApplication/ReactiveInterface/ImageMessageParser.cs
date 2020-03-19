@@ -1,13 +1,13 @@
-﻿using TemplateRepositories.Model;
-using TemplateRepositories.Repositories;
-using M2MCommunication.Core.Interfaces;
-using M2MCommunication.Services;
+﻿using ReactiveHMI.TemplateRepositories.Model;
+using ReactiveHMI.TemplateRepositories.Repositories;
+using ReactiveHMI.M2MCommunication.Core.Interfaces;
+using ReactiveHMI.M2MCommunication.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ReferenceWebApplication.ReactiveInterface
+namespace ReactiveHMI.ReferenceWebApplication.ReactiveInterface
 {
     public class ImageMessageParser : MessageParser
     {

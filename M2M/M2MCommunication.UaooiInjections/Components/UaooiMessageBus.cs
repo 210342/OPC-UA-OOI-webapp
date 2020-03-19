@@ -1,12 +1,12 @@
-﻿using M2MCommunication.Core.Exceptions;
-using M2MCommunication.Core.Interfaces;
+﻿using ReactiveHMI.M2MCommunication.Core.Exceptions;
+using ReactiveHMI.M2MCommunication.Core.Interfaces;
 using System.ComponentModel.Composition;
 using System.Threading.Tasks;
 using UAOOI.Configuration.Networking;
 using UAOOI.Networking.Core;
 using UAOOI.Networking.SemanticData;
 
-namespace M2MCommunication.UaooiInjections.Components
+namespace ReactiveHMI.M2MCommunication.UaooiInjections.Components
 {
     [Export(typeof(IMessageBus))]
     public class UaooiMessageBus : DataManagementSetup, IMessageBus

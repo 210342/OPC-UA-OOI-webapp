@@ -1,7 +1,7 @@
-﻿using M2MCommunication.Core.CommonTypes;
-using M2MCommunication.Core.Exceptions;
-using M2MCommunication.Core.Interfaces;
-using M2MCommunication.UaooiInjections.Extensions;
+﻿using ReactiveHMI.M2MCommunication.Core.CommonTypes;
+using ReactiveHMI.M2MCommunication.Core.Exceptions;
+using ReactiveHMI.M2MCommunication.Core.Interfaces;
+using ReactiveHMI.M2MCommunication.UaooiInjections.Extensions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
@@ -9,7 +9,7 @@ using UAOOI.Configuration.Networking.Serialization;
 using UAOOI.Networking.SemanticData;
 using UAOOI.Networking.SemanticData.DataRepository;
 
-namespace M2MCommunication.UaooiInjections.Components
+namespace ReactiveHMI.M2MCommunication.UaooiInjections.Components
 {
     [Export(typeof(IBindingFactory))]
     public class ConsumerBindingFactory : IBindingFactory, ISubscriptionFactory
