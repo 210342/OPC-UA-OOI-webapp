@@ -36,9 +36,9 @@ namespace ReferenceWebApplication
             services.AddSingleton(s => s.GetRequiredService<IOptions<RepositoryConfiguration>>().Value);
             services.AddSingleton<ILogger, Logger>();
             services.AddSingleton<ServiceContainerSetup>();
-            services.AddTransient<MessageBusService>();
-            services.AddTransient<IMessageParser, ImageMessageParser>();
-            services.AddTransient<IConsumerViewModel, ImageMessageParser>();
+            services.AddSingleton<MessageBusService>();
+            services.AddSingleton<IMessageParser, ImageMessageParser>();
+            services.AddSingleton<IConsumerViewModel, ImageMessageParser>();
             services.AddTransient<IImageTemplateRepository, JsonFileImageTemplateRepository>();
         }
 

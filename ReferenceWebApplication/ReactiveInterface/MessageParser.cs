@@ -11,7 +11,7 @@ namespace ReferenceWebApplication.ReactiveInterface
     public abstract class MessageParser : IMessageParser, IConsumerViewModel
     {
         protected internal IMessageBus MessageBus { get; private set; }
-        protected internal Func<Task> OnSubscriptionUpdated { get; set; }
+        public event Func<Task> OnSubscriptionUpdated;
 
         public virtual IEnumerable<PrintableProperty> PrintableProperties { get; } = new List<PrintableProperty>();
 
@@ -20,9 +20,8 @@ namespace ReferenceWebApplication.ReactiveInterface
             MessageBus = messageBus?.MessageBus;
         }
 
-        public virtual Task InitialiseAsync(Func<Task> handler)
+        public virtual Task InitialiseAsync()
         {
-            OnSubscriptionUpdated = handler;
             return MessageBus.InitialiseAsync(this);
         }
 
@@ -33,37 +32,9 @@ namespace ReferenceWebApplication.ReactiveInterface
 
         public abstract void AddSubscription(ISubscription subscription);
 
-        #region IDisposable Support
-        /// <summary>
-        /// For IDisposable implementation
-        /// </summary>
-        private IEnumerable<ISubscription> _subscriptions = Enumerable.Empty<ISubscription>();
-        private bool disposedValue = false; // To detect redundant calls
-
-        protected virtual void Dispose(bool disposing)
+        protected internal Task InvokeSubscriptionUpdated()
         {
-            if (!disposedValue)
-            {
-                if (disposing)
-                {
-                    _subscriptions?.ToList()?.ForEach(subscription => subscription.Disable());
-                }
-
-                _subscriptions = Enumerable.Empty<ISubscription>();
-                MessageBus = null;
-
-                disposedValue = true;
-            }
+            return OnSubscriptionUpdated.Invoke();
         }
-
-        // This code added to correctly implement the disposable pattern.
-        public void Dispose()
-        {
-            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        #endregion
     }
 }

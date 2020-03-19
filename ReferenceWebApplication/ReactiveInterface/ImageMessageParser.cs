@@ -5,6 +5,7 @@ using M2MCommunication.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace ReferenceWebApplication.ReactiveInterface
 {
@@ -47,7 +48,7 @@ namespace ReferenceWebApplication.ReactiveInterface
                         ImageTemplateRepository.GetImageTemplateByAlias(subscription?.TypeAlias).Subscribe(subscription)
                     );
                 }
-                subscription.Enable(async (sender, args) => await OnSubscriptionUpdated().ConfigureAwait(false));
+                subscription.Enable(async (sender, args) => await InvokeSubscriptionUpdated().ConfigureAwait(false));
             }
         }
     }

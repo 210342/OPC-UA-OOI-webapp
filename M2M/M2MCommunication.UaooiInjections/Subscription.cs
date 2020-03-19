@@ -35,7 +35,6 @@ namespace M2MCommunication.UaooiInjections
 
         public void Enable(PropertyChangedEventHandler handler)
         {
-            Disable();
             ValueUpdated += handler;
         }
 
