@@ -26,12 +26,16 @@ Application depends on open-source NuGet packages developed by [Mariusz Postół
     - Choose IIS Express in the dropdown menu in the build toolbar
     - Build and run - this should open a browser with the right URL
 
-## Modules
+## Packages
 
-The application is split into the following modules:
+The application is split into the following packages:
 
-| Module | Description |
+| Package | Description |
 |:------:|:------------|
-| [M2M Communication](M2M) | Module focused on communicating between IoT machines using OPC-UA standard |
-| [Reactive interface](ReactiveInterface) | Module focused on parsing the received data and preparing it to be displayed |
-| [Reference Web Application](ReferenceWebApplication) | Module focused on configuration of the application and its graphical interface |
+| [M2M Communication](M2M) | Package focused on communicating between IoT machines using OPC-UA standard |
+| [Reactive interface](ReactiveInterface) | Package focused onmodeling the received data and preparing it to be displayed |
+| [Reference Web Application](ReferenceWebApplication) | Package focused on configuration of the application and its graphical interface |
+
+### Package diagram
+
+![Package diagram](Repository-resources/UML-diagrams/Package-ReactiveHMI.png)

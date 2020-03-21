@@ -1,18 +1,18 @@
 # M2M Communication - UAOOI
 
-The goal of this project is to implement the [UAOOI](https://https://github.com/mpostol/OPC-UA-OOI) library for this application
+The goal of this project is to implement the [UAOOI](https://https://github.com/mpostol/OPC-UA-OOI) library for use cases of this application
 
 ## Types
 
 | Name | Description |
 |:----:|:------------|
-| `Subscription` | An implementation of the `ISubscription` interface used in `ISubscriptionFactory` implementation in this project |
+| `Subscription` | An implementation of the `ISubscription` interface used in `Components.ConsumerBindingFactory` - implementation of `ISubscriptionFactory` |
 
 ### *Subscription*
 
 > Implements `ISubscription`
 
-An implementation of the `ISubscription` interface used in `ISubscriptionFactory` implementation in this project.
+ An implementation of the `ISubscription` interface used in `Components.ConsumerBindingFactory` - implementation of `ISubscriptionFactory`
 
 #### Constructors
 
@@ -29,15 +29,21 @@ An implementation of the `ISubscription` interface used in `ISubscriptionFactory
 | `UATypeInfo` | TypeInfo | get; | Description of the type provided from UAOOI library |
 | `object` | Value | get; set; | The subscribed object |
 
+#### Events
+
+| Type | Name | Description |
+|:----:|:----:|:------------|
+| `PropertyChangedEventHandler` | ValueUpdated | Event invoked every time the value of `Value` property changes |
+
 #### Methods
 
 | Return type | Name | Description |
 |:-----------:|:----:|:------------|
-| `void` | Enable(`PropertyChangedEventHandler` handler) | Removes all existing event handlers and then adds the provided handler |
-| `void` | Disable() | Removes all existing event handlers |
+| `void` | Enable(`PropertyChangedEventHandler` handler) | Adds the provided handler to ValueUpdated event |
+| `void` | Disable() | Removes all existing event handlers from ValueUpdated event |
 | `void` | InvokeValueUpdated() | Used to invoke an internal ValueUpdated event manually |
 
-## Injections
+## Components
 
 | Name | Description |
 |:----:|:------------|
@@ -164,3 +170,13 @@ A POCO object representing a type-alias mapping
 |:----:|:----:|:---------:|:------------|
 | `Uri` | InformationModelUri | get; set; | URI of the UA type |
 | `string` | Alias | get; set; | Alias of the type used by the reactive interface |
+
+## UML diagrams
+
+### Internal dependencies
+
+![M2M Uaooi injections internal dependencies diagram](../../Repository-resources/UML-diagrams/UaooiDiagram-internal.png)
+
+### External dependencies
+
+![M2M Uaooi injections external dependencies diagram](../../Repository-resources/UML-diagrams/UaooiDiagram-external.png)
