@@ -16,10 +16,12 @@ namespace ReactiveHMI.M2MCommunication.UaooiInjections
 {
     [Export(typeof(ILoggerContainer))]
     [Export(typeof(ITraceSource))]
-    public class LoggerContainer : ILoggerContainer, ITraceSource
+    public class LoggerContainer : ILoggerContainer, ITraceSource, IDisposable
     {
         private readonly ILogger _loggerSink;
         private readonly IEnumerable<INetworkingEventSourceProvider> _eventSourceProviders;
+
+        private IDisposable subscription;
 
         public LoggerContainer()
         {
@@ -29,9 +31,9 @@ namespace ReactiveHMI.M2MCommunication.UaooiInjections
 
         #region ILoggerContainer
 
-        public void EnableLoggers()
+        public ILoggerContainer EnableLoggers()
         {
-            _eventSourceProviders
+            subscription = _eventSourceProviders
                 ?.Select(p =>
                 {
                     ObservableEventListener eventListener = new ObservableEventListener();
@@ -41,6 +43,7 @@ namespace ReactiveHMI.M2MCommunication.UaooiInjections
                 ?.Merge()
                 ?.ObserveOn(Scheduler.Default)
                 ?.Subscribe(TraceExternalLogs);
+            return this;
         }
 
         #endregion
@@ -86,6 +89,30 @@ namespace ReactiveHMI.M2MCommunication.UaooiInjections
             }
         }
 
+        #endregion
+
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    subscription?.Dispose();
+                }
+                subscription = null;
+
+                disposedValue = true;
+            }
+        }
+
+        // This code added to correctly implement the disposable pattern.
+        public void Dispose()
+        {
+            Dispose(true);
+        }
         #endregion
     }
 }

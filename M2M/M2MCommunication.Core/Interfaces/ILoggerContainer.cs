@@ -2,6 +2,6 @@
 {
     public interface ILoggerContainer
     {
-        void EnableLoggers();
+        ILoggerContainer EnableLoggers();
     }
 }

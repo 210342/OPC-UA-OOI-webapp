@@ -21,6 +21,10 @@ namespace ReactiveHMI.M2MCommunication.Services
             {
                 throw new ArgumentNullException(nameof(serviceType));
             }
+            if (disposedValue)
+            {
+                return Enumerable.Empty<object>();
+            }
             return _container?.GetExports(serviceType, null, null)?.Select(e => e.Value) ?? Enumerable.Empty<object>();
         }
 
@@ -29,6 +33,10 @@ namespace ReactiveHMI.M2MCommunication.Services
             if (serviceType is null)
             {
                 throw new ArgumentNullException(nameof(serviceType));
+            }
+            if (disposedValue)
+            {
+                return null;
             }
             return _container?.GetExports(serviceType, null, key)?.Select(e => e.Value)?.SingleOrDefault();
         }

@@ -13,6 +13,7 @@ namespace ReactiveHMI.M2MCommunication.Services
     {
         private readonly UaLibrarySettings _uaLibrarySettings;
         private readonly ILogger _logger;
+        private ILoggerContainer loggerContainer;
 
         internal IServiceLocator DisposableServiceLocator { get; private set; }
 
@@ -45,8 +46,11 @@ namespace ReactiveHMI.M2MCommunication.Services
             DisposableServiceLocator = new UaooiServiceLocator(Container);
             ServiceLocator.SetLocatorProvider(() => DisposableServiceLocator);
 
-            _logger?.LogInfo("Composing a common logger for all components");
-            Container.GetExportedValue<ILoggerContainer>().EnableLoggers();
+            if (shouldComposeLoggers)
+            {
+                _logger?.LogInfo("Composing a common logger for all components");
+                loggerContainer = Container.GetExportedValue<ILoggerContainer>().EnableLoggers();
+            }
 
             return this;
         }
@@ -61,8 +65,10 @@ namespace ReactiveHMI.M2MCommunication.Services
                 if (disposing)
                 {
                     (DisposableServiceLocator as IDisposable)?.Dispose();
+                    (loggerContainer as IDisposable)?.Dispose();
                 }
                 DisposableServiceLocator = null;
+                loggerContainer = null;
                 ServiceLocator.SetLocatorProvider(() => null);
 
                 disposedValue = true;
@@ -75,6 +81,12 @@ namespace ReactiveHMI.M2MCommunication.Services
             // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
             Dispose(true);
         }
+        #endregion
+
+        #region Unit test workaround
+
+        private readonly bool shouldComposeLoggers = true;
+
         #endregion
     }
 }

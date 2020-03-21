@@ -43,6 +43,27 @@ The goal of this project is to implement the [UAOOI](https://https://github.com/
 | `void` | Disable() | Removes all existing event handlers from ValueUpdated event |
 | `void` | InvokeValueUpdated() | Used to invoke an internal ValueUpdated event manually |
 
+### *LoggerContainer*
+
+> Implements `ILoggerContainer`, `UAOOI.Common.Infrastructure.Diagnostic.ITraceSource`, `IDisposable`
+
+ An implementation of the `ILoggerContainer` interface. It resolves an `ILogger` instance from MEF container and composes parts of type `UAOOI.Networking.Core.INetworkingEventSourceProvider` and subscribes to these loggers to redirect messages to `ILogger`'s sink.
+
+#### Constructors
+
+| Name | Description |
+|:----:|:------------|
+| LoggerContainer() | Default constructor which uses ServiceLocator to resolve dependencies. None of the dependencies are required. |
+
+#### Methods
+
+| Return type | Name | Description |
+|:-----------:|:----:|:------------|
+| `ILoggerContainer` | EnableLoggers() | Subscribes to any injected `INetworkingEventSourceProviders` and returns this instance |
+| `void` | TraceData(TraceEventType eventType, int id, object data) | Inherited from `ITraceSource`. Used to redirect trace data to the common sink |
+| `void` | Dispose() | Used to dispose subscriptions on the injected external loggers |
+
+
 ## Components
 
 | Name | Description |
