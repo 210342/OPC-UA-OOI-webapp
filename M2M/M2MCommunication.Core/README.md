@@ -73,7 +73,7 @@ An interface for a type that aggregates all external loggers and merges them int
 
 | Return type | Name |  Description |
 |:-----------:|:----:|:-------------|
-| `void` | EnableLoggers() | Aggregates all injected loggers and merges them into a single sink |
+| `ILoggerContainer` | EnableLoggers() | Aggregates all injected loggers and merges them into a single sink and returns this instance |
 
 ### *ISubscription*
 

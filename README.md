@@ -1,5 +1,7 @@
 # OPC-UA-OOI-webapp
 
+![ASP.NET Core](https://github.com/210342/OPC-UA-OOI-webapp/workflows/ASP.NET%20Core/badge.svg?branch=master)
+
 Web application built using ASP.NET Core 3.0 with Blazor Server as an example usage of OPC-UA PubSub Standard
 
 Application depends on open-source NuGet packages developed by [Mariusz Postół on github](https://github.com/mpostol/OPC-UA-OOI).

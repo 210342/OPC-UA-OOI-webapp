@@ -14,7 +14,7 @@ namespace ReactiveHMI.M2MCommunicationUnitTest
     {
         internal static UaLibrarySettings Settings => new UaLibrarySettings()
         {
-            ResourcesDirectory = @"..\..\..\..\..\ReferenceWebApplication\wwwroot",
+            ResourcesDirectory = Path.Combine("..", "..", "..", "..", "..", "ReferenceWebApplication", "wwwroot"),
             LibraryDirectory = "M2MCommunication.Uaooi",
             ConsumerConfigurationFile = "ConfigurationDataConsumer.xml"
         };

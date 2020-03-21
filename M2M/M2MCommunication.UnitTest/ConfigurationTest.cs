@@ -1,5 +1,6 @@
 ﻿using ReactiveHMI.M2MCommunication.Core.Exceptions;
 using ReactiveHMI.M2MCommunication.UaooiInjections.Components;
+using System.IO;
 using System.Reflection;
 using UAOOI.Configuration.Networking.Serialization;
 using Xunit;
@@ -8,7 +9,12 @@ namespace ReactiveHMI.M2MCommunicationUnitTest
 {
     public class ConfigurationTest
     {
-        private static readonly string _configurationFileName = @"M2MCommunication.UAOOI\ConfigurationDataConsumer.xml";
+        private static readonly string _configurationFileName = 
+            Path.Combine(
+                Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), 
+                "M2MCommunication.Uaooi", 
+                "ConfigurationDataConsumer.xml"
+            );
 
         [Fact]
         public void ConstructorTest()
