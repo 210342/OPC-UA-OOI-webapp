@@ -6,4 +6,4 @@ Parsing starts with injecting a message bus into an `ImageMessageParser` and ini
 
 ## UML class diagram
 
-![Reactive interface class diagram](ReactiveInterfaceUML.png)
+![Reactive interface class diagram](../../Repository-resources/UML-diagrams/ReactiveInterfaceUML.png)

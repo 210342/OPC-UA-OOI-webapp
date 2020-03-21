@@ -17,16 +17,18 @@ The goal of this project is to provide interfaces used in the whole application 
 ### *IConfiguration*
 
 An interface for an implementation of configuration for either a consumer or producer
+*Implemented by* ReactiveHMI.M2MCommunication.UaooiInjections.Components.Configuration
 
 #### Methods
 
 | Return type | Name |  Description |
 |:-----------:|:----:|:-------------|
-| `string` | GetAliasForRepositoryGroup(`string` repositoryGroupName) | Provides an alias for a |
+| `string` | GetAliasForRepositoryGroup(`string` repositoryGroupName) | Provides an alias for a given repositiory group which can be used by other packages to identify the group in case URI format is not preferable |
 
 ### *IConsumerViewModel*
 
 Interface for an implementation of a view model which should handle any new subscriptions
+*Implemented by* ReactiveHMI.ReferenceWebApplication.ReactiveInterface.MessageParser
 
 #### Methods
 
@@ -37,18 +39,20 @@ Interface for an implementation of a view model which should handle any new subs
 ### *IMessageBus*
 
 An interface for an object representing a bus that will notify subscribers about changes in the data they subscribed to
+*Implemented by* ReactiveHMI.M2MCommunication.UaooiInjections.Components.UaooiMessageBus
 
 #### Methods
 
 | Return type | Name |  Description |
 |:-----------:|:----:|:-------------|
-| `void` | Initialise(`IConsumerViewModel` consumerViewModel)| Injects specified view model and start communication |
-| `Task` | InitialiseAsync(`IConsumerViewModel` consumerViewModel)| Injects specified view model and start communication asynchronously |
-| `void` | RefreshConfiguration() | Reads the configuration again and restarts the process of reading data |
+| `void` | Initialise(`IConsumerViewModel` consumerViewModel)| Injects specified view model and starts communication |
+| `Task` | InitialiseAsync(`IConsumerViewModel` consumerViewModel)| Injects specified view model and starts communication asynchronously |
+| `void` | RefreshConfiguration() | Reads the configuration again and restarts the process of processing data |
 
 ### *ILogger*
 
 Interface for a logger to implement
+*Implemented by* ReactiveHMI.ReferenceWebApplication.Services.Logger
 
 #### Methods
 
@@ -60,9 +64,21 @@ Interface for a logger to implement
 | `void` | LogError(`string` message, `string` callerName, `string` callerPath) | Logs specified message with `error` level |
 | `void` | LogError(`Exception` exception, `string` message, `string` callerName, `string` callerPath) | Logs specified message and exception message with `error` level |
 
+### *ILoggerContainer*
+
+An interface for a type that aggregates all external loggers and merges them into a single sink
+*Implemented by* ReactiveHMI.M2MCommunication.UaooiInjections.LoggerContainer
+
+#### *Methods*
+
+| Return type | Name |  Description |
+|:-----------:|:----:|:-------------|
+| `void` | EnableLoggers() | Aggregates all injected loggers and merges them into a single sink |
+
 ### *ISubscription*
 
 An interface for a subscription to implement.
+*Implemented by* ReactiveHMI.M2MCommunication.UaooiInjections.Subscription
 
 #### Properties
 
@@ -83,6 +99,7 @@ An interface for a subscription to implement.
 ### *ISubscriptionFactory*
 
 An interface for an implementation of configuration for either a consumer or producer
+*Implemented by* ReactiveHMI.M2MCommunication.UaooiInjections.Components.ConsumerBindingFactory
 
 #### Methods
 
@@ -111,7 +128,7 @@ A POCO object representing the configuration of the adapted OPC-UA library
 
 ### *UaTypeMetadata*
 
-A POCO object representing the type of a UA object
+A POCO object representing metadata the type of a UA object
 
 #### Constructors
 

@@ -14,3 +14,15 @@ A directive is a keyword preceded by a `@`. Blazor defines multiple directives f
 | **inherits** |  signals to the compiler that this rendered component or page should inherit from the following type |
 | **inject** | creates a property of the specified type and name which will be then set with DI pattern if the specified type has been registered as a service in the DI container |
 | **code** | defines a block of C# code which contains overriden lifecycle methods, event handlers or any data needed to be displayed |
+
+## URLs
+
+### "/"
+
+Handler: `Index.razor`
+
+Page displays general information about the app
+
+### "/hmi" 
+
+Displays the data received through the injected bus

@@ -19,3 +19,17 @@ Usually components receive parameters from their parent components. To define a 
 ``` html
 <ChildComponent ParameterName=@localVariable />
 ```
+
+## Defined components
+
+### ImageMessageParser
+
+Component used to render each ImageTemplate from an injected `ReactiveHMI.ReferenceWebApplication.ReactiveInterface.ImageMessageParser` as an image with the properties `Property` drawn over them.
+
+### TextMessageParser
+
+Component used to print to the screen any properties that don't have any graphical representation defined in the ImageTemplate 
+
+### Property
+
+Component used to render a single property that updates each time the corresponding subscription is updated

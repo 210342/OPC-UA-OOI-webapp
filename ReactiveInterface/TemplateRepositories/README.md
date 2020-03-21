@@ -10,7 +10,7 @@ In the process of parsing, for each of the `PropertyTemplates` parser creates a 
 
 ### UML Class Diagram
 
-![Model class diagram](InterfaceModelUML.png)
+![Model class diagram](../../Repository-resources/UML-diagrams/InterfaceModelUML.png)
 
 ## Repositories
 
