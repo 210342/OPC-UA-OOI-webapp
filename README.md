@@ -1,6 +1,6 @@
 # OPC-UA-OOI-webapp
 
-![ASP.NET Core](https://github.com/210342/OPC-UA-OOI-webapp/workflows/ASP.NET%20Core/badge.svg?branch=master)
+![Build and unit test](https://github.com/210342/OPC-UA-OOI-webapp/workflows/Build%20and%20unit%20test/badge.svg)
 
 Web application built using ASP.NET Core 3.0 with Blazor Server as an example usage of OPC-UA PubSub Standard
 
