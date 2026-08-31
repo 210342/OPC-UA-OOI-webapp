@@ -9,17 +9,17 @@ namespace ReactiveHMI.M2MCommunicationUnitTest
 {
     public class ConfigurationTest
     {
-        private static readonly string _configurationFileName = 
+        private static readonly string _configurationFileName =
             Path.Combine(
-                Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), 
-                "M2MCommunication.Uaooi", 
+                Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
+                "M2MCommunication.Uaooi",
                 "ConfigurationDataConsumer.xml"
             );
 
         [Fact]
         public void ConstructorTest()
         {
-            Configuration configuration = new Configuration(null, _configurationFileName);
+            Configuration configuration = new(null, _configurationFileName);
             Assert.NotNull(configuration
                 .GetType()
                 .GetProperty("Loader", BindingFlags.NonPublic | BindingFlags.Instance)
@@ -34,7 +34,7 @@ namespace ReactiveHMI.M2MCommunicationUnitTest
         [Fact]
         public void ConstructorWrongFileNameTest()
         {
-            Configuration configuration = new Configuration(null, _configurationFileName.Replace("xml", "pdf"));
+            Configuration configuration = new(null, _configurationFileName.Replace("xml", "pdf"));
             Assert.Throws<ConfigurationFileNotFoundException>(() =>
             configuration.GetConfiguration());
         }
@@ -42,15 +42,15 @@ namespace ReactiveHMI.M2MCommunicationUnitTest
         [Fact]
         public void LoadConfigTest()
         {
-            Configuration configuration = new Configuration(null, _configurationFileName);
+            Configuration configuration = new(null, _configurationFileName);
             Assert.NotNull(LoadConfig(configuration));
         }
 
-        private ConfigurationData LoadConfig(Configuration config)
+        private static ConfigurationData LoadConfig(Configuration config)
         {
             return config.GetType()
                 .GetMethod("LoadConfig", BindingFlags.NonPublic | BindingFlags.Instance)
-                .Invoke(config, new object[] { })
+                .Invoke(config, [])
                 as ConfigurationData;
         }
     }

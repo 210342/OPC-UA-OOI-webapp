@@ -1,17 +1,16 @@
-﻿using ReactiveHMI.TemplateRepositories.Model;
-using ReactiveHMI.TemplateRepositories.Repositories;
+﻿using ReactiveHMI.ReactiveInterface.TemplateRepositories.Model;
+using ReactiveHMI.ReactiveInterface.TemplateRepositories.Repositories;
 using ReactiveHMI.M2MCommunication.Core.Interfaces;
 using ReactiveHMI.M2MCommunication.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace ReactiveHMI.ReferenceWebApplication.ReactiveInterface
 {
     public class ImageMessageParser : MessageParser
     {
-        private readonly object _imageTemplateDictionaryLock = new object();
+        private readonly object _imageTemplateDictionaryLock = new();
         protected internal IImageTemplateRepository ImageTemplateRepository { get; }
         public override IEnumerable<PrintableProperty> PrintableProperties => ImageTemplates.Values.SelectMany(template => template.PrintableProperties);
         public IDictionary<string, ImageTemplate> ImageTemplates { get; } = new Dictionary<string, ImageTemplate>();
@@ -30,10 +29,7 @@ namespace ReactiveHMI.ReferenceWebApplication.ReactiveInterface
 
         public override void AddSubscription(ISubscription subscription)
         {
-            if (subscription is null)
-            {
-                throw new ArgumentNullException(nameof(subscription));
-            }
+            ArgumentNullException.ThrowIfNull(subscription);
 
             lock (_imageTemplateDictionaryLock)
             {

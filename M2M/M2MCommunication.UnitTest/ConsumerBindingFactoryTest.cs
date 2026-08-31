@@ -11,7 +11,7 @@ namespace ReactiveHMI.M2MCommunicationUnitTest
 {
     public class ConsumerBindingFactoryTest
     {
-        private static readonly UaTypeMetadata _typeMetadata = new UaTypeMetadata("repository group", "type name");
+        private static readonly UaTypeMetadata _typeMetadata = new("repository group", "type name");
         private static readonly IConfiguration _configuration = new Configuration(null, string.Empty);
         private static readonly IConsumerViewModel _consumerViewModel = new TestConsumerViewModel();
 
@@ -25,7 +25,7 @@ namespace ReactiveHMI.M2MCommunicationUnitTest
         [Fact]
         public void ConstructorTest()
         {
-            ConsumerBindingFactory sut = new ConsumerBindingFactory(null, _configuration);
+            ConsumerBindingFactory sut = new(null, _configuration);
             Assert.Null(sut.GetType()
                 .GetField("_logger", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)
                 .GetValue(sut));
@@ -50,9 +50,9 @@ namespace ReactiveHMI.M2MCommunicationUnitTest
         [Fact]
         public void GetConsumerBindingTest()
         {
-            ConsumerBindingFactory factory = new ConsumerBindingFactory(null, _configuration);
+            ConsumerBindingFactory factory = new(null, _configuration);
             factory.Initialise(_consumerViewModel);
-            UATypeInfo typeInfo = new UATypeInfo(BuiltInType.Byte, -1, new int[] { });
+            UATypeInfo typeInfo = new(BuiltInType.Byte, -1, []);
             IConsumerBinding binding = factory.GetConsumerBinding(_typeMetadata.RepositoryGroupName, _typeMetadata.TypeName, typeInfo);
             Assert.NotNull(binding);
         }
@@ -60,23 +60,23 @@ namespace ReactiveHMI.M2MCommunicationUnitTest
         [Fact]
         public void GetConsumerBindingForNullTypeTest()
         {
-            ConsumerBindingFactory factory = new ConsumerBindingFactory(null, _configuration);
+            ConsumerBindingFactory factory = new(null, _configuration);
             Assert.Throws<ArgumentNullException>(() => factory.GetConsumerBinding(_typeMetadata.RepositoryGroupName, _typeMetadata.TypeName, null));
         }
 
         [Fact]
         public void GetConsumerBindingForMultidimensionalTypeTest()
         {
-            ConsumerBindingFactory factory = new ConsumerBindingFactory(null, _configuration);
-            UATypeInfo typeInfo = new UATypeInfo(BuiltInType.Byte, 2, new int[] { 21, 37 });
+            ConsumerBindingFactory factory = new(null, _configuration);
+            UATypeInfo typeInfo = new(BuiltInType.Byte, 2, [21, 37]);
             Assert.Throws<ValueRankOutOfRangeException>(() => factory.GetConsumerBinding(_typeMetadata.RepositoryGroupName, _typeMetadata.TypeName, typeInfo));
         }
 
         [Fact]
         public void GetConsumerBindingForNotSupportedTypeTest()
         {
-            ConsumerBindingFactory factory = new ConsumerBindingFactory(null, _configuration);
-            UATypeInfo typeInfo = new UATypeInfo(BuiltInType.NodeId, -2, new int[] { });
+            ConsumerBindingFactory factory = new(null, _configuration);
+            UATypeInfo typeInfo = new(BuiltInType.NodeId, -2, []);
             Assert.Throws<UnsupportedTypeException>(() => factory.GetConsumerBinding(_typeMetadata.RepositoryGroupName, _typeMetadata.TypeName, typeInfo));
         }
     }

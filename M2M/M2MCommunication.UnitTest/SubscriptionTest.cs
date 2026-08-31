@@ -9,13 +9,13 @@ namespace ReactiveHMI.M2MCommunicationUnitTest
 {
     public class SubscriptionTest
     {
-        private static readonly UaTypeMetadata _typMetadata = new UaTypeMetadata("repo", "type");
+        private static readonly UaTypeMetadata _typMetadata = new("repo", "type");
 
         [Fact]
         public void ConstructorTest()
         {
-            UATypeInfo typeInfo = new UATypeInfo(BuiltInType.DateTime);
-            Subscription subscription = new Subscription(typeInfo, _typMetadata, "alias", DateTime.MinValue);
+            UATypeInfo typeInfo = new(BuiltInType.DateTime);
+            Subscription subscription = new(typeInfo, _typMetadata, "alias", DateTime.MinValue);
             Assert.NotNull(subscription.TypeInfo);
             Assert.NotNull(subscription.Value);
             Assert.NotNull(subscription.UaTypeMetadata);
@@ -34,7 +34,7 @@ namespace ReactiveHMI.M2MCommunicationUnitTest
         public void EnableTest()
         {
             bool raised = false;
-            Subscription subscription = new Subscription(new UATypeInfo(BuiltInType.DateTime), _typMetadata, "alias", DateTime.MinValue);
+            Subscription subscription = new(new UATypeInfo(BuiltInType.DateTime), _typMetadata, "alias", DateTime.MinValue);
             subscription.Enable((sender, args) => raised = true);
             subscription.Value = DateTime.UtcNow;
             Assert.True(raised);
@@ -43,7 +43,7 @@ namespace ReactiveHMI.M2MCommunicationUnitTest
         [Fact]
         public void DisableTest()
         {
-            Subscription subscription = new Subscription(new UATypeInfo(BuiltInType.DateTime), _typMetadata, "alias", DateTime.MinValue);
+            Subscription subscription = new(new UATypeInfo(BuiltInType.DateTime), _typMetadata, "alias", DateTime.MinValue);
             subscription.Disable();
             Assert.Null(subscription
                 .GetType()

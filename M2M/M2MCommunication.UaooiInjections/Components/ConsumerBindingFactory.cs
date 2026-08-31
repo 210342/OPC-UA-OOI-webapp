@@ -36,15 +36,12 @@ namespace ReactiveHMI.M2MCommunication.UaooiInjections.Components
 
         public IConsumerBinding GetConsumerBinding(string repositoryGroup, string processValueName, UATypeInfo fieldTypeInfo)
         {
-            if (fieldTypeInfo is null)
-            {
-                throw new ArgumentNullException(nameof(fieldTypeInfo));
-            }
+            ArgumentNullException.ThrowIfNull(fieldTypeInfo);
             if (fieldTypeInfo.ContainsMultidimensionalArray())
             {
                 throw new ValueRankOutOfRangeException(nameof(fieldTypeInfo.ValueRank));
             }
-            UaTypeMetadata typeMetadata = new UaTypeMetadata(repositoryGroup, processValueName);
+            UaTypeMetadata typeMetadata = new(repositoryGroup, processValueName);
             switch (fieldTypeInfo.BuiltInType)
             {
                 case BuiltInType.Boolean:
@@ -124,9 +121,9 @@ namespace ReactiveHMI.M2MCommunication.UaooiInjections.Components
             throw new NotSupportedException();
         }
 
-        private IConsumerBinding Bind<type>(UaTypeMetadata typeMetadata, UATypeInfo typeInfo)
+        private IConsumerBinding Bind<fieldType>(UaTypeMetadata typeMetadata, UATypeInfo typeInfo)
         {
-            ConsumerBindingMonitoredValue<type> binding = new ConsumerBindingMonitoredValue<type>(typeInfo);
+            ConsumerBindingMonitoredValue<fieldType> binding = new(typeInfo);
             binding.PropertyChanged += (sender, args) =>
             {
                 if (_subscriptions.TryGetValue(typeMetadata, out ISubscription subscription))

@@ -1,11 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
-    <RootNamespace>ReactiveHMI.M2MCommunication.Uaooi</RootNamespace>
+    <TargetFramework>net10.0</TargetFramework>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <RootNamespace>ReactiveHMI.M2MCommunication.UaooiInjections</RootNamespace>
   </PropertyGroup>
-  
+
   <Target Name="PostBuild" BeforeTargets="PostBuildEvent">
     <ItemGroup>
       <UaooiLibrariesAndDependencies Include="$(TargetDir)*.dll" />
@@ -13,8 +13,8 @@
     <ItemGroup>
       <UaooiConfiguration Include="$(ProjectDir)*Configuration*.xml" />
     </ItemGroup>
-    <MakeDir Directories="$(SolutionDir)\ReferenceWebApplication\bin\$(ConfigurationName)\netcoreapp3.0\M2MCommunication.Uaooi" />
-    <Copy SourceFiles="@(UaooiLibrariesAndDependencies)" DestinationFolder="$(SolutionDir)\ReferenceWebApplication\bin\$(ConfigurationName)\netcoreapp3.0\M2MCommunication.Uaooi" />
+    <MakeDir Directories="$(SolutionDir)\ReferenceWebApplication\bin\$(ConfigurationName)\$(TargetFramework)\M2MCommunication.Uaooi" />
+    <Copy SourceFiles="@(UaooiLibrariesAndDependencies)" DestinationFolder="$(SolutionDir)\ReferenceWebApplication\bin\$(ConfigurationName)\$(TargetFramework)\M2MCommunication.Uaooi" />
     <MakeDir Directories="$(SolutionDir)\ReferenceWebApplication\ReferenceWebApplication\wwwroot\M2MCommunication.Uaooi" />
     <Copy SourceFiles="@(UaooiConfiguration)" DestinationFolder="$(SolutionDir)\ReferenceWebApplication\wwwroot\M2MCommunication.Uaooi" />
   </Target>
@@ -26,18 +26,18 @@
     <ItemGroup>
       <UaooiConfiguration Include="$(ProjectDir)*Configuration*.xml" />
     </ItemGroup>
-    <MakeDir Directories="$(ProjectDir)\..\M2MCommunication.UnitTest\bin\$(ConfigurationName)\netcoreapp3.0\M2MCommunication.Uaooi" />
-    <Copy SourceFiles="@(UaooiLibrariesAndDependencies)" DestinationFolder="$(ProjectDir)\..\M2MCommunication.UnitTest\bin\$(ConfigurationName)\netcoreapp3.0\M2MCommunication.Uaooi" />
-    <Copy SourceFiles="@(UaooiConfiguration)" DestinationFolder="$(ProjectDir)\..\M2MCommunication.UnitTest\bin\$(ConfigurationName)\netcoreapp3.0\M2MCommunication.Uaooi" /> 
+    <MakeDir Directories="$(ProjectDir)\..\M2MCommunication.UnitTest\bin\$(ConfigurationName)\$(TargetFramework)\M2MCommunication.Uaooi" />
+    <Copy SourceFiles="@(UaooiLibrariesAndDependencies)" DestinationFolder="$(ProjectDir)\..\M2MCommunication.UnitTest\bin\$(ConfigurationName)\$(TargetFramework)\M2MCommunication.Uaooi" />
+    <Copy SourceFiles="@(UaooiConfiguration)" DestinationFolder="$(ProjectDir)\..\M2MCommunication.UnitTest\bin\$(ConfigurationName)\$(TargetFramework)\M2MCommunication.Uaooi" />
   </Target>
-  
+
   <ItemGroup>
     <PackageReference Include="EnterpriseLibrary.SemanticLogging.NetCore" Version="2.0.1406.4" />
-    <PackageReference Include="System.Reactive.Linq" Version="4.3.1" />
-    <PackageReference Include="UAOOI.Common.Infrastructure" Version="4.0.1" />
-    <PackageReference Include="UAOOI.Configuration.Core" Version="4.0.1" />
-    <PackageReference Include="UAOOI.Configuration.DataBindings" Version="4.0.1" />
-    <PackageReference Include="UAOOI.Configuration.Networking" Version="4.0.1" />
+    <PackageReference Include="System.Reactive" Version="7.0.0" />
+    <PackageReference Include="UAOOI.Common.Infrastructure" Version="6.4.7" />
+    <PackageReference Include="UAOOI.Configuration.Core" Version="6.4.8" />
+    <PackageReference Include="UAOOI.Configuration.DataBindings" Version="6.4.8" />
+    <PackageReference Include="UAOOI.Configuration.Networking" Version="6.4.8" />
     <PackageReference Include="UAOOI.Networking.Core" Version="4.0.1" />
     <PackageReference Include="UAOOI.Networking.Encoding" Version="4.0.1" />
     <PackageReference Include="UAOOI.Networking.SemanticData" Version="4.0.1" />
@@ -46,6 +46,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\M2MCommunication.Core\M2MCommunication.Core.csproj" />
+    <ProjectReference Include="..\M2MCommunication.Services\M2MCommunication.Services.csproj" />
   </ItemGroup>
 
 </Project>

@@ -7,21 +7,21 @@ namespace ReactiveHMI.M2MCommunicationUnitTest
 {
     public class UaTypeMetadataTest
     {
-        public static IEnumerable<object[]> ConstructorInvalidTypeNameData => new[]
-        {
-            new object[] { null },
-            new object[] { "" },
-            new object[] { "  " },
-            new object[] { Environment.NewLine }
-        };
+        public static IEnumerable<object[]> ConstructorInvalidTypeNameData =>
+        [
+            [null],
+            [""],
+            ["  "],
+            [Environment.NewLine]
+        ];
 
-        public static IEnumerable<object[]> EqualsTestData => new[]
-        {
-            new object[] { new UaTypeMetadata("repo", "test"), new UaTypeMetadata("repo", "test"), true },
-            new object[] { new UaTypeMetadata("repo", "test2"), new UaTypeMetadata("repo", "test"), false },
-            new object[] { new UaTypeMetadata("repo2", "test"), new UaTypeMetadata("repo", "test"), false },
-            new object[] { new UaTypeMetadata("repo", "test"), null, false }
-        };
+        public static IEnumerable<object[]> EqualsTestData =>
+        [
+            [new UaTypeMetadata("repo", "test"), new UaTypeMetadata("repo", "test"), true],
+            [new UaTypeMetadata("repo", "test2"), new UaTypeMetadata("repo", "test"), false],
+            [new UaTypeMetadata("repo2", "test"), new UaTypeMetadata("repo", "test"), false],
+            [new UaTypeMetadata("repo", "test"), null, false]
+        ];
 
         [Theory]
         [MemberData(nameof(ConstructorInvalidTypeNameData))]
@@ -33,7 +33,7 @@ namespace ReactiveHMI.M2MCommunicationUnitTest
         [Fact]
         public void ConstructorValidDataTest()
         {
-            UaTypeMetadata sut = new UaTypeMetadata("repo", "type");
+            UaTypeMetadata sut = new("repo", "type");
             Assert.Equal("repo", sut.RepositoryGroupName);
             Assert.Equal("type", sut.TypeName);
         }
@@ -41,7 +41,7 @@ namespace ReactiveHMI.M2MCommunicationUnitTest
         [Fact]
         public void ConstructorNullRepositoryNameTest()
         {
-            UaTypeMetadata sut = new UaTypeMetadata(null, "type");
+            UaTypeMetadata sut = new(null, "type");
             Assert.Equal(string.Empty, sut.RepositoryGroupName);
             Assert.Equal("type", sut.TypeName);
         }
@@ -49,15 +49,15 @@ namespace ReactiveHMI.M2MCommunicationUnitTest
         [Fact]
         public void ToStringTest()
         {
-            UaTypeMetadata sut = new UaTypeMetadata("repo", "type");
+            UaTypeMetadata sut = new("repo", "type");
             Assert.Equal("repo.type", sut.ToString());
         }
 
         [Fact]
         public void HashCodeTest()
         {
-            UaTypeMetadata sut = new UaTypeMetadata("repo", "type");
-            UaTypeMetadata sut2 = new UaTypeMetadata("repo", "type");
+            UaTypeMetadata sut = new("repo", "type");
+            UaTypeMetadata sut2 = new("repo", "type");
             Assert.Equal(sut.GetHashCode(), sut2.GetHashCode());
         }
 

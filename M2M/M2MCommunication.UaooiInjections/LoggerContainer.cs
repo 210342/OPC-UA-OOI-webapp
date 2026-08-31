@@ -1,6 +1,6 @@
-﻿using CommonServiceLocator;
+﻿using Microsoft.Practices.EnterpriseLibrary.SemanticLogging;
 using ReactiveHMI.M2MCommunication.Core.Interfaces;
-using Microsoft.Practices.EnterpriseLibrary.SemanticLogging;
+using ReactiveHMI.M2MCommunication.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
@@ -25,8 +25,8 @@ namespace ReactiveHMI.M2MCommunication.UaooiInjections
 
         public LoggerContainer()
         {
-            _loggerSink = ServiceLocator.Current.GetInstance<ILogger>();
-            _eventSourceProviders = ServiceLocator.Current.GetAllInstances<INetworkingEventSourceProvider>();
+            _loggerSink = UaooiServiceLocator.Current.GetInstance<ILogger>();
+            _eventSourceProviders = UaooiServiceLocator.Current.GetAllInstances<INetworkingEventSourceProvider>();
         }
 
         #region ILoggerContainer
@@ -36,9 +36,9 @@ namespace ReactiveHMI.M2MCommunication.UaooiInjections
             subscription = _eventSourceProviders
                 ?.Select(p =>
                 {
-                    ObservableEventListener eventListener = new ObservableEventListener();
+                    var eventListener = new ObservableEventListener();
                     eventListener.EnableEvents(p.GetPartEventSource(), EventLevel.LogAlways, Keywords.All);
-                    return eventListener as IObservable<EventEntry>;
+                    return eventListener;
                 })
                 ?.Merge()
                 ?.ObserveOn(Scheduler.Default)
@@ -108,9 +108,9 @@ namespace ReactiveHMI.M2MCommunication.UaooiInjections
             }
         }
 
-        // This code added to correctly implement the disposable pattern.
         public void Dispose()
         {
+            GC.SuppressFinalize(this);
             Dispose(true);
         }
         #endregion

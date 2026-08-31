@@ -14,7 +14,7 @@ Components can be defined in a similar manner to the pages, they simply don't us
 
 ## Parameters
 
-Usually components receive parameters from their parent components. To define a parameter there needs to be a public property in the `@code` block with a [ParameterAttribute](https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.components.parameterattribute?view=aspnetcore-3.0). The name of the property will be the name of the parameter. Then the parent can send a parameter with the following syntax:
+Usually components receive parameters from their parent components. To define a parameter there needs to be a public property in the `@code` block with a [ParameterAttribute](https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.components.parameterattribute?view=aspnet10.0). The name of the property will be the name of the parameter. Then the parent can send a parameter with the following syntax:
 
 ``` html
 <ChildComponent ParameterName=@localVariable />
@@ -28,7 +28,7 @@ Component used to render each ImageTemplate from an injected `ReactiveHMI.Refere
 
 ### TextMessageParser
 
-Component used to print to the screen any properties that don't have any graphical representation defined in the ImageTemplate 
+Component used to print to the screen any properties that don't have any graphical representation defined in the ImageTemplate
 
 ### Property
 

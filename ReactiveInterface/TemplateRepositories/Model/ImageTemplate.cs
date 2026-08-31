@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ReactiveHMI.TemplateRepositories.Model
+namespace ReactiveHMI.ReactiveInterface.TemplateRepositories.Model
 {
     public class ImageTemplate
     {
@@ -42,8 +42,7 @@ namespace ReactiveHMI.TemplateRepositories.Model
                 return this;
             }
             else if (PropertyTemplates
-                        .Where(template => template.Name.Equals(subscription.UaTypeMetadata.TypeName))
-                        .FirstOrDefault() is PropertyTemplate propertyTemplate)
+                        .FirstOrDefault(template => template.Name.Equals(subscription.UaTypeMetadata.TypeName)) is PropertyTemplate propertyTemplate)
             {
                 Properties.Add(new DrawableProperty(subscription, propertyTemplate));
             }

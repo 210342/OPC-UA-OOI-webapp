@@ -1,4 +1,4 @@
-﻿using ReactiveHMI.TemplateRepositories.Model;
+﻿using ReactiveHMI.ReactiveInterface.TemplateRepositories.Model;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;

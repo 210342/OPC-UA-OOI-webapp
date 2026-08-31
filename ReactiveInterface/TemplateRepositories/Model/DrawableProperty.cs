@@ -1,6 +1,6 @@
 ﻿using ReactiveHMI.M2MCommunication.Core.Interfaces;
 
-namespace ReactiveHMI.TemplateRepositories.Model
+namespace ReactiveHMI.ReactiveInterface.TemplateRepositories.Model
 {
     public class DrawableProperty : BaseProperty
     {

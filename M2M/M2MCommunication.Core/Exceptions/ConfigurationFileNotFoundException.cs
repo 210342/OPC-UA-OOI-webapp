@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Runtime.Serialization;
 
 namespace ReactiveHMI.M2MCommunication.Core.Exceptions
 {
@@ -23,10 +22,6 @@ namespace ReactiveHMI.M2MCommunication.Core.Exceptions
         }
 
         public ConfigurationFileNotFoundException(string message, string fileName, Exception innerException) : base(message, fileName, innerException)
-        {
-        }
-
-        protected ConfigurationFileNotFoundException(SerializationInfo info, StreamingContext context) : base(info, context)
         {
         }
     }

@@ -7,31 +7,31 @@ namespace ReactiveHMI.M2MCommunicationUnitTest
 {
     public class UATypeInfoExtensionsTest
     {
-        public static IEnumerable<object[]> ArrayTypes => new[]
-            {
-                new[] { new UATypeInfo(BuiltInType.Boolean, 0, new int[] { 42 }) },
-                new[] { new UATypeInfo(BuiltInType.Boolean, 1, new int[] { 42 }) },
-                new[] { new UATypeInfo(BuiltInType.Boolean, 2, new int[] { 3, 7 }) },
-                new[] { new UATypeInfo(BuiltInType.Boolean, 4, new int[] { 2, 4, 8, 16}) }
-            };
+        public static IEnumerable<object[]> ArrayTypes =>
+            [
+                [new UATypeInfo(BuiltInType.Boolean, 0, [42])],
+                [new UATypeInfo(BuiltInType.Boolean, 1, [42])],
+                [new UATypeInfo(BuiltInType.Boolean, 2, [3, 7])],
+                [new UATypeInfo(BuiltInType.Boolean, 4, [2, 4, 8, 16])]
+            ];
 
-        public static IEnumerable<object[]> NonArrayTypes => new[]
-            {
-                new[] { new UATypeInfo(BuiltInType.Boolean, -1) }
-            };
+        public static IEnumerable<object[]> NonArrayTypes =>
+            [
+                [new UATypeInfo(BuiltInType.Boolean, -1)]
+            ];
 
-        public static IEnumerable<object[]> MultidimensionalArrayTypes => new[]
-            {
-                new[] { new UATypeInfo(BuiltInType.Boolean, 0, new int[] { 21, 37 }) },
-                new[] { new UATypeInfo(BuiltInType.Boolean, 2, new int[] { 21, 42 }) },
-                new[] { new UATypeInfo(BuiltInType.Boolean, 4, new int[] { 2, 4, 8, 16 }) }
-            };
+        public static IEnumerable<object[]> MultidimensionalArrayTypes =>
+            [
+                [new UATypeInfo(BuiltInType.Boolean, 0, [21, 37])],
+                [new UATypeInfo(BuiltInType.Boolean, 2, [21, 42])],
+                [new UATypeInfo(BuiltInType.Boolean, 4, [2, 4, 8, 16])]
+            ];
 
-        public static IEnumerable<object[]> NonMultidimensionalArrayTypes => new[]
-            {
-                new[] { new UATypeInfo(BuiltInType.Boolean, 1, new int[] { 42 }) },
-                new[] { new UATypeInfo(BuiltInType.Boolean, -1) }
-            };
+        public static IEnumerable<object[]> NonMultidimensionalArrayTypes =>
+            [
+                [new UATypeInfo(BuiltInType.Boolean, 1, [42])],
+                [new UATypeInfo(BuiltInType.Boolean, -1)]
+            ];
 
         [Theory]
         [MemberData(nameof(ArrayTypes))]

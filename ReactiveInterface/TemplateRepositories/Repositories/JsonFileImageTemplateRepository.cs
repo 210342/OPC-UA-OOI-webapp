@@ -1,10 +1,10 @@
-﻿using ReactiveHMI.TemplateRepositories.Configuration;
-using ReactiveHMI.TemplateRepositories.Model;
+﻿using ReactiveHMI.ReactiveInterface.TemplateRepositories.Configuration;
+using ReactiveHMI.ReactiveInterface.TemplateRepositories.Model;
 using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace ReactiveHMI.TemplateRepositories.Repositories
+namespace ReactiveHMI.ReactiveInterface.TemplateRepositories.Repositories
 {
     /// <summary>
     /// A repository that uses json serialisation to persist and retrieve templates
@@ -30,40 +30,34 @@ namespace ReactiveHMI.TemplateRepositories.Repositories
 
         private ImageTemplate Deserialise(string path)
         {
-            if (!string.IsNullOrEmpty(path))
-            {
-                string json = File.ReadAllText(
-                    Path.Combine(
-                        _configuration.Directory,
-                        path,
-                        _configuration.PropertiesFileName
-                    )
-                );
-                return JsonSerializer.Deserialize<ImageTemplate>(json);
-            }
-            else
+            if (string.IsNullOrEmpty(path))
             {
                 return new ImageTemplate();
             }
+            string json = File.ReadAllText(
+                Path.Combine(
+                    _configuration.Directory,
+                    path,
+                    _configuration.PropertiesFileName
+                )
+            );
+            return JsonSerializer.Deserialize<ImageTemplate>(json);
         }
 
         private async Task<ImageTemplate> DeserialiseAsync(string path)
         {
-            if (!string.IsNullOrEmpty(path))
-            {
-                string json = await File.ReadAllTextAsync(
-                    Path.Combine(
-                        _configuration.Directory,
-                        path,
-                        _configuration.PropertiesFileName
-                    )
-                );
-                return JsonSerializer.Deserialize<ImageTemplate>(json);
-            }
-            else
+            if (string.IsNullOrEmpty(path))
             {
                 return new ImageTemplate();
             }
+            string json = await File.ReadAllTextAsync(
+                Path.Combine(
+                    _configuration.Directory,
+                    path,
+                    _configuration.PropertiesFileName
+                )
+            );
+            return JsonSerializer.Deserialize<ImageTemplate>(json);
         }
     }
 }

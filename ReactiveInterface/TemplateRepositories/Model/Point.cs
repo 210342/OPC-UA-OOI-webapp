@@ -1,4 +1,4 @@
-﻿namespace ReactiveHMI.TemplateRepositories.Model
+﻿namespace ReactiveHMI.ReactiveInterface.TemplateRepositories.Model
 {
     public class Point
     {

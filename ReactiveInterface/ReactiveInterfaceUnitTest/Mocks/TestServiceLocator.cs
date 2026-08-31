@@ -1,20 +1,60 @@
-﻿using CommonServiceLocator;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using ReactiveHMI.M2MCommunication.Core.Interfaces;
 
-namespace ReactiveHMI.ReactiveInterfaceUnitTest.Mocks
+namespace ReactiveHMI.ReactiveInterface.ReactiveInterfaceUnitTest.Mocks
 {
-    internal class TestServiceLocator : ServiceLocatorImplBase
+    internal class TestServiceLocator : IServiceContainer
     {
-        protected override IEnumerable<object> DoGetAllInstances(Type serviceType)
+        private bool disposedValue;
+
+        public IEnumerable<object> GetAllInstances(Type serviceType)
         {
-            return Enumerable.Empty<object>();
+            return [];
         }
 
-        protected override object DoGetInstance(Type serviceType, string key)
+        public IEnumerable<T> GetAllInstances<T>() where T : class
+        {
+            return [];
+        }
+
+        public object GetInstance(Type serviceType)
         {
             return null;
+        }
+
+        public object GetInstance(Type serviceType, string key)
+        {
+            return null;
+        }
+
+        public T GetInstance<T>() where T : class
+        {
+            return null;
+        }
+
+        public T GetInstance<T>(string key) where T : class
+        {
+            return null;
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                }
+
+                disposedValue = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
     }
 }
