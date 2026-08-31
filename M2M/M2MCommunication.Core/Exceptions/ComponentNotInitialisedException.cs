@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.Serialization;
 
 namespace ReactiveHMI.M2MCommunication.Core.Exceptions
 {
@@ -14,10 +13,6 @@ namespace ReactiveHMI.M2MCommunication.Core.Exceptions
         }
 
         public ComponentNotInitialisedException(string message, Exception innerException) : base(message, innerException)
-        {
-        }
-
-        protected ComponentNotInitialisedException(SerializationInfo info, StreamingContext context) : base(info, context)
         {
         }
     }

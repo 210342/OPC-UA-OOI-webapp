@@ -1,5 +1,5 @@
-using ReactiveHMI.TemplateRepositories.Configuration;
-using ReactiveHMI.TemplateRepositories.Repositories;
+using ReactiveHMI.ReactiveInterface.TemplateRepositories.Configuration;
+using ReactiveHMI.ReactiveInterface.TemplateRepositories.Repositories;
 using ReactiveHMI.M2MCommunication.Core.CommonTypes;
 using ReactiveHMI.M2MCommunication.Core.Interfaces;
 using ReactiveHMI.M2MCommunication.Services;

@@ -1,7 +1,7 @@
-﻿using ReactiveHMI.TemplateRepositories.Model;
+﻿using ReactiveHMI.ReactiveInterface.TemplateRepositories.Model;
 using System.Threading.Tasks;
 
-namespace ReactiveHMI.TemplateRepositories.Repositories
+namespace ReactiveHMI.ReactiveInterface.TemplateRepositories.Repositories
 {
     public interface IImageTemplateRepository
     {

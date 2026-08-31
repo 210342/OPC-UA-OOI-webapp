@@ -1,7 +1,7 @@
 ﻿using ReactiveHMI.M2MCommunication.Core.Interfaces;
 using System.Threading.Tasks;
 
-namespace ReactiveHMI.ReactiveInterfaceUnitTest.Mocks
+namespace ReactiveHMI.ReactiveInterface.ReactiveInterfaceUnitTest.Mocks
 {
     class TestMessageBusService : IMessageBus
     {

@@ -1,24 +1,21 @@
-﻿using CommonServiceLocator;
-using ReactiveHMI.M2MCommunication.Core.Interfaces;
-using ReactiveHMI.M2MCommunication.Services;
-using ReactiveHMI.ReactiveInterfaceUnitTest.Mocks;
+﻿using ReactiveHMI.M2MCommunication.Services;
+using ReactiveHMI.ReactiveInterface.ReactiveInterfaceUnitTest.Mocks;
 using ReactiveHMI.ReferenceWebApplication.ReactiveInterface;
-using System.Collections.Generic;
 using System.Reflection;
 using Xunit;
 
-namespace ReactiveHMI.ReactiveInterfaceUnitTest
+namespace ReactiveHMI.ReactiveInterface.ReactiveInterfaceUnitTest
 {
     public class MessageParserTest
     {
         public MessageParserTest()
         {
-            ServiceLocator.SetLocatorProvider(() => new TestServiceLocator());
+            UaooiServiceLocator.Current = new TestServiceLocator();
         }
 
         protected internal MessageBusService GetMessageBusService()
         {
-            MessageBusService service = new MessageBusService();
+            MessageBusService service = new();
             service.GetType()
                 .GetProperty("MessageBus", BindingFlags.Instance | BindingFlags.Public)
                 .SetValue(service, new TestMessageBusService());
@@ -28,7 +25,7 @@ namespace ReactiveHMI.ReactiveInterfaceUnitTest
         [Fact]
         public void ConstructorTest()
         {
-            ImageMessageParser sut = new ImageMessageParser(GetMessageBusService(), new TestImageTemplateRepository());
+            ImageMessageParser sut = new(GetMessageBusService(), new TestImageTemplateRepository());
             Assert.NotNull(sut.GetType().GetProperty("MessageBus", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(sut));
             Assert.NotNull(sut.PrintableProperties);
             Assert.Empty(sut.PrintableProperties);

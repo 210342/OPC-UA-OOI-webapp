@@ -8,7 +8,7 @@ namespace ReactiveHMI.M2MCommunication.UaooiInjections.Extensions
     public class ConfigurationExtension : ConfigurationData, IExtensibleDataObject
     {
         [DataMember(Name = "InformationModelAliases", EmitDefaultValue = true, IsRequired = false)]
-        private readonly InformationModelAlias[] _aliases = new InformationModelAlias[0];
+        private readonly InformationModelAlias[] _aliases = [];
 
         public IEnumerable<InformationModelAlias> Aliases => _aliases;
     }

@@ -1,8 +1,8 @@
-﻿using ReactiveHMI.TemplateRepositories.Model;
-using ReactiveHMI.TemplateRepositories.Repositories;
+﻿using ReactiveHMI.ReactiveInterface.TemplateRepositories.Model;
+using ReactiveHMI.ReactiveInterface.TemplateRepositories.Repositories;
 using System.Threading.Tasks;
 
-namespace ReactiveHMI.ReactiveInterfaceUnitTest.Mocks
+namespace ReactiveHMI.ReactiveInterface.ReactiveInterfaceUnitTest.Mocks
 {
     class TestImageTemplateRepository : IImageTemplateRepository
     {
@@ -10,15 +10,15 @@ namespace ReactiveHMI.ReactiveInterfaceUnitTest.Mocks
         {
             return new ImageTemplate(@"", 1920, 1080)
             {
-                PropertyTemplates = new[] { new PropertyTemplate("Second type name", new Point(0, 0), "white") }
+                PropertyTemplates = [new PropertyTemplate("Second type name", new Point(0, 0), "white")]
             };
         }
 
         public Task<ImageTemplate> GetImageTemplateByAliasAsync(string name)
         {
-            ImageTemplate imageTemplate = new ImageTemplate(@"", 1920, 1080)
+            ImageTemplate imageTemplate = new(@"", 1920, 1080)
             {
-                PropertyTemplates = new[] { new PropertyTemplate("Second type name", new Point(0, 0), "white") }
+                PropertyTemplates = [new PropertyTemplate("Second type name", new Point(0, 0), "white")]
             };
             return Task.FromResult(imageTemplate);
         }

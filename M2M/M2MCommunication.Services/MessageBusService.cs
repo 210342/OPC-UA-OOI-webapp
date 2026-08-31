@@ -1,5 +1,4 @@
-﻿using CommonServiceLocator;
-using ReactiveHMI.M2MCommunication.Core.Interfaces;
+﻿using ReactiveHMI.M2MCommunication.Core.Interfaces;
 
 namespace ReactiveHMI.M2MCommunication.Services
 {
@@ -9,7 +8,7 @@ namespace ReactiveHMI.M2MCommunication.Services
 
         public MessageBusService()
         {
-            MessageBus = ServiceLocator.Current.GetInstance<IMessageBus>();
+            MessageBus = UaooiServiceLocator.Current.GetInstance<IMessageBus>();
         }
     }
 }

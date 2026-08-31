@@ -1,4 +1,4 @@
-﻿namespace ReactiveHMI.TemplateRepositories.Configuration
+﻿namespace ReactiveHMI.ReactiveInterface.TemplateRepositories.Configuration
 {
     public class RepositoryConfiguration
     {

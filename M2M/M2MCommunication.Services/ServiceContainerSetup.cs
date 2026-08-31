@@ -1,11 +1,14 @@
-﻿using CommonServiceLocator;
-using ReactiveHMI.M2MCommunication.Core.CommonTypes;
+﻿using ReactiveHMI.M2MCommunication.Core.CommonTypes;
 using ReactiveHMI.M2MCommunication.Core.Interfaces;
 using System;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.IO;
 using System.Reflection;
+using System.Runtime.CompilerServices;
+
+[assembly: InternalsVisibleTo("ReactiveInterfaceUnitTest")]
+[assembly: InternalsVisibleTo("M2MCommunication.UnitTest")]
 
 namespace ReactiveHMI.M2MCommunication.Services
 {
@@ -14,8 +17,6 @@ namespace ReactiveHMI.M2MCommunication.Services
         private readonly UaLibrarySettings _uaLibrarySettings;
         private readonly ILogger _logger;
         private ILoggerContainer loggerContainer;
-
-        internal IServiceLocator DisposableServiceLocator { get; private set; }
 
         public ServiceContainerSetup(UaLibrarySettings settings, ILogger logger)
         {
@@ -26,12 +27,12 @@ namespace ReactiveHMI.M2MCommunication.Services
         public ServiceContainerSetup Initialise()
         {
             _logger?.LogInfo("Initialising Managed Extensibility Framework container");
-            AggregateCatalog AggregateCatalog = new AggregateCatalog(
+            AggregateCatalog AggregateCatalog = new(
                 new DirectoryCatalog(
                     Path.Combine(Path.GetDirectoryName(Assembly.GetCallingAssembly().Location), _uaLibrarySettings.LibraryDirectory)
                 )
             );
-            CompositionContainer Container = new CompositionContainer(AggregateCatalog);
+            CompositionContainer Container = new(AggregateCatalog);
 
             _logger?.LogInfo("Composing configuration file name and logger instance");
             Container.ComposeExportedValue(UaContractNames.ConfigurationFileNameContract, Path.Combine(
@@ -43,8 +44,7 @@ namespace ReactiveHMI.M2MCommunication.Services
             Container.ComposeExportedValue(_logger);
 
             _logger?.LogInfo("Setting a service locator");
-            DisposableServiceLocator = new UaooiServiceLocator(Container);
-            ServiceLocator.SetLocatorProvider(() => DisposableServiceLocator);
+            UaooiServiceLocator.Current = new UaooiServiceLocator(Container);
 
             if (shouldComposeLoggers)
             {
@@ -64,13 +64,11 @@ namespace ReactiveHMI.M2MCommunication.Services
             {
                 if (disposing)
                 {
-                    (DisposableServiceLocator as IDisposable)?.Dispose();
+                    UaooiServiceLocator.Current?.Dispose();
                     (loggerContainer as IDisposable)?.Dispose();
                 }
-                DisposableServiceLocator = null;
+                UaooiServiceLocator.Current = null;
                 loggerContainer = null;
-                ServiceLocator.SetLocatorProvider(() => null);
-
                 disposedValue = true;
             }
         }
@@ -79,6 +77,7 @@ namespace ReactiveHMI.M2MCommunication.Services
         public void Dispose()
         {
             // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+            GC.SuppressFinalize(this);
             Dispose(true);
         }
         #endregion

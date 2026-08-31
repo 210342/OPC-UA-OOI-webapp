@@ -35,12 +35,12 @@ namespace ReactiveHMI.M2MCommunication.UaooiInjections.Components
         {
             if (string.IsNullOrWhiteSpace(_configurationFileName))
             {
-                ComponentNotInitialisedException exception = new ComponentNotInitialisedException($"{nameof(_configurationFileName)} was not initialised");
+                ComponentNotInitialisedException exception = new($"{nameof(_configurationFileName)} was not initialised");
                 _logger?.LogError(exception, exception.Message);
                 throw exception;
             }
 
-            FileInfo configurationFile = new FileInfo(_configurationFileName);
+            FileInfo configurationFile = new(_configurationFileName);
             if (configurationFile.Exists)
             {
                 return ConfigurationDataFactoryIO.Load<ConfigurationExtension>(
@@ -52,7 +52,7 @@ namespace ReactiveHMI.M2MCommunication.UaooiInjections.Components
             }
             else
             {
-                ConfigurationFileNotFoundException exception = new ConfigurationFileNotFoundException($"{nameof(Configuration)} could not find the file {_configurationFileName}", _configurationFileName);
+                ConfigurationFileNotFoundException exception = new($"{nameof(Configuration)} could not find the file {_configurationFileName}", _configurationFileName);
                 _logger?.LogError(exception, exception.Message);
                 throw exception;
             }

@@ -1,13 +1,11 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
-
+<Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
-    <LangVersion>8.0</LangVersion>
+    <TargetFramework>net10.0</TargetFramework>
     <ApplicationIcon>wwwroot\IoT.ico</ApplicationIcon>
     <OutputType>Exe</OutputType>
-    <StartupObject />
+    <StartupObject/>
     <Authors>Adam Troszczyński</Authors>
-    <Copyright>Adam Troszczyński 2019</Copyright>
+    <Copyright>Adam Troszczyński 2026</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/210342/OPC-UA-OOI-webapp</PackageProjectUrl>
     <RepositoryUrl>https://github.com/210342/OPC-UA-OOI-webapp</RepositoryUrl>
@@ -15,41 +13,30 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
     <AssemblyName>Object Oriented Internet</AssemblyName>
     <RootNamespace>ReactiveHMI.ReferenceWebApplication</RootNamespace>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <PlatformTarget>AnyCPU</PlatformTarget>
     <Optimize>true</Optimize>
-    <DocumentationFile></DocumentationFile>
+    <DocumentationFile/>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
-    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
-
   <ItemGroup>
-    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.8">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.0.0" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.0.0" />
-    <PackageReference Include="Serilog" Version="2.9.0" />
-    <PackageReference Include="Serilog.AspNetCore" Version="3.2.0" />
-    <PackageReference Include="Serilog.Extensions.Logging" Version="3.0.1" />
-    <PackageReference Include="Serilog.Sinks.File" Version="4.1.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="10.0.2"/>
+    <PackageReference Include="Serilog" Version="4.4.0"/>
+    <PackageReference Include="Serilog.AspNetCore" Version="10.0.0"/>
+    <PackageReference Include="Serilog.Extensions.Logging" Version="10.0.0"/>
+    <PackageReference Include="Serilog.Sinks.File" Version="7.0.0"/>
   </ItemGroup>
-
   <ItemGroup>
-    <None Include="wwwroot\js\JsInterop.js" />
+    <None Include="wwwroot\js\JsInterop.js"/>
   </ItemGroup>
-
   <ItemGroup>
-    <Folder Include="Properties\" />
+    <Folder Include="Properties\"/>
   </ItemGroup>
-
   <ItemGroup>
-    <ProjectReference Include="..\M2M\M2MCommunication.Core\M2MCommunication.Core.csproj" />
-    <ProjectReference Include="..\M2M\M2MCommunication.Services\M2MCommunication.Services.csproj" />
-    <ProjectReference Include="..\ReactiveInterface\TemplateRepositories\TemplateRepositories.csproj" />
+    <ProjectReference Include="..\M2M\M2MCommunication.Core\M2MCommunication.Core.csproj"/>
+    <ProjectReference Include="..\M2M\M2MCommunication.Services\M2MCommunication.Services.csproj"/>
+    <ProjectReference Include="..\ReactiveInterface\TemplateRepositories\TemplateRepositories.csproj"/>
   </ItemGroup>
-
 </Project>

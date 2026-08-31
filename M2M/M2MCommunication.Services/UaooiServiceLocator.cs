@@ -1,44 +1,71 @@
-﻿using CommonServiceLocator;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition.Hosting;
 using System.Linq;
+using ReactiveHMI.M2MCommunication.Core.Interfaces;
 
 namespace ReactiveHMI.M2MCommunication.Services
 {
-    internal class UaooiServiceLocator : ServiceLocatorImplBase, IDisposable
+    public class UaooiServiceLocator : IServiceContainer
     {
         private readonly CompositionContainer _container;
 
-        public UaooiServiceLocator(CompositionContainer compositionContainer)
+        public static IServiceContainer Current { get; internal set; }
+
+        internal UaooiServiceLocator(CompositionContainer compositionContainer)
         {
             _container = compositionContainer ?? throw new ArgumentNullException(nameof(compositionContainer));
         }
 
-        protected override IEnumerable<object> DoGetAllInstances(Type serviceType)
+        public IEnumerable<object> GetAllInstances(Type serviceType)
         {
-            if (serviceType is null)
-            {
-                throw new ArgumentNullException(nameof(serviceType));
-            }
+            ArgumentNullException.ThrowIfNull(serviceType);
             if (disposedValue)
             {
-                return Enumerable.Empty<object>();
+                return [];
             }
-            return _container?.GetExports(serviceType, null, null)?.Select(e => e.Value) ?? Enumerable.Empty<object>();
+            return _container?.GetExports(serviceType, null, null)?.Select(e => e.Value) ?? [];
         }
 
-        protected override object DoGetInstance(Type serviceType, string key)
+        public object GetInstance(Type serviceType)
         {
-            if (serviceType is null)
-            {
-                throw new ArgumentNullException(nameof(serviceType));
-            }
+            return GetInstance(serviceType, null);
+        }
+
+        public object GetInstance(Type serviceType, string key)
+        {
+            ArgumentNullException.ThrowIfNull(serviceType);
             if (disposedValue)
             {
                 return null;
             }
             return _container?.GetExports(serviceType, null, key)?.Select(e => e.Value)?.SingleOrDefault();
+        }
+
+        public IEnumerable<T> GetAllInstances<T>()
+            where T: class
+        {
+            if (disposedValue)
+            {
+                return [];
+            }
+            return _container?.GetExports(typeof(T), null, null)?.Select(e => e.Value as T) ?? [];
+        }
+
+        public T GetInstance<T>()
+            where T: class
+        {
+            return GetInstance<T>(null);
+        }
+
+        public T GetInstance<T>(string key)
+            where T: class
+        {
+            if (disposedValue)
+            {
+                return null;
+            }
+            return _container?.GetExports(typeof(T), null, key)?.Select(e => e.Value as T)?.SingleOrDefault();
         }
 
         #region IDisposable Support

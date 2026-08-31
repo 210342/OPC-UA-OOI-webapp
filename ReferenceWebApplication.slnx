@@ -1,0 +1,13 @@
+<Solution>
+  <Folder Name="/M2M/">
+    <Project Path="M2M/M2MCommunication.Core/M2MCommunication.Core.csproj" />
+    <Project Path="M2M/M2MCommunication.Services/M2MCommunication.Services.csproj" />
+    <Project Path="M2M/M2MCommunication.UaooiInjections/M2MCommunication.UaooiInjections.csproj" />
+    <Project Path="M2M/M2MCommunication.UnitTest/M2MCommunication.UnitTest.csproj" />
+  </Folder>
+  <Folder Name="/ReactiveInterface/">
+    <Project Path="ReactiveInterface/ReactiveInterfaceUnitTest/ReactiveInterfaceUnitTest.csproj" />
+    <Project Path="ReactiveInterface/TemplateRepositories/TemplateRepositories.csproj" />
+  </Folder>
+  <Project Path="ReferenceWebApplication/ReferenceWebApplication.csproj" />
+</Solution>

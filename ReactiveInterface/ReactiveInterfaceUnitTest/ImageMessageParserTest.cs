@@ -1,28 +1,27 @@
-﻿using ReactiveHMI.ReactiveInterfaceUnitTest.Mocks;
+﻿using ReactiveHMI.ReactiveInterface.ReactiveInterfaceUnitTest.Mocks;
 using ReactiveHMI.ReferenceWebApplication.ReactiveInterface;
 using System.Reflection;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace ReactiveHMI.ReactiveInterfaceUnitTest
+namespace ReactiveHMI.ReactiveInterface.ReactiveInterfaceUnitTest
 {
     public class ImageMessageParserTest : MessageParserTest
     {
         [Fact]
         public void ImageConstructorTest()
         {
-            ImageMessageParser sut = new ImageMessageParser(GetMessageBusService(), new TestImageTemplateRepository());
+            ImageMessageParser sut = new(GetMessageBusService(), new TestImageTemplateRepository());
             Assert.NotNull(sut.GetType().GetProperty("MessageBus", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(sut));
             Assert.NotNull(sut.GetType().GetProperty("ImageTemplateRepository", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(sut));
             Assert.NotNull(sut.ImageTemplates);
             Assert.Empty(sut.ImageTemplates);
-            
         }
 
         [Fact]
         public async Task InitialiseAsyncTest()
         {
-            ImageMessageParser sut = new ImageMessageParser(GetMessageBusService(), new TestImageTemplateRepository());
+            ImageMessageParser sut = new(GetMessageBusService(), new TestImageTemplateRepository());
             await sut.InitialiseAsync();
             Assert.NotNull(sut.ImageTemplates);
             Assert.Empty(sut.ImageTemplates);

@@ -1,19 +1,19 @@
-﻿using ReactiveHMI.TemplateRepositories.Model;
-using ReactiveHMI.ReactiveInterfaceUnitTest.Mocks;
+﻿using ReactiveHMI.ReactiveInterface.TemplateRepositories.Model;
+using ReactiveHMI.ReactiveInterface.ReactiveInterfaceUnitTest.Mocks;
 using Xunit;
 
-namespace ReactiveHMI.ReactiveInterfaceUnitTest
+namespace ReactiveHMI.ReactiveInterface.ReactiveInterfaceUnitTest
 {
     public class PropertyTest
     {
         [Fact]
         public void MapPrintableToDrawableProperty()
         {
-            IProperty printable = new PrintableProperty(
+            PrintableProperty printable = new(
                 new TestSubscription() { Value = "Printable value" },
                 new PropertyTemplate("Name", null, "red")
             );
-            IProperty drawable = (printable as PrintableProperty).MapToDrawable(new Point(10, 100));
+            DrawableProperty drawable = printable.MapToDrawable(new Point(10, 100));
             Assert.True(drawable is DrawableProperty);
             Assert.Equal(printable.Template.Name, drawable.Template.Name);
             Assert.Equal(printable.Subscription, drawable.Subscription);
@@ -25,11 +25,11 @@ namespace ReactiveHMI.ReactiveInterfaceUnitTest
         [Fact]
         public void MapDrawableToPrintableProperty()
         {
-            IProperty drawable = new DrawableProperty(
+            DrawableProperty drawable = new(
                 new TestSubscription() { Value = "Drawable value" },
                 new PropertyTemplate("Name", new Point(0, 0), "red")
             );
-            IProperty printable = (drawable as DrawableProperty).MapToPrintable();
+            PrintableProperty printable = drawable.MapToPrintable();
             Assert.True(printable is PrintableProperty);
             Assert.Equal(drawable.Template.Name, printable.Template.Name);
             Assert.Equal(drawable.Subscription, printable.Subscription);
